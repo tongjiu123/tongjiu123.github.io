@@ -186,7 +186,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-15 15:53:55" itemprop="dateModified" datetime="2021-03-15T15:53:55+08:00">2021-03-15</time>
+                <time title="Modified: 2021-03-15 15:56:04" itemprop="dateModified" datetime="2021-03-15T15:56:04+08:00">2021-03-15</time>
               </span>
 
           <br>
@@ -214,9 +214,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-<p>#include &lt;stdio.h&gt;<br>int main()<br>{<br>    float celsius;<br>    float fahrenheit;<br>    scanf(“%f”,&amp;fahrenheit);<br>    celsius =(5.0000/9.0000)*(fahrenheit -32);<br>    printf(“%f”,celsius );<br>    return 0;<br>}</p>
-
+          <p>#include &lt;stdio.h&gt;</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/09/program2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -439,7 +445,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>857</span>
+              <span>860</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -516,7 +522,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-15 15:53:12" itemprop="dateModified" datetime="2021-03-15T15:53:12+08:00">2021-03-15</time>
+                <time title="Modified: 2021-03-15 15:56:23" itemprop="dateModified" datetime="2021-03-15T15:56:23+08:00">2021-03-15</time>
               </span>
 
           <br>
@@ -544,33 +550,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-<p>from bs4 import BeautifulSoup<br>import urllib.request<br>import csv<br>import requests<br>import lxml<br>import json</p>
-<p>for page in range(0,10):<br>    #url = ‘<a target="_blank" rel="noopener" href="https://movie.douban.com/top250?start=&#39;">https://movie.douban.com/top250?start=&#39;</a> + str(page*25) + ‘&amp;filter=’<br>    #url=’<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/446107907&#39;">https://www.zhihu.com/question/446107907&#39;</a><br>    #url=’<a target="_blank" rel="noopener" href="https://baidu.com&/#39;">https://baidu.com&#39;</a><br>    #url=’<a target="_blank" rel="noopener" href="https://tongjiu123.github.io&/#39;">https://tongjiu123.github.io&#39;</a><br>    url=’<a target="_blank" rel="noopener" href="https://forum.xitek.com/forum.php&#39;">https://forum.xitek.com/forum.php&#39;</a><br>    try:<br>        response=requests.get(url)<br>        response.raise_for_status()<br>        response.encoding = response.apparent_encoding<br>        print(url)<br>    except:<br>        print(“something wrong!”)<br>        print(url)<br>        break</p>
-<pre><code>soup = BeautifulSoup(response.content,&#39;lxml&#39;)
-# soup=BeautifulSoup(html,&#39;html.parser&#39;)
-print(soup.title.string)
-#print(soup.p.string)
-#while
-titlee=soup.find(class_=&#39;np&#39;)
-print(titlee.text)
-#for item in titlee:
-    #item_name=item.find(&#39;title&#39;).string
-    #print(item_name)
-
-#with open(&#39;output1&#39;, &#39;w&#39;) as f_output:
- #   csv_output = csv.writer(f_output)
-  #  csv_output.writerows(titlee.text)
-
-#filename=&#39;output2.json&#39;
-#with open(filename,&#39;w&#39;) as fobj:
- #   json.dump(titlee.text,fobj)
-
-with open(&#39;test1.txt&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as fp:
-    fp.write(titlee.text)
-    fp.close()
-</code></pre>
-
+          <p>from bs4 import BeautifulSoup</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/27/crawler1/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -792,7 +780,7 @@ with open(&#39;test1.txt&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as fp:
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-15 15:53:33" itemprop="dateModified" datetime="2021-03-15T15:53:33+08:00">2021-03-15</time>
+                <time title="Modified: 2021-03-15 15:56:37" itemprop="dateModified" datetime="2021-03-15T15:56:37+08:00">2021-03-15</time>
               </span>
 
           <br>
@@ -820,19 +808,15 @@ with open(&#39;test1.txt&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as fp:
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-<p>#include &lt;stdio.h&gt;<br>#include &lt;string.h&gt;<br>#define maxn 100<br>int left,chance;<br>char s[maxn],s2[maxn];<br>int win,lose;</p>
-<p>void guess(char ch)<br>{<br>    int bad=1;<br>    for(int i=0 ; i &lt;strlen(s) ; i++)<br>        if(s[i] == ch) {left–; s[i] = ‘ ‘;bad=0;}<br>    if(bad)–chance;<br>    if(!chance) lose=1;<br>    if(!left) win =1;<br>}</p>
-<p>int main()<br>{<br>    int rnd;<br>    while(scanf(“%d%s%s”, &amp;rnd ,s ,s2) == 3 &amp;&amp; rnd != -1)<br>    {<br>        printf(“Round %d\n”, rnd);<br>        win = lose = 0;<br>        left = strlen(s);<br>        chance = 7;<br>        for(int i = 0; i&lt; strlen(s2); i++)<br>        {<br>            guess(s2[i]);<br>            if(win || lose) break;</p>
-<pre><code>    &#125;
-    if(win) printf(&quot;You win.\n&quot;);
-    else if(lose) printf(&quot;You lose.\n&quot;);
-    else printf(&quot;You chickened out.\n&quot;);
-&#125;
-return 0;
-</code></pre>
-<p>}</p>
-
+          <p>#include &lt;stdio.h&gt;</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/01/hangman/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -882,7 +866,7 @@ return 0;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-15 15:53:44" itemprop="dateModified" datetime="2021-03-15T15:53:44+08:00">2021-03-15</time>
+                <time title="Modified: 2021-03-15 15:57:14" itemprop="dateModified" datetime="2021-03-15T15:57:14+08:00">2021-03-15</time>
               </span>
 
           <br>
@@ -910,9 +894,15 @@ return 0;
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-<p>1.You should take the command to appear the ssh key in the hiden file.<br>2.Better use vpn or alter the source to download nodejs,brew,hexo.etc.<br>3.Sometimes maybe could not creat the public file and the git_deploy file,it is annoying,you could trying repeatly or delete the hexo and redownload it.<br>4.Notice that you content of the blog should be write down under the tags,not in the tags.<br>5.Carefully revise the content in the config.yml,it is the core file of the HEXO,especially when you want to revise it to led the github automatically pull your blog.<br>6.When build in WINDOWS,sometimes could not creat the public film after you use the”hexo generate”,I don’t konw why,try to repeat this command or copy this film from others.<br>7.To be added.</p>
-
+          <p>1.You should take the command to appear the ssh key in the hiden file.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/01/notice/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -962,7 +952,7 @@ return 0;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-15 15:53:39" itemprop="dateModified" datetime="2021-03-15T15:53:39+08:00">2021-03-15</time>
+                <time title="Modified: 2021-03-15 15:57:25" itemprop="dateModified" datetime="2021-03-15T15:57:25+08:00">2021-03-15</time>
               </span>
 
           <br>
@@ -990,9 +980,15 @@ return 0;
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-<p>After you check if you have already have a ssh key by”ls -al ~/.ssh      “.At first you should use the code”ssh-keygen -t rsa -C “<a href="mailto:&#120;&#x78;&#x78;&#120;&#x40;&#x78;&#120;&#120;&#x78;&#46;&#99;&#111;&#x6d;">&#120;&#x78;&#x78;&#120;&#x40;&#x78;&#120;&#120;&#x78;&#46;&#99;&#111;&#x6d;</a>“to creat a ssh(when you cd your terminal to the target film)(xxxx is  your mail) to create your ssh key.Then you have two choices,one is use “pbcopy &lt; ~/.ssh/id_rsa.pub     “to copy your ssh key.Another method is to use the “defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder” and restart you finder to show hidden files,then ~/users/.ssh find your ssh key .Then paste your ssh key to your github.<br>AAAfter that you’d better modify the config.yml to pull your post automatically.</p>
-
+          <p>After you check </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/30/mac/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
