@@ -20,24 +20,22 @@
     var CONFIG = {"hostname":"tongjiu123.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="DeepTime: Learning Deep Time-index Models for Time Series Forecasting">
+  <meta name="description" content="CoBEVT：稀疏Transformer做协作BEV语义分割">
 <meta property="og:type" content="article">
-<meta property="og:title" content="deeptime">
-<meta property="og:url" content="http://tongjiu123.github.io/2023/07/22/deeptime/index.html">
+<meta property="og:title" content="CoBEVT">
+<meta property="og:url" content="http://tongjiu123.github.io/2023/07/22/CoBEVT/index.html">
 <meta property="og:site_name" content="Blog of Yang">
-<meta property="og:description" content="DeepTime: Learning Deep Time-index Models for Time Series Forecasting">
+<meta property="og:description" content="CoBEVT：稀疏Transformer做协作BEV语义分割">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://tongjiu123.github.io/2023/07/22/deeptime/v2-67fd0eb883a4312b4cd36b103989248e_720w.webp">
-<meta property="og:image" content="http://tongjiu123.github.io/2023/07/22/deeptime/v2-ef9069c667992477f3c9b837987d5ebc_720w.webp">
-<meta property="og:image" content="http://tongjiu123.github.io/2023/07/22/deeptime/v2-71debe61ccd42c50f7c641b7c7d76236_720w.webp">
-<meta property="article:published_time" content="2023-07-22T13:01:17.000Z">
-<meta property="article:modified_time" content="2023-07-22T13:21:19.854Z">
+<meta property="og:image" content="http://tongjiu123.github.io/2023/07/22/CoBEVT/v2-f34e07352a28b095403c224b5331a71e_720w.webp">
+<meta property="og:image" content="http://tongjiu123.github.io/2023/07/22/CoBEVT/v2-c450b0e4bbbf9763b37df7f81681c6f3_720w.webp">
+<meta property="article:published_time" content="2023-07-22T13:29:52.000Z">
+<meta property="article:modified_time" content="2023-07-22T13:30:45.114Z">
 <meta property="article:author" content="Zachary Yang">
-<meta property="article:tag" content="LSTF">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://tongjiu123.github.io/2023/07/22/deeptime/v2-67fd0eb883a4312b4cd36b103989248e_720w.webp">
+<meta name="twitter:image" content="http://tongjiu123.github.io/2023/07/22/CoBEVT/v2-f34e07352a28b095403c224b5331a71e_720w.webp">
 
-<link rel="canonical" href="http://tongjiu123.github.io/2023/07/22/deeptime/">
+<link rel="canonical" href="http://tongjiu123.github.io/2023/07/22/CoBEVT/">
 
 
 <script id="page-configurations">
@@ -50,7 +48,7 @@
   };
 </script>
 
-  <title>deeptime | Blog of Yang</title>
+  <title>CoBEVT | Blog of Yang</title>
   
 
 
@@ -177,7 +175,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://tongjiu123.github.io/2023/07/22/deeptime/">
+    <link itemprop="mainEntityOfPage" href="http://tongjiu123.github.io/2023/07/22/CoBEVT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/kejigou.png">
@@ -190,7 +188,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          deeptime
+          CoBEVT
         </h1>
 
         <div class="post-meta">
@@ -201,16 +199,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-07-22 21:01:17 / Modified: 21:21:19" itemprop="dateCreated datePublished" datetime="2023-07-22T21:01:17+08:00">2023-07-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
-                </span>
+              <time title="Created: 2023-07-22 21:29:52 / Modified: 21:30:45" itemprop="dateCreated datePublished" datetime="2023-07-22T21:29:52+08:00">2023-07-22</time>
             </span>
 
           
@@ -224,43 +213,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting"><a href="#DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting" class="headerlink" title="DeepTime: Learning Deep Time-index Models for Time Series Forecasting"></a>DeepTime: Learning Deep Time-index Models for Time Series Forecasting</h1><span id="more"></span>
+        <h1 id="CoBEVT：稀疏Transformer做协作BEV语义分割"><a href="#CoBEVT：稀疏Transformer做协作BEV语义分割" class="headerlink" title="CoBEVT：稀疏Transformer做协作BEV语义分割"></a>CoBEVT：稀疏Transformer做协作BEV语义分割</h1><span id="more"></span>
 
-<p>DeepTime模型是一个用于LSTF的由[Gerald Woo ，Chenghao Liu ，Doyen Sahoo ， Akshat Kumar ，Steven Hoi ]等人于2022年发表的模型。</p>
-<p>arxiv链接</p>
-<p><a href="http://link.zhihu.com/?target=https://arxiv.org/abs/2207.06046">https://arxiv.org/abs/2207.06046arxiv.org/abs/2207.06046</a></p>
-<p>Github链接</p>
-<p><a href="http://link.zhihu.com/?target=https://github.com/salesforce/DeepTime">https://github.com/salesforce/DeepTimegithub.com/salesforce/DeepTime</a></p>
-<p><strong>摘要</strong>: 论文提出了一种用于多元时间序列预测的深度学习框架DeepTime，该框架采用元优化方法对基模型的超参数进行优化，基模型是一种简单的前馈神经网络，论文提供了理论分析和实证结果来证明所提框架的有效性。</p>
-<p>其使用closed-form ridge regressor进行元数据学习，并且可以自动提取特征，并且避免了梯度消失及梯度爆炸。</p>
-<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a><strong>贡献</strong></h3><ol>
-<li>提出了一种新的元学习方法，用于训练和测试时间序列预测模型，该方法采用了一个闭合形式的岭回归器来实现元优化过程，可以在训练和测试时都非常快速和高效。</li>
-<li>采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式，从而提高模型的泛化能力和预测性能。</li>
-<li>在多元时间序列预测任务中进行了实验验证，结果表明该方法取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</li>
-</ol>
-<p>在Related Work部分，本文回顾了现有的时间序列预测方法，包括传统的时间序列预测方法和基于深度学习的方法。传统的时间序列预测方法包括ARIMA、ETS和VAR等，这些方法在处理短时间序列和单变量时间序列时表现良好，但在处理长时间序列和多变量时间序列时存在一些局限性。基于深度学习的方法在处理这些问题时表现更好，包括RNN、LSTM和GRU等，这些方法可以处理长时间序列和多变量时间序列，并且可以自动提取特征。然而，这些方法通常需要大量的计算资源和时间来训练，并且可能会出现过拟合问题。因此，本文提出了一种新的深度学习框架DeepTime，它可以高效地处理长时间序列和多变量时间序列，并在实际数据集上取得了竞争性的结果。</p>
-<p>它是一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段。内部学习过程是标准的监督学习过程，用于拟合最近时间步骤的参数。外部学习过程使深度时间索引模型能够从数据中学习强大的归纳偏差，以便进行外推。DeepTime采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。与传统的时间序列预测方法不同，DeepTime可以处理长时间序列和多变量时间序列，并且可以自动提取特征。本文的实验结果表明，DeepTime在实际数据集上取得了竞争性的结果，并且比现有的基于深度学习的时间序列预测方法更加高效。</p>
-<img src="/2023/07/22/deeptime/v2-67fd0eb883a4312b4cd36b103989248e_720w.webp" class title="这是一张图片">
-
-
-
-
-
-<p>时间序列预测的目标是预测未来时间步骤的值，给定过去时间步骤的值。本文采用的是基于回归的方法，即将时间序列预测问题转化为一个回归问题，通过学习一个函数f来预测未来时间步骤的值。本文的目标是提出一种新的深度学习框架DeepTime，用于时间序列预测，并解决现有方法的一些问题，如过拟合、计算复杂度高等问题。为此，本文提出了一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段，以提高模型的泛化能力和预测性能。同时，本文还提出了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。</p>
-<img src="/2023/07/22/deeptime/v2-ef9069c667992477f3c9b837987d5ebc_720w.webp" class title="这是一张图片">
-
-
-
+<p>UCLA大学在2022年发表在CoRL</p>
+<p>Paper：</p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2207.02202">https://arxiv.org/abs/2207.02202arxiv.org/abs/2207.02202</a></p>
 <ul>
-<li><strong>Fast and Efficient Meta-optimization</strong></li>
-<li>本文提出了一种快速高效的元优化方法，用于训练和测试时间序列预测模型。具体来说，本文采用了一个闭合形式的岭回归器来实现元优化过程，这个方法可以在训练和测试时都非常快速和高效。与传统的基于梯度的元优化方法不同，本文的方法不需要进行内部梯度下降，因此可以避免梯度消失和梯度爆炸等问题。同时，本文的方法还采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。通过这些方法，本文提出的元优化框架可以更好地处理时间序列预测问题，提高模型的泛化能力和预测性能。</li>
+<li>场景：复杂交通场景中</li>
+<li>问题：基于单智能体相机的系统对于复杂交通场景中的遮挡和检测远处的目标性能较差</li>
+<li>动机：使用通用多智能体多相机感知框架（车与车( Vehicle-to-Vehicle，V2V )通信技术可以使无人驾驶车辆能够共享感知信息），提高感知性能和范围</li>
+<li>paper发表于CoRL 2022</li>
+<li>多智体多摄像机感知框架</li>
+<li>轴向注意力（fused axial attention，FAX）模块</li>
+<li>数据集：V2V 感知数据集OPV2V；nuScenes</li>
 </ul>
-<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a><strong>实验</strong></h3><p>该论文在实验部分分别对合成数据和真实世界数据进行了测试，以验证所提出的元学习方法的有效性和性能。在合成数据实验中，作者考虑了三种不同的函数形式，包括线性函数、三次函数和正弦函数的和，并随机生成了不同的函数参数来构建不同的任务。在真实世界数据实验中，作者使用了六个真实世界数据集，包括电力变压器温度、电力消耗负载、交易、交通、天气和类流感疾病等。实验结果表明，所提出的元学习方法在多元时间序列预测任务中取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</p>
-<img src="/2023/07/22/deeptime/v2-71debe61ccd42c50f7c641b7c7d76236_720w.webp" class title="这是一张图片">
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>鸟瞰图( BEV )语义分割在自动驾驶的空间感知中起着至关重要的作用。尽管最近的文献在BEV地图理解方面取得了重大进展，但它们都是基于单智能体相机的系统。这些解决方案有时在处理复杂交通场景中的遮挡或检测远处物体时存在困难。车与车( Vehicle-to-Vehicle，V2V )通信技术使无人驾驶车辆能够共享感知信息，与单智能体系统相比，显著提高了感知性能和范围</p>
+<p>在本文中，我们提出了CoBEVT，这是第一个能够协同生成BEV地图预测的通用多智能体多相机感知框架。为了在Transformer底层架构中高效地融合来自多视图和多智能体数据的相机特征，我们设计了一个融合的轴向注意力模块( FAX )，该模块能够稀疏地捕获视图和智能体之间的局部和全局空间交互。在V2V感知数据集OPV2V上的大量实验表明，CoBEVT在协同BEV语义分割方面取得了最先进的性能。</p>
+<h3 id="CoBEVT"><a href="#CoBEVT" class="headerlink" title="CoBEVT"></a>CoBEVT</h3><p>第一个使用多智能体多相机传感器通过稀疏视觉转换器协作生成BEV分割地图的框架</p>
+<p>每个AV通过SinBEVT Transformer从其相机机架计算出自己的BEV，并在压缩后传输给其他AV。接收端(即其他AV)将接收到的BEV特征变换到其坐标系下，并使用提出的FuseBEVT进行BEV级聚合。这两个transformers的核心部件是一个融合轴向注意力( FAX )模块，它可以通过局部和全局空间稀疏性在整个BEV或相机图像空间中搜索所有代理或相机视图。FAX包含全局注意力以建模长距离依赖关系，局部注意力以聚合区域细节特征，计算复杂度低。</p>
+<img src="/2023/07/22/CoBEVT/v2-f34e07352a28b095403c224b5331a71e_720w.webp" class title="这是一张图片">
 
 
 
-<p>其分别与最近比较火的几种模型，比如N-HITS，FEDformer，Autoformer，Infomer等在多种数据集上进行了表现的比较，可以看到其表现不俗。</p>
+<p>CoBEVT结构图</p>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ul>
+<li>一个V2V通信系统，其中所有AV都可以与其他AV交换感知信息</li>
+<li>所有智能体的pose都是准确的，并且传输的消息是同步的</li>
+</ul>
+<h3 id="FAX-—-Fused-Axial-Attention"><a href="#FAX-—-Fused-Axial-Attention" class="headerlink" title="FAX — Fused Axial Attention"></a>FAX — Fused Axial Attention</h3><p>Sin BEVT和Fuse BEVT的核心组件</p>
+<p>可以在局部和全局上有效地聚合跨代理或相机视图的特征。</p>
+<p>具有很大的通用性，在不同的模态上表现出对多个感知任务的有效性，包括基于多视角相机的协同&#x2F;单智能体BEV分割和协同3D LiDAR目标检测。</p>
+<p>融合来自多智体的BEV特征需要局部和全局交互以及所有智体的空间位置。一方面，相邻AV在同一目标上通常具有不同的遮挡级别，因此更关心细节的局部注意可以帮助在该目标上构建像素到像素的对应关系</p>
+<img src="/2023/07/22/CoBEVT/v2-c450b0e4bbbf9763b37df7f81681c6f3_720w.webp" class title="这是一张图片">
+
+
+
+<h3 id="SinBEVT-for-Single-agent-BEV-Feature-Computation"><a href="#SinBEVT-for-Single-agent-BEV-Feature-Computation" class="headerlink" title="SinBEVT for Single-agent BEV Feature Computation"></a>SinBEVT for Single-agent BEV Feature Computation</h3><p>通过SinBEVT Transformer从其相机机架计算出自己的BEV</p>
+<h3 id="FuseBEVT-for-Multi-agent-BEV-Feature-Fusion"><a href="#FuseBEVT-for-Multi-agent-BEV-Feature-Fusion" class="headerlink" title="FuseBEVT for Multi-agent BEV Feature Fusion"></a>FuseBEVT for Multi-agent BEV Feature Fusion</h3><p>一个简单的1x1卷积自动编码器来压缩和解压BEV特征，以降低传输数据大小</p>
+<p>FuseBEVT是一个3-D视觉transformer，可以专注地融合来自多智体的BEV特征信息</p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>摄影机追踪结果</p>
+<p>LiDAR-track results.</p>
+<p>nuScenes vehicle map-view segmentation</p>
+<p>Effect of compression rate</p>
 
     </div>
 
@@ -276,7 +270,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://tongjiu123.github.io/2023/07/22/deeptime/" title="deeptime">http://tongjiu123.github.io/2023/07/22/deeptime/</a>
+    <a href="http://tongjiu123.github.io/2023/07/22/CoBEVT/" title="CoBEVT">http://tongjiu123.github.io/2023/07/22/CoBEVT/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -286,9 +280,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/LSTF/" rel="tag"># LSTF</a>
-          </div>
 
         
 
@@ -296,13 +287,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/09/13/mininet1/" rel="prev" title="mininet1">
-      <i class="fa fa-chevron-left"></i> mininet1
+    <a href="/2023/07/22/VICOD/" rel="prev" title="VICOD">
+      <i class="fa fa-chevron-left"></i> VICOD
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/07/22/BEVFusion/" rel="next" title="BEVFusion">
-      BEVFusion <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -361,7 +349,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting"><span class="nav-number">1.</span> <span class="nav-text">DeepTime: Learning Deep Time-index Models for Time Series Forecasting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%A1%E7%8C%AE"><span class="nav-number">1.0.1.</span> <span class="nav-text">贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.0.2.</span> <span class="nav-text">实验</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CoBEVT%EF%BC%9A%E7%A8%80%E7%96%8FTransformer%E5%81%9A%E5%8D%8F%E4%BD%9CBEV%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2"><span class="nav-number">1.</span> <span class="nav-text">CoBEVT：稀疏Transformer做协作BEV语义分割</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.0.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CoBEVT"><span class="nav-number">1.0.2.</span> <span class="nav-text">CoBEVT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%8F%90"><span class="nav-number">1.0.3.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FAX-%E2%80%94-Fused-Axial-Attention"><span class="nav-number">1.0.4.</span> <span class="nav-text">FAX — Fused Axial Attention</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SinBEVT-for-Single-agent-BEV-Feature-Computation"><span class="nav-number">1.0.5.</span> <span class="nav-text">SinBEVT for Single-agent BEV Feature Computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FuseBEVT-for-Multi-agent-BEV-Feature-Fusion"><span class="nav-number">1.0.6.</span> <span class="nav-text">FuseBEVT for Multi-agent BEV Feature Fusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.0.7.</span> <span class="nav-text">实验</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
