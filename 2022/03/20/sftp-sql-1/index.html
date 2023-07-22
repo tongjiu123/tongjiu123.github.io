@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongjiu123.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="2022&#x2F;3&#x2F;20 发现sftp连接不上，显示connection closed">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sftp_sql_1">
+<meta property="og:url" content="http://tongjiu123.github.io/2022/03/20/sftp-sql-1/index.html">
+<meta property="og:site_name" content="Blog of Yang">
+<meta property="og:description" content="2022&#x2F;3&#x2F;20 发现sftp连接不上，显示connection closed">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-20T08:58:44.000Z">
+<meta property="article:modified_time" content="2023-07-22T12:37:48.582Z">
+<meta property="article:author" content="Zachary Yang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://tongjiu123.github.io/2022/03/20/sftp-sql-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>sftp_sql_1 | Blog of Yang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog of Yang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about_me">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>about_me</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/tongjiu123" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tongjiu123.github.io/2022/03/20/sftp-sql-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/kejigou.png">
+      <meta itemprop="name" content="Zachary Yang">
+      <meta itemprop="description" content="生生不息">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of Yang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sftp_sql_1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-20 16:58:44" itemprop="dateCreated datePublished" datetime="2022-03-20T16:58:44+08:00">2022-03-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-07-22 20:37:48" itemprop="dateModified" datetime="2023-07-22T20:37:48+08:00">2023-07-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/problem/" itemprop="url" rel="index"><span itemprop="name">problem</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>2022&#x2F;3&#x2F;20 发现sftp连接不上，显示connection closed</p>
+<span id="more"></span>
+
+<h6 id="查看-sshd-config-配置文件，-发现没有-usr-libexec-sftp-server可执行程序"><a href="#查看-sshd-config-配置文件，-发现没有-usr-libexec-sftp-server可执行程序" class="headerlink" title="查看 sshd_config 配置文件， 发现没有&#x2F;usr&#x2F;libexec&#x2F;sftp-server可执行程序"></a>查看 sshd_config 配置文件， 发现没有&#x2F;usr&#x2F;libexec&#x2F;sftp-server可执行程序</h6><p><code>override default of no subsystems</code></p>
+<p><code>Subsystem      sftp    /usr/libexec/opensshj/sftp-server</code><br><code>可以修改如下：</code></p>
+<p><code>override default of no subsystems</code></p>
+<p><code>Subsystem      sftp    internal-sftp</code><br>并且发现里头sftp路径为：usr&#x2F;libexec&#x2F;opensshj&#x2F;sftp-server</p>
+<p>修改j为好，但仍然connection closed</p>
+<h6 id="sftp-server-与-internal-sftp-的区别可看"><a href="#sftp-server-与-internal-sftp-的区别可看" class="headerlink" title="sftp-server 与 internal-sftp 的区别可看"></a>sftp-server 与 internal-sftp 的区别可看</h6><p><a target="_blank" rel="noopener" href="https://serverfault.com/questions/660160/openssh-difference-between-internal-sftp-and-sftp-server">https://serverfault.com/questions/660160/openssh-difference-between-internal-sftp-and-sftp-server</a></p>
+<h6 id="ssh可以使用但sftp不能使用"><a href="#ssh可以使用但sftp不能使用" class="headerlink" title="ssh可以使用但sftp不能使用"></a>ssh可以使用但sftp不能使用</h6><p><a target="_blank" rel="noopener" href="http://bbs.chinaunix.net/thread-4252902-1-1.html">http://bbs.chinaunix.net/thread-4252902-1-1.html</a></p>
+<p>ssh可以使用sftp不可以使用</p>
+<p>Vim &#x2F;etc&#x2F;passwd<br>把 bbscgl:500:500::&#x2F;kssftp:&#x2F;bin&#x2F;false<br>改为 bbscgl:500:500::&#x2F;kssftp:&#x2F;bin&#x2F;bash</p>
+<p>但是Vi &#x2F;etc&#x2F;passwd 失败</p>
+<h6 id="尝试重启服务sshd-service"><a href="#尝试重启服务sshd-service" class="headerlink" title="尝试重启服务sshd.service"></a>尝试重启服务sshd.service</h6><p>systemctl restart sshd.service</p>
+<p>防火墙</p>
+<p>sudo systemctl status wall fired</p>
+<p>查看防火墙状态：<code>sudo systemctl status firewalld</code><br>关闭防火墙:<code>sudo systemctl stop firewalld</code></p>
+<p>sftp -P 5432 <a href="mailto:&#114;&#x6f;&#111;&#116;&#x40;&#x31;&#50;&#55;&#x2e;&#48;&#46;&#x30;&#x2e;&#x31;">&#114;&#x6f;&#111;&#116;&#x40;&#x31;&#50;&#55;&#x2e;&#48;&#46;&#x30;&#x2e;&#x31;</a></p>
+<p>ssh -p 5432 <a href="mailto:&#x72;&#111;&#x6f;&#x74;&#x40;&#x31;&#50;&#x37;&#x2e;&#48;&#x2e;&#48;&#x2e;&#49;">&#x72;&#111;&#x6f;&#x74;&#x40;&#x31;&#50;&#x37;&#x2e;&#48;&#x2e;&#48;&#x2e;&#49;</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chown</span> jay:fefjay a.txt <span class="comment">#修改文件所属用户为jay，所属用户组为fefjay</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>chown gpadmin:gpadmin tel.csv</p>
+<p>使用Fillzilla连接centos7：<br>1.关闭防火墙<br>查看防火墙状态：sudo systemctl status firewalld<br>关闭防火墙:sudo systemctl stop firewalld<br>2.开启网卡<br>centos默认不开启网卡，使用ip addr 命令查看是否含有ens33属性，如果没有ens33属性，说明没有开启网卡，参考centos7如何查看ip信息<br>3.检查ssh是否安装<br>命令：yum list installed | grep openssh-server<br>表示已安装，否则执行命令：yum install openssh-serve<br>进行安装<br>4.更改SSH配置文件（很重要）<br>编辑SSH配置文件：vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config<br>如何编辑：<br>通过vi命令进入编辑模式以后，键盘输入“I”后即可开始插入或者修改内容</p>
+<p>编辑完成以后通过“ESC”键即可退出编辑模式，在所有的操作完成以后，键盘输入“：wq”保存后回车</p>
+<p>关于vi使用可以参考vi编辑与保存</p>
+<p>将监听端口和端口地址打开</p>
+<p>放开root权限：</p>
+<p>开启使用用户名密码来作为连接验证：</p>
+<p>5.配置FillZilla连接（最重要的一步）<br>在第四步我们已经开启了22端口，ip地址一定要用第二步enss33属性里边的ip，不能使用本机的ipconfig命令查看ip地址，否则会报连接拒绝connect refused错误，连接帐号root，密码就是登陆密码。</p>
+<p>正确配置完成以后，即可连接上。撒花！</p>
+<p>wget –header ‘X-GP-PROTO:0’ mdw:8081&#x2F;tel.csv</p>
+<p>%s&#x2F;“&#x2F;&#x2F;g</p>
+<h5 id="导入stif。csvcsv"><a href="#导入stif。csvcsv" class="headerlink" title="导入stif。csvcsv"></a>导入stif。csvcsv</h5><h6 id="显示"><a href="#显示" class="headerlink" title="显示"></a>显示</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">SQL 错误 [22021]: ERROR: invalid byte sequence <span class="keyword">for</span> encoding <span class="string">&quot;UTF8&quot;</span>: 0xb3  (seg1 slice1 127.0.0.1:6001 pid=2640)</span><br><span class="line"></span><br><span class="line">SQL 错误 [22021]: ERROR: invalid byte sequence <span class="keyword">for</span> encoding <span class="string">&quot;UTF8&quot;</span>: 0xb3  (seg0 slice1 127.0.0.1:6000 pid=3852)</span><br><span class="line">  在位置：External table stif, line 1 of file gpfdist://mdw:8081/stif.csv</span><br><span class="line"></span><br><span class="line">org.jkiss.dbeaver.model.sql.DBSQLException: SQL 错误 [22021]: ERROR: invalid byte sequence <span class="keyword">for</span> encoding <span class="string">&quot;UTF8&quot;</span>: 0xb3  (seg0 slice1 127.0.0.1:6000 pid=3852)</span><br><span class="line">  在位置：External table stif, line 1 of file gpfdist://mdw:8081/stif.csv</span><br><span class="line">	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.executeStatement(JDBCStatementImpl.java:133)</span><br><span class="line">	at org.jkiss.dbeaver.model.impl.jdbc.struct.JDBCTable.readData(JDBCTable.java:190)</span><br><span class="line">	at org.jkiss.dbeaver.ui.controls.resultset.ResultSetJobDataRead.lambda<span class="variable">$0</span>(ResultSetJobDataRead.java:118)</span><br><span class="line">	at org.jkiss.dbeaver.model.exec.DBExecUtils.tryExecuteRecover(DBExecUtils.java:171)</span><br><span class="line">	at org.jkiss.dbeaver.ui.controls.resultset.ResultSetJobDataRead.run(ResultSetJobDataRead.java:116)</span><br><span class="line">	at org.jkiss.dbeaver.ui.controls.resultset.ResultSetViewer<span class="variable">$ResultSetDataPumpJob</span>.run(ResultSetViewer.java:4821)</span><br><span class="line">	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)</span><br><span class="line">	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)</span><br><span class="line">Caused by: org.postgresql.util.PSQLException: ERROR: invalid byte sequence <span class="keyword">for</span> encoding <span class="string">&quot;UTF8&quot;</span>: 0xb3  (seg0 slice1 127.0.0.1:6000 pid=3852)</span><br><span class="line">  在位置：External table stif, line 1 of file gpfdist://mdw:8081/stif.csv</span><br><span class="line">	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2553)</span><br><span class="line">	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2285)</span><br><span class="line">	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:323)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:322)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:308)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:284)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:279)</span><br><span class="line">	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.execute(JDBCStatementImpl.java:330)</span><br><span class="line">	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.executeStatement(JDBCStatementImpl.java:130)</span><br><span class="line">	... 7 more</span><br></pre></td></tr></table></figure>
+
+<p>SQL 错误 [22021]: ERROR: invalid byte sequence for encoding “UTF8”: 0xb3  (seg1 slice1 127.0.0.1:6001 pid&#x3D;4145)<br>  在位置：External table stif, line 1 of file gpfdist:&#x2F;&#x2F;mdw:8081&#x2F;stif.csv</p>
+<h6 id="解决办法1-转换成txt再导入"><a href="#解决办法1-转换成txt再导入" class="headerlink" title="解决办法1:转换成txt再导入"></a>解决办法1:转换成txt再导入</h6><p>无法转换成txt，python显示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;/Users/roy/PycharmProjects/data_transfer/main.py&quot;</span>, line <span class="number">11</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    [</span><br><span class="line">  File <span class="string">&quot;/Users/roy/PycharmProjects/data_transfer/main.py&quot;</span>, line <span class="number">11</span>, <span class="keyword">in</span> &lt;listcomp&gt;</span><br><span class="line">    [</span><br><span class="line">  File <span class="string">&quot;/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/codecs.py&quot;</span>, line <span class="number">322</span>, <span class="keyword">in</span> decode</span><br><span class="line">    (result, consumed) = self._buffer_decode(data, self.errors, final)</span><br><span class="line">UnicodeDecodeError: <span class="string">&#x27;utf-8&#x27;</span> codec can<span class="string">&#x27;t decode byte 0xb3 in position 20: invalid start byte</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="解决办法2-切换encoding"><a href="#解决办法2-切换encoding" class="headerlink" title="解决办法2:切换encoding"></a>解决办法2:切换encoding</h6><p>format ‘csv’, delimiter ‘, encoding ‘ISO-8859-1’)” $dbname</p>
+<p>psql -c “copy $schemaname.$tbname from ‘$dirname&#x2F;$filename’ with(format ‘csv’, delimiter ‘, encoding ‘ISO-8859-1’)” $dbname</p>
+<p>可以导入，但是导入了以后还是乱码</p>
+<h6 id="解决办法3-使用工具切换成txt"><a href="#解决办法3-使用工具切换成txt" class="headerlink" title="解决办法3:使用工具切换成txt"></a>解决办法3:使用工具切换成txt</h6><p>使用wps另存为txt并，解决了大数据量的</p>
+<h5 id="导入relation。csv"><a href="#导入relation。csv" class="headerlink" title="导入relation。csv"></a>导入relation。csv</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">SQL 错误 [22021]: ERROR: invalid byte sequence <span class="keyword">for</span> encoding <span class="string">&quot;UTF8&quot;</span>: 0xc8 0xfd  (seg1 slice1 127.0.0.1:6001 pid=5441)</span><br><span class="line">  在位置：External table relation, line 1 of file gpfdist://mdw:8081/relation.csv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">org.jkiss.dbeaver.model.sql.DBSQLException: SQL 错误 [22021]: ERROR: invalid byte sequence <span class="keyword">for</span> encoding <span class="string">&quot;UTF8&quot;</span>: 0xc8 0xfd  (seg1 slice1 127.0.0.1:6001 pid=5441)</span><br><span class="line">  在位置：External table relation, line 1 of file gpfdist://mdw:8081/relation.csv</span><br><span class="line">	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.executeStatement(JDBCStatementImpl.java:133)</span><br><span class="line">	at org.jkiss.dbeaver.model.impl.jdbc.struct.JDBCTable.readData(JDBCTable.java:190)</span><br><span class="line">	at org.jkiss.dbeaver.ui.controls.resultset.ResultSetJobDataRead.lambda<span class="variable">$0</span>(ResultSetJobDataRead.java:118)</span><br><span class="line">	at org.jkiss.dbeaver.model.exec.DBExecUtils.tryExecuteRecover(DBExecUtils.java:171)</span><br><span class="line">	at org.jkiss.dbeaver.ui.controls.resultset.ResultSetJobDataRead.run(ResultSetJobDataRead.java:116)</span><br><span class="line">	at org.jkiss.dbeaver.ui.controls.resultset.ResultSetViewer<span class="variable">$ResultSetDataPumpJob</span>.run(ResultSetViewer.java:4821)</span><br><span class="line">	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)</span><br><span class="line">	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)</span><br><span class="line">Caused by: org.postgresql.util.PSQLException: ERROR: invalid byte sequence <span class="keyword">for</span> encoding <span class="string">&quot;UTF8&quot;</span>: 0xc8 0xfd  (seg1 slice1 127.0.0.1:6001 pid=5441)</span><br><span class="line">  在位置：External table relation, line 1 of file gpfdist://mdw:8081/relation.csv</span><br><span class="line">	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2553)</span><br><span class="line">	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2285)</span><br><span class="line">	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:323)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:322)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:308)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:284)</span><br><span class="line">	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:279)</span><br><span class="line">	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.execute(JDBCStatementImpl.java:330)</span><br><span class="line">	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.executeStatement(JDBCStatementImpl.java:130)</span><br><span class="line">	... 7 more</span><br></pre></td></tr></table></figure>
+
+<p>centos更改文件所有者</p>
+<p>su - root</p>
+<p>cd &#x2F;home&#x2F;gpadmin&#x2F;gpfdist&#x2F;</p>
+<p>chown zzx:zzxGroup a.txt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 50009 admin@agilec.gicp.net</span><br><span class="line"></span><br><span class="line">密码：adminADMIN</span><br><span class="line"></span><br><span class="line">ssh -p 22 admin@192.168.0.253</span><br><span class="line"></span><br><span class="line">密码：admin </span><br><span class="line"></span><br><span class="line">sftp -P 22 hcc@192.168.0.9  </span><br><span class="line"></span><br><span class="line">密码：ccfCCF@2022</span><br><span class="line"></span><br><span class="line">roy@yangzonyoudeMBP ~ % ssh -p 50009 admin@agilec.gicp.net</span><br><span class="line"></span><br><span class="line">The authenticity of host <span class="string">&#x27;[agilec.gicp.net]:50009 ([222.128.178.75]:50009)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:xOPh2JzO597wKLvgc7q73C4AYjzCeYBZR7hTuNk+uT4.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[agilec.gicp.net]:50009,[222.128.178.75]:50009<span class="string">&#x27; (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">admin@agilec.gicp.net&#x27;</span>s password: </span><br><span class="line"></span><br><span class="line">Last login: Tue May 17 00:31:42 2022 from 119.166.234.126</span><br><span class="line"></span><br><span class="line">[admin@cdh01 /home/admin]$ ssh -p 22 admin@192.168.0.253</span><br><span class="line"></span><br><span class="line">admin@192.168.0.253<span class="string">&#x27;s password: </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Permission denied, please try again.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">admin@192.168.0.253&#x27;</span>s password: </span><br><span class="line"></span><br><span class="line">Last failed login: Tue May 17 01:22:15 CST 2022 from 192.168.0.21 on ssh:notty</span><br><span class="line"></span><br><span class="line">There was 1 failed login attempt since the last successful login.</span><br><span class="line"></span><br><span class="line">Last login: Tue May 17 00:35:48 2022 from 192.168.0.21</span><br><span class="line"></span><br><span class="line">[admin@master /home/admin]$ </span><br></pre></td></tr></table></figure>
+
+<p>在外先登录跳板机，ssh  <a href="mailto:&#97;&#100;&#109;&#105;&#x6e;&#64;&#x61;&#103;&#x69;&#108;&#x65;&#99;&#x2e;&#x67;&#x69;&#x63;&#112;&#46;&#110;&#101;&#x74;">&#97;&#100;&#109;&#105;&#x6e;&#64;&#x61;&#103;&#x69;&#108;&#x65;&#99;&#x2e;&#x67;&#x69;&#x63;&#112;&#46;&#110;&#101;&#x74;</a>   密码：adminADMIN<br>然后通过内网ssh登录    ssh  <a href="mailto:&#97;&#x64;&#109;&#x69;&#110;&#x40;&#49;&#57;&#x32;&#46;&#x31;&#54;&#56;&#46;&#x30;&#46;&#x32;&#x35;&#x33;">&#97;&#x64;&#109;&#x69;&#110;&#x40;&#49;&#57;&#x32;&#46;&#x31;&#54;&#56;&#46;&#x30;&#46;&#x32;&#x35;&#x33;</a>   密码：admin    部署程序的用户，你们自己定义就行，做好软件安装记录文档。<br>如果需要使用root用户，则sudo  su  -  root    输入admin的密码，就可以切换了。</p>
+<p>跳板机ssh端口号50009</p>
+<p>5台虚拟机，8核32GB500GB磁盘   都可以通过admin &#x2F; admin登录，可疑通过admin切换到root账户。<br>192.168.0.170<br>192.168.0.171<br>192.168.0.172<br>192.168.0.173<br>192.168.0.174</p>
+<p>一共六台服务器，192.168.0.253是主节点</p>
+<p>SFTP<br>外网：agilec.gicp.net   端口：20210<br>内网：192.168.0.9   端口：22<br>用户：hcc   密码：ccfCCF@2022<br>路径：&#x2F;CCF</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 50009 admin@agilec.gicp.net</span><br><span class="line"></span><br><span class="line">密码：adminADMIN</span><br><span class="line"></span><br><span class="line">ssh -p 22 admin@192.168.0.253</span><br><span class="line"></span><br><span class="line">密码：admin </span><br><span class="line"></span><br><span class="line">sftp -P 22 hcc@192.168.0.9  </span><br><span class="line"></span><br><span class="line">密码：ccfCCF@2022</span><br><span class="line"></span><br><span class="line">sftp -P 20210 admin@agilec.gicp.net</span><br><span class="line">sftp -P 20210 hcc@agilec.gicp.net</span><br><span class="line">sftp -P 22 hcc@192.168.0.9  </span><br><span class="line"></span><br><span class="line">密码：ccfCCF@2022</span><br></pre></td></tr></table></figure>
+
+<p>linux解压zip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> zip</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">unzip abc.zip</span><br><span class="line"><span class="comment">#出现inflating即为成功</span></span><br><span class="line">unzip 2022-03-12_1.zip</span><br><span class="line">unzip 2022-03-13_1.zip</span><br><span class="line">unzip 2022-03-14_1.zip</span><br><span class="line">unzip 2022-03-15_1.zip</span><br><span class="line">unzip 2022-03-16_1.zip</span><br><span class="line">unzip 2022-03-17_1.zip</span><br><span class="line">unzip 2022-03-18_1.zip</span><br><span class="line">unzip 2022-03-19_1.zip</span><br><span class="line">unzip 2022-03-20_1.zip</span><br><span class="line">unzip 2022-03-21_1.zip</span><br></pre></td></tr></table></figure>
+
+<p>vi正则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/“//g</span><br></pre></td></tr></table></figure>
+
+<p>vim正则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep vim</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">:%s/foo/bar/g    会在全局范围(%)查找foo并替换为bar，所有出现都会被替换（g）</span><br><span class="line">:%s/&amp;#@/,/g  会在全局范围(%)查找&amp;#@并替换为<span class="string">&quot;,&quot;</span>，所有出现都会被替换（g）</span><br><span class="line"></span><br><span class="line">:<span class="keyword">w</span> 保存不退出</span><br><span class="line">:<span class="keyword">w</span> 新文件名 把文件另存为新文件</span><br><span class="line">:q 不保存退出</span><br><span class="line">:<span class="keyword">wq</span> 保存退出</span><br><span class="line">:! 强制</span><br><span class="line">:q! 强制不保存退出，用于修改文件之后，不保存数据退出</span><br><span class="line">:wq! 强制保存退出，当文件的所有者或 root 用户，对文件没有写权限的时候，强制写入数据使用</span><br><span class="line">ctrl+<span class="keyword">c</span>强制中断</span><br></pre></td></tr></table></figure>
+
+<p>sed</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; stif_2022-03-12.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; address_2022-03-12.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; bact_2022-03-12.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; cert_2022-03-12.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; org_2022-03-12.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; pact_2022-03-12.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; person_2022-03-12.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; relation_2022-03-12.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; stif_2022-03-19.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; stif_2022-03-20.csv</span><br><span class="line">sed -i &quot;s/&amp;#@/,/g&quot; stif_2022-03-21.csv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>gpfdist导入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep gpfdist</span><br><span class="line">gpfdist -d /home/admin/data/ -p 8081 -l /home/admin/data.log &amp;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>time导入</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#插入</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> stif (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_stif);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> address (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_address);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> bact (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_bact);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> cert (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_cert);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> org (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_org);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> pact (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_pact);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> person (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_address);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> relation (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_relation);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tel (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ext_tel);</span><br><span class="line"></span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO stif (select * from ext_stif)&quot;;</span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO address (select * from ext_address)&quot;;</span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO bact (select * from ext_bact)&quot;;</span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO cert (select * from ext_cert)&quot;;</span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO org (select * from ext_org)&quot;;</span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO pact (select * from ext_pact)&quot;;</span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO person (select * from ext_person)&quot;;</span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO relation (select * from ext_relation)&quot;;</span><br><span class="line"><span class="type">time</span> psql gpdb <span class="operator">-</span>c &quot;INSERT INTO tel (select * from ext_tel)&quot;;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>linux给文件改名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mv</span> test.txt new.txt</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-13.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-13.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-13.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-13.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-13.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-13.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-13.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-13.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-13.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-14.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-14.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-14.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-14.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-14.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-14.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-14.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-14.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-14.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-15.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-15.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-15.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-15.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-15.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-15.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-15.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-15.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-15.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-16.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-16.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-16.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-16.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-16.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-16.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-16.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-16.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-16.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-17.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-17.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-17.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-17.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-17.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-17.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-17.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-17.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-17.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-18.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-18.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-18.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-18.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-18.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-18.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-18.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-18.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-18.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-19.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-19.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-19.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-19.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-19.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-19.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-19.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-19.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-19.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-20.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-20.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-20.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-20.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-20.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-20.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-20.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-20.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-20.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> address_2022-03-21.csv address_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> bact_2022-03-21.csv bact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> cert_2022-03-21.csv cert_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> org_2022-03-21.csv org_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> pact_2022-03-21.csv pact_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> person_2022-03-21.csv person_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> relation_2022-03-21.csv relation_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> stif_2022-03-21.csv stif_2022-03-12.csv</span><br><span class="line">sudo <span class="built_in">mv</span> tel_2022-03-21.csv tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> -f + 文件名</span><br><span class="line">eg：<span class="built_in">rm</span> -f  2018_12_26.stderrout.log.060121612 --执行完成即将这个文件删除</span><br><span class="line"><span class="built_in">rm</span> -f address_2022-03-12.csv</span><br><span class="line"><span class="built_in">rm</span> -f bact_2022-03-12.csv</span><br><span class="line"><span class="built_in">rm</span> -f cert_2022-03-12.csv</span><br><span class="line"><span class="built_in">rm</span> -f org_2022-03-12.csv</span><br><span class="line"><span class="built_in">rm</span> -f pact_2022-03-12.csv</span><br><span class="line"><span class="built_in">rm</span> -f person_2022-03-12.csv</span><br><span class="line"><span class="built_in">rm</span> -f relation_2022-03-12.csv</span><br><span class="line"><span class="built_in">rm</span> -f stif_2022-03-12.csv</span><br><span class="line"><span class="built_in">rm</span> -f tel_2022-03-12.csv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> -f address_2022-03-13.csv</span><br><span class="line"><span class="built_in">rm</span> -f bact_2022-03-13.csv</span><br><span class="line"><span class="built_in">rm</span> -f cert_2022-03-13.csv</span><br><span class="line"><span class="built_in">rm</span> -f org_2022-03-13.csv</span><br><span class="line"><span class="built_in">rm</span> -f pact_2022-03-13.csv</span><br><span class="line"><span class="built_in">rm</span> -f person_2022-03-13.csv</span><br><span class="line"><span class="built_in">rm</span> -f relation_2022-03-13.csv</span><br><span class="line"><span class="built_in">rm</span> -f stif_2022-03-13.csv</span><br><span class="line"><span class="built_in">rm</span> -f tel_2022-03-13.csv</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Zachary Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://tongjiu123.github.io/2022/03/20/sftp-sql-1/" title="sftp_sql_1">http://tongjiu123.github.io/2022/03/20/sftp-sql-1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/13/mininet1/" rel="next" title="mininet1">
+      mininet1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-sshd-config-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%8C-%E5%8F%91%E7%8E%B0%E6%B2%A1%E6%9C%89-usr-libexec-sftp-server%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">查看 sshd_config 配置文件， 发现没有&#x2F;usr&#x2F;libexec&#x2F;sftp-server可执行程序</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sftp-server-%E4%B8%8E-internal-sftp-%E7%9A%84%E5%8C%BA%E5%88%AB%E5%8F%AF%E7%9C%8B"><span class="nav-number">2.</span> <span class="nav-text">sftp-server 与 internal-sftp 的区别可看</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ssh%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BD%86sftp%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">ssh可以使用但sftp不能使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B0%9D%E8%AF%95%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1sshd-service"><span class="nav-number">4.</span> <span class="nav-text">尝试重启服务sshd.service</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5stif%E3%80%82csvcsv"><span class="nav-number"></span> <span class="nav-text">导入stif。csvcsv</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA"><span class="nav-number">1.</span> <span class="nav-text">显示</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%951-%E8%BD%AC%E6%8D%A2%E6%88%90txt%E5%86%8D%E5%AF%BC%E5%85%A5"><span class="nav-number">2.</span> <span class="nav-text">解决办法1:转换成txt再导入</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%952-%E5%88%87%E6%8D%A2encoding"><span class="nav-number">3.</span> <span class="nav-text">解决办法2:切换encoding</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%953-%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E5%88%87%E6%8D%A2%E6%88%90txt"><span class="nav-number">4.</span> <span class="nav-text">解决办法3:使用工具切换成txt</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5relation%E3%80%82csv"><span class="nav-number"></span> <span class="nav-text">导入relation。csv</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zachary Yang"
+      src="/images/kejigou.png">
+  <p class="site-author-name" itemprop="name">Zachary Yang</p>
+  <div class="site-description" itemprop="description">生生不息</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongjiu123" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongjiu123" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dryang0624@163.com" title="E-Mail → mailto:dryang0624@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
