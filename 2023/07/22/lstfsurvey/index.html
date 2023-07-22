@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongjiu.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Time Series Forecasting blend in Online Interval Join">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lstfsurvey">
+<meta property="og:url" content="https://tongjiu.top/2023/07/22/lstfsurvey/index.html">
+<meta property="og:site_name" content="Blog of Yang">
+<meta property="og:description" content="Time Series Forecasting blend in Online Interval Join">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tongjiu.top/2023/07/22/lstfsurvey/4a86682f91355cefbb7d3631a0a45a7.png">
+<meta property="og:image" content="https://tongjiu.top/2023/07/22/lstfsurvey/v2-082a1616973b0539cda4e63e08893840_b.jpg">
+<meta property="og:image" content="https://tongjiu.top/2023/07/22/lstfsurvey/v2-56dd4ca871cb71611561c2bf2bd1ab24_b.jpg">
+<meta property="og:image" content="https://tongjiu.top/2023/07/22/lstfsurvey/v2-03ba0f2b93e5756396cb38ac474883b0_b.jpg">
+<meta property="article:published_time" content="2023-07-22T15:15:56.000Z">
+<meta property="article:modified_time" content="2023-07-22T15:31:09.310Z">
+<meta property="article:author" content="Zachary Yang">
+<meta property="article:tag" content="LSTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongjiu.top/2023/07/22/lstfsurvey/4a86682f91355cefbb7d3631a0a45a7.png">
+
+<link rel="canonical" href="https://tongjiu.top/2023/07/22/lstfsurvey/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>lstfsurvey | Blog of Yang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog of Yang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about_me">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>about_me</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/tongjiu123" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://tongjiu.top/2023/07/22/lstfsurvey/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/kejigou.png">
+      <meta itemprop="name" content="Zachary Yang">
+      <meta itemprop="description" content="生生不息">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of Yang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          lstfsurvey
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-07-22 23:15:56 / Modified: 23:31:09" itemprop="dateCreated datePublished" datetime="2023-07-22T23:15:56+08:00">2023-07-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Time Series Forecasting blend in Online Interval Join</p>
+<span id="more"></span>
+
+<h2 id="背景Background"><a href="#背景Background" class="headerlink" title="背景Background"></a>背景Background</h2><p>流式处理系统中，一般使用key-partitioned based join 算法（key-OIJ）所处理的信息主要为：金融、风控、推荐等领域的毫秒级实时流式特征计算</p>
+<p>Scalable Online Interval Join on Modern Multicore Processors in OpenMLDB中提出的scale-OIJ解决了1.work load不平衡数据倾斜； 2.重叠窗口带来的重复计算； 3.数据无序带来的数据扫描</p>
+<h2 id="动机Motivation"><a href="#动机Motivation" class="headerlink" title="动机Motivation"></a>动机Motivation</h2><p>通过时序预测的方法</p>
+<p>这个RP的主要目标是通过引入时序预测技术来降低OIJ的delay。我们的研究关注于使用时序预测方法来预测时间间隔数据的发展趋势，并利用这些预测结果来提前进行连接操作，从而减少实际数据到达所需的等待时间。我们的研究问题包括如何选择适当的时序预测模型，如何集成时序预测和scale-OIJ，以及如何评估和优化预测准确性与延迟降低之间的权衡。</p>
+<p>openMLDB需要较低的时延以满足需求</p>
+<p>scale-OIJ是将两个数据流进行聚合操作。因此我们可以对数据流可以使用time series forecasting进行提前预测，提前进行连接操作来降低时延</p>
+<h2 id="先前的研究Related-work"><a href="#先前的研究Related-work" class="headerlink" title="先前的研究Related work"></a>先前的研究Related work</h2><p>在时序预测方面，基于统计模型的方法被广泛应用于预测时间序列数据。例如，ARIMA模型结合自回归、差分和移动平均等技术来建模时间序列的趋势和季节性。指数平滑法（ETS）则利用加权平均和趋势调整来对时间序列数据进行预测。</p>
+<p>基于深度学习的时序预测方法在近年来得到了广泛关注。深度学习模型如循环神经网络（RNN）、长短期记忆网络（LSTM）和Transformer等，具有捕捉时间序列复杂模式和长期依赖关系的能力。这些方法通过多层次的神经网络结构，自适应地学习时间序列的特征并进行预测。</p>
+<p>近三年，使用MLP模型来进行时序预测的文章层出不穷，但是其是否绝对比传统方法效果好仍存在质疑。</p>
+<h2 id="模型选择-Model"><a href="#模型选择-Model" class="headerlink" title="模型选择 Model"></a>模型选择 Model</h2><p>在本研究中，我们将选择适合于时间序列数据预测的模型，并对其进行详细描述。我们将考虑传统的统计模型如ARIMA、指数平滑法（ETS）以及基于深度学习的模型如循环神经网络（RNN）、长短期记忆网络（LSTM）和变压器（Transformer）等。</p>
+<p>分别选出传统统计模型中的“轻”方案和使用机器学习的”重“方案。</p>
+<h3 id="传统·统计方法"><a href="#传统·统计方法" class="headerlink" title="传统·统计方法"></a>传统·统计方法</h3><h4 id="1-ARIMA-差分自回归移动平均模型"><a href="#1-ARIMA-差分自回归移动平均模型" class="headerlink" title="1.ARIMA 差分自回归移动平均模型"></a>1.ARIMA 差分自回归移动平均模型</h4><p>ARIMA 是用于单变量时间序列数据预测的最广泛使用方法之一</p>
+<p>优点：模型十分简单，只需要<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%86%85%E7%94%9F%E5%8F%98%E9%87%8F&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:%22112640453%22%7D">内生变量</a>而不需要借助其他外生变量</p>
+<p>缺点：要求时序数据是稳定的；本质上只能捕捉线性关系，不能捕捉非线性关系</p>
+<h4 id="2-ETS指数平滑法"><a href="#2-ETS指数平滑法" class="headerlink" title="2.ETS指数平滑法"></a>2.ETS指数平滑法</h4><p> 基本原理：指数平滑法是移动平均法中的一种，其特点在于给过去的观测值不一样的权重，即较近期观测值的权数比较远期观测值的权数要大。根据平滑次数不同，指数平滑法分为一次指数平滑法、二次指数平滑法和三次指数平滑法等。但它们的基本思想都是：预测值是以前观测值的加权和，且对不同的数据给予不同的权数，新数据给予较大的权数，旧数据给予较小的权数。</p>
+<p>  方法应用：指数平滑法是生产预测中常用的一种方法。也用于中短期经济发展趋势预测，所有预测方法中，指数平滑是用得最多的一种。</p>
+<p>指数平滑法的基本公式：St&#x3D;a*yt+(1-a)*St-1 式中，</p>
+<p>　　St–时间t的平滑值；</p>
+<p>　　yt–时间t的实际值；</p>
+<p>　　St-1–时间t-1的平滑值；</p>
+<p>　　a–平滑常数，其取值范围为[0,1]</p>
+<p>据平滑次数不同，指数平滑法分为：一次指数平滑法、二次指数平滑和三次指数平滑法等。</p>
+<h3 id="深度学习方法"><a href="#深度学习方法" class="headerlink" title="深度学习方法"></a>深度学习方法</h3><h4 id="FEDformer"><a href="#FEDformer" class="headerlink" title="FEDformer"></a>FEDformer</h4><ul>
+<li><p><strong>paper</strong>：Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting</p>
+</li>
+<li><p><strong>作者</strong>: [阿里巴巴达摩院]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: [ICML]</p>
+</li>
+<li><p><strong>年份</strong>: [2022]</p>
+</li>
+<li><p><strong>code</strong>：<a target="_blank" rel="noopener" href="https://github.com/MAZiqing/FEDformer">https://github.com/MAZiqing/FEDformer</a></p>
+</li>
+<li><p><strong>摘要</strong>: FEDformer模型在多个真实世界数据集上都表现出了很好的性能，具有较低的计算复杂度和内存复杂度，适用于大规模时间序列预测任务。</p>
+</li>
+<li><p><strong>贡献</strong>：1.提出了一种基于频域增强的分解Transformer架构，采用专家混合技术进行季节性趋势分解，以更好地捕捉时间序列的全局特性。 </p>
+<ol start="2">
+<li>提出了傅里叶增强块和小波增强块，用于在Transformer结构中通过频域映射捕捉时间序列中的重要结构。它们可以替代自注意力和交叉注意力块。 </li>
+<li>通过随机选择一定数量的傅里叶分量，该模型实现了线性计算复杂度和内存成本。这种选择方法的有效性在理论和实证方面得到了验证。 </li>
+<li>在6个基准数据集上进行了广泛的实验，跨多个领域（能源、交通、经济、天气和疾病）(energy, traffic, economic, weather, disease)，实验结果表明，该模型在多变量和单变量预测方面的性能均优于现有的四种最先进的算法，分别提高了14.8%和22.6%。</li>
+</ol>
+</li>
+<li><p><strong>comment</strong>：   FEDformer模型具有较低的计算复杂度和内存复杂度，适用于大规模时间序列预测任务。<br>并且其频域上随机采样的好处：极大降低输入向量的长度，进而降低了计算复杂度。实验证明采样带来的损失对最终的精读影响不大，因为信号在频域上相对时域更加稀疏。</p>
+</li>
+</ul>
+<p>FEDformer( Frequency Enhanced Decomposed Transformer)是一种针对长期序列预测的新型Transformer模型。融合transformer和经典信号处理方法。比如，利用傅立叶&#x2F;小波变换将时域信息拆解为频域信息，让transformer更好地学习长时序中的依赖关系。拥有线性复杂度，线性于序列长度。FEDformer也能排除干扰，具有更好的鲁棒性。其中专门设计了周期趋势项分解模块，通过多次分解以降低输入输出的波动，进一步提升预测精度。</p>
+<h6 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h6><img src="/2023/07/22/lstfsurvey/4a86682f91355cefbb7d3631a0a45a7.png" class title="这是一张图片">
+
+
+
+
+
+<p>Encoder部分：输入经过两个MOE Decomp层，每层将信号分解为S和T，S被传递给接下来的层学习，并最终传给解码器。T被舍弃</p>
+<p>Decoder部分：Encoder的输入经过三个MOE Decomp层分解为S和T，S传递给接下来的层进行学习，通过频域Attention层对编码器和解码器的S项进行频域关联性学习，T分量则进行累加最终加回给S项以还原原始序列</p>
+<p>Figure 2展示了FEDformer的整体结构，包括编码器和解码器。编码器由多个Frequency Enhanced Block（FEB）组成，每个FEB包含一个傅里叶增强块和一个混合专家机制MOEDecomp。解码器由多个Frequency Enhanced Attention Block（FEAB）组成，每个FEAB包含一个傅里叶增强块和一个交叉注意力机制。在FEDformer中，傅里叶增强块和小波增强块被用来替代Transformer中的自注意力和交叉注意力块，以便更好地捕捉时间序列中的重要结构。混合专家机制用于季节性-趋势分解，以更好地捕捉时间序列的全局特性。</p>
+<h6 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h6><p>频域学习模块 FEB：采用一个<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:%22597778829%22%7D">全连接层</a>R作为可学习的参数。</p>
+<p>频域注意力模块 FEA：将来自<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%BC%96%E7%A0%81%E5%99%A8&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:%22597778829%22%7D">编码器</a>和<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%A7%A3%E7%A0%81%E5%99%A8&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:%22597778829%22%7D">解码器</a>的信号进行cross attention操作。</p>
+<p>周期-趋势分解模块 MOE Decomp：将序列分解为S和T，并且分解不止一次，反复分解。</p>
+<p>前向传播模块 Feed Forward。</p>
+<p>Mixture of Experts for Seasonal-Trend Decomposition是FEDformer模型中用于进行季节趋势分解的一种方法。由于真实世界中的时间序列通常具有复杂的周期性模式和趋势分量，使用固定窗口平均池化来提取趋势可能会很困难。为了克服这个问题，FEDformer模型中设计了一个Mixture Of Experts Decomposition block（MOEDecomp）。该块包含一组具有不同大小的平均池化滤波器，用于从输入信号中提取多个趋势分量，以及一组数据相关的权重，用于将它们组合成最终的趋势。具体地，MOEDecomp的计算公式为X_trend &#x3D; Softmax(L(x)) * (F(x))，其中F(·)是一组平均池化滤波器，Softmax(L(x))是用于混合这些提取的趋势的权重。通过使用Mixture of Experts for Seasonal-Trend Decomposition，FEDformer模型可以更好地分解时间序列中的季节和趋势分量，从而提高预测的准确性。</p>
+<h4 id="TIDE"><a href="#TIDE" class="headerlink" title="TIDE"></a>TIDE</h4><ul>
+<li><p>Long-term Forecasting with TiDE: Time-series Dense Encoder</p>
+</li>
+<li><p><strong>作者</strong>: [GOOGLE]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: []</p>
+</li>
+<li><p><strong>年份</strong>: [2023]</p>
+</li>
+<li><p><strong>摘要</strong>: 提出TiDE模型（新型多层感知器（MLP）编码器-解码器模型），整个模型没有任何注意力机制、RNN或CNN，完全由全连接组成。TiDE模型可以处理协变量和非线性依赖关系同时像线性模型一样简单快速。TiDE在线性动态系统（LDS）中实现了接近最优的误差率，并在流行的长期时间序列预测基准测试中优于先前的方法。该论文还对TiDE的性能进行了详细分析，并将其与其他最先进的模型进行了比较。</p>
+</li>
+<li><p><strong>code</strong>：<a target="_blank" rel="noopener" href="https://github.com/frinkleko/TiDE-Applications">https://github.com/frinkleko/TiDE-Applications</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/google-research/google-research/tree/master/tide">https://github.com/google-research/google-research/tree/master/tide</a></p>
+</li>
+<li><p><strong>comment</strong>：TIDE相对于其他模型，其没有使用自注意力机制，而且准确率很高，且速度快</p>
+</li>
+</ul>
+<img src="/2023/07/22/lstfsurvey/v2-082a1616973b0539cda4e63e08893840_b.jpg" class title="这是一张图片">
+
+
+
+<h6 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h6><p>文中模型重点解决多元长周期时间序列预测任务。TiDE整个模型结构全部由MLP组成，重点解决之前线性模型无法建模预测窗口与历史窗口非线性关系、无法有效建模外部变量等问题。</p>
+<p>模型的核心基础组件是Residual Block，由一个Dense+RLU层、一个Dense线性层、一个Add&amp;Layernorm组成。TiDE其他组件都基于这个基础bloc搭建。模型整体可以分为<strong>Feature Projection、Dense Encoder、Dense Decoder、Temporal Decoder</strong>四个部分。</p>
+<p><strong>Feature Projection</strong>将外部变量映射到一个低维向量，使用Residual Block实现，主要目的是对外部变量进行降维。</p>
+<p>Dense Encoder部分将历史序列、属性信息、外部变量映射的低维向量拼接到一起，使用多层Residual Block对其进行映射，最终得到一个编码结果e。</p>
+<p>Dense Decoder部分将e使用同样的多层Residual Block映射成g，并将g进行reshape成一个[p, H]的矩阵。其中H对应的是预测窗口的长度，p是Decoder输出维度，相当于预测窗口每个时刻都得到一个向量。</p>
+<p>Temporal Decoder将上一步的g和外部变量x按照时间维度拼接到一起，使用一个Residual Block进行每个时刻的输出结果映射，后续会加入历史序列的直接映射结果做一个残差连接，得到最终的预测结果。</p>
+<p>文中采用的是每个序列单独预测的方式进行的，并且各个序列预测的模型参数是共享的。</p>
+<p>其实相当于用全连接将历史序列、属性特征、外部变量等信息，直接映射到未来窗口的预测结果。但是，文中在后续用理论证明了这种方式的线性模型，对于预测Linear Dynamical System（未来序列是历史序列的线性映射）的数据是最合适的。</p>
+<h6 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h6><p>这篇论文的实验评估了一种新的基于多层感知器（MLP）的编码器-解码器模型TiDE在合成和真实世界数据集上的性能。该论文将TiDE的性能与其他最先进的模型进行了比较，包括线性模型、LSTM和Transformer，并在流行的长期时间序列预测基准测试中进行了评估。该论文还进行了消融研究，以展示TiDE中时间解码器的有用性。结果表明，TiDE在线性动态系统中实现了接近最优的误差率，并在真实世界数据集上优于先前的方法，同时像线性模型一样简单快速。</p>
+<h4 id="FiLM"><a href="#FiLM" class="headerlink" title="FiLM:"></a>FiLM:</h4><ul>
+<li><p>Frequency improved Legendre Memory Model for Long-term Time Series Forecasting</p>
+</li>
+<li><p><strong>作者</strong>: [Yifan Guo, Zhiwen Yu, Jianxin Li, Shenghua Liu]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: [NeurIPS]</p>
+</li>
+<li><p><strong>年份</strong>: [2022]</p>
+</li>
+<li><p><strong>摘要</strong>: 现有的序列预测算法中，在预测长时间序列的时候，采用Transformer&#x2F;LSTM等方法容易受噪声影响（因为它们倾向于过度拟合过去的所有峰值，从而导致有限的长期预测性能），LMU模型为长时间序列提供了良好的表示，同时为了减少噪声信号对勒让德投影的影响，通过结合傅立叶分析和低秩矩阵近似引入了一个降维层。更具体地说，其保留了勒让德投影的大维度表示，以确保历史数据的所有重要细节都得到保留。</p>
+</li>
+<li><p><strong>code</strong>：<a target="_blank" rel="noopener" href="https://github.com/tianzhou2011/FiLM/">https://github.com/tianzhou2011/FiLM/</a></p>
+</li>
+<li><p><strong>comment</strong>：使用勒让德多项式投影，在高维空间中寻找其特征，增加准确率，对于LSTF效果不错</p>
+</li>
+</ul>
+<h6 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h6><ol>
+<li>提出了一种FiLM模型，它采用专家混合的方法进行多尺度时间序列特征提取。</li>
+<li>重新设计了Legendre Projection Unit (LPU)，使其成为一种通用工具，任何时间序列预测模型都可以利用它来解决历史信息保留问题。</li>
+<li>提出了一种Frequency Enhanced Layers (FEL)方法，通过傅里叶分析和低秩矩阵逼近相结合的方式来降低维度，从而减少时间序列中噪声信号的影响，并缓解过拟合问题。该方法的有效性在理论和实证研究中得到了验证。</li>
+<li>在多个领域（能源、交通、经济、天气和疾病）的六个基准数据集上进行了大量实验。实证研究表明，所提出的模型在多变量和单变量预测中比现有最先进方法提高了19.2%和26.1%的性能，同时通过降维实现了计算效率的显著提高。</li>
+</ol>
+<p>Legendre Projection是一种基于Legendre多项式的投影方法，用于将时间序列数据投影到一个高维空间中。在Legendre Projection中，时间序列数据被表示为Legendre多项式的系数向量，这个向量可以被看作是时间序列数据在Legendre多项式基函数下的投影。通过这种方式，Legendre Projection可以更好地保留时间序列数据的历史信息，并提高时间序列预测的准确性。在LMU模型中，Legendre Projection被用于将时间序列数据投影到一个高维空间中，并使用LSTM等递归神经网络来处理这些投影。</p>
+<h6 id="模型结构-1"><a href="#模型结构-1" class="headerlink" title="模型结构"></a>模型结构</h6>
+
+
+
+<h6 id="RevIN：数据标准化块"><a href="#RevIN：数据标准化块" class="headerlink" title="RevIN：数据标准化块"></a>RevIN：数据标准化块</h6><p>输入数据首先被归一化，然后被投影到勒让德多项式空间(LPU存储器C)。</p>
+<h6 id="LPU：勒让德投影装置"><a href="#LPU：勒让德投影装置" class="headerlink" title="LPU：勒让德投影装置"></a>LPU：勒让德投影装置</h6>
+
+
+<p>LPU包括两个部分：投射和重构。</p>
+<h6 id="FEL-频率增强层（傅里叶变换）"><a href="#FEL-频率增强层（傅里叶变换）" class="headerlink" title="FEL: 频率增强层（傅里叶变换）"></a>FEL: 频率增强层（傅里叶变换）</h6>
+
+
+
+
+
+<p>在长期预测中，关键的挑战是在历史信息保存和噪音降低之间进行权衡，以实现准确和稳健的预测。为了应对这一挑战，论文提出了一种频率改进的勒让德记忆模型FilM，以准确地保存历史信息并消除噪声信号。此外，论文还从理论和经验上证明了勒让德和傅立叶投影在模型中的有效性。</p>
+<p>FiLM模型是不同模型的拼接。主要利用勒让德投影预先处理序列信息，之后通过傅里叶变换筛选信息。同时进行不同时序信息的T变换糅合信息。</p>
+<h6 id="多尺度专家机制的混合"><a href="#多尺度专家机制的混合" class="headerlink" title="多尺度专家机制的混合"></a>多尺度专家机制的混合</h6><p>利用具有不同时间范围的输入序列{T，2T，…nT }来预测预测层位T，并将每个专家预测与线性层合并。（因为单独的以时间T为序的模型可能缺乏一致性的对待历史序列点）。</p>
+<p>这是一种用于时间序列预测的机制，它利用不同时间尺度的输入序列来预测未来的时间序列。具体来说，该机制将输入序列分成多个时间尺度，每个尺度都使用一个专家模型来预测未来的时间序列。然后，这些专家模型的预测结果被合并成最终的预测结果。这种机制可以更好地处理时间序列中的多尺度现象，从而提高时间序列预测的准确性。在该机制中，每个专家模型都可以使用不同的特征提取方法和预测模型，以适应不同的时间尺度。该机制在文献中也被称为Mixture of Experts with Different Time Horizons。</p>
+<h6 id="实验-1"><a href="#实验-1" class="headerlink" title="实验"></a>实验</h6><ol>
+<li>参数敏感性实验：在附录F中进行，用于讨论M和N的超参数选择，其中M是频率模式数，N是Legendre多项式数。</li>
+<li>噪声注入实验：在附录G中进行，用于展示模型的鲁棒性。</li>
+<li>Kolmogorov-Smirnov（KS）测试：在附录H中进行，用于讨论输出分布与输入之间的相似性。</li>
+<li>模型效率实验：在附录J中进行，用于比较不同模型的训练速度和内存使用情况。</li>
+<li>时间序列预测实验：在第4节中进行，用于比较所提出的模型与其他基线模型在时间序列预测任务上的性能。</li>
+</ol>
+<p>main result中</p>
+<p>在第4节中，作者进行了多个时间序列预测实验，用于比较所提出的模型与其他基线模型在不同数据集上的性能。这些数据集包括ETT、Solar、Electricity、Traffic、Exchange Rate和ILS。实验中使用的评价指标包括均方误差（MSE）和平均绝对误差（MAE）。实验中比较的基线模型包括FEDformer、Autoformer、S4、Informer、LogTrans和Reformer。实验结果表明，所提出的模型在大多数数据集上都具有更好的性能，特别是在长期预测任务中表现更加优秀。此外，所提出的模型还具有更高的鲁棒性和更快的训练速度。</p>
+<p>消融研究（Ablation Study）： 在第4.2节中，作者进行了消融研究，用于分析所提出的模型中不同组件的作用。消融研究包括对FEL和LPU两个主要组件的分析，以及对多尺度机制和数据归一化的分析。实验结果表明，FEL和LPU两个组件都对模型的性能有重要影响，而多尺度机制和数据归一化对模型的性能影响较小。</p>
+<h4 id="DeepTime"><a href="#DeepTime" class="headerlink" title="DeepTime"></a>DeepTime</h4><ul>
+<li><p>Deep Time-Index Meta-Learning for Non-Stationary Time-Series Forecasting </p>
+</li>
+<li><p><strong>作者</strong>: [Gerald Woo ，Chenghao Liu ，Doyen Sahoo ， Akshat Kumar ，Steven Hoi ]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: []</p>
+</li>
+<li><p><strong>年份</strong>: [2022]</p>
+</li>
+<li><p><strong>摘要</strong>: 论文提出了一种用于多元时间序列预测的深度学习框架DeepTime，该框架采用元优化方法对基模型的超参数进行优化，基模型是一种简单的前馈神经网络，论文提供了理论分析和实证结果来证明所提框架的有效性。</p>
+</li>
+<li><p><strong>code</strong>：<a target="_blank" rel="noopener" href="https://github.com/salesforce/DeepTime">https://github.com/salesforce/DeepTime</a></p>
+</li>
+<li><p><strong>comment</strong>：使用元数据学习方法，不需要进行内部梯度下降，因此可以避免梯度消失和梯度爆炸等问题，并且可以自动提取特征。并且克服了需要大量的计算资源和时间来训练，并且可能会出现过拟合的问题</p>
+</li>
+</ul>
+<h6 id="贡献-1"><a href="#贡献-1" class="headerlink" title="贡献"></a>贡献</h6><ol>
+<li><p>提出了一种新的元学习方法，用于训练和测试时间序列预测模型，该方法采用了一个闭合形式的岭回归器来实现元优化过程，可以在训练和测试时都非常快速和高效。</p>
+</li>
+<li><p>采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式，从而提高模型的泛化能力和预测性能。</p>
+</li>
+<li><p>在多元时间序列预测任务中进行了实验验证，结果表明该方法取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</p>
+</li>
+</ol>
+<p>这篇文章介绍了一种名为DeepTime的深度学习框架，用于时间序列数据的预测。它提出了一种元优化框架，可以学习深度时间索引模型，以高效和准确地预测时间序列数据。文章讨论了传统深度时间索引模型的局限性，并介绍了DeepTime如何克服这些局限性。</p>
+<p>在Related Work部分，本文回顾了现有的时间序列预测方法，包括传统的时间序列预测方法和基于深度学习的方法。传统的时间序列预测方法包括ARIMA、ETS和VAR等，这些方法在处理短时间序列和单变量时间序列时表现良好，但在处理长时间序列和多变量时间序列时存在一些局限性。基于深度学习的方法在处理这些问题时表现更好，包括RNN、LSTM和GRU等，这些方法可以处理长时间序列和多变量时间序列，并且可以自动提取特征。然而，这些方法通常需要大量的计算资源和时间来训练，并且可能会出现过拟合问题。因此，本文提出了一种新的深度学习框架DeepTime，它可以高效地处理长时间序列和多变量时间序列，并在实际数据集上取得了竞争性的结果。</p>
+<p>DeepTime是本文提出的一种深度学习框架，用于时间序列预测。它是一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段。内部学习过程是标准的监督学习过程，用于拟合最近时间步骤的参数。外部学习过程使深度时间索引模型能够从数据中学习强大的归纳偏差，以便进行外推。DeepTime采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。与传统的时间序列预测方法不同，DeepTime可以处理长时间序列和多变量时间序列，并且可以自动提取特征。本文的实验结果表明，DeepTime在实际数据集上取得了竞争性的结果，并且比现有的基于深度学习的时间序列预测方法更加高效。</p>
+<p>时间序列预测的目标是预测未来时间步骤的值，给定过去时间步骤的值。本文采用的是基于回归的方法，即将时间序列预测问题转化为一个回归问题，通过学习一个函数f来预测未来时间步骤的值。本文的目标是提出一种新的深度学习框架DeepTime，用于时间序列预测，并解决现有方法的一些问题，如过拟合、计算复杂度高等问题。为此，本文提出了一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段，以提高模型的泛化能力和预测性能。同时，本文还提出了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。</p>
+<ul>
+<li><p><strong>Fast and Efficient Meta-optimization</strong></p>
+</li>
+<li><p>本文提出了一种快速高效的元优化方法，用于训练和测试时间序列预测模型。具体来说，本文采用了一个闭合形式的岭回归器来实现元优化过程，这个方法可以在训练和测试时都非常快速和高效。与传统的基于梯度的元优化方法不同，本文的方法不需要进行内部梯度下降，因此可以避免梯度消失和梯度爆炸等问题。同时，本文的方法还采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。通过这些方法，本文提出的元优化框架可以更好地处理时间序列预测问题，提高模型的泛化能力和预测性能。</p>
+</li>
+</ul>
+<h6 id="实验-2"><a href="#实验-2" class="headerlink" title="实验"></a>实验</h6><p>该论文在实验部分分别对合成数据和真实世界数据进行了测试，以验证所提出的元学习方法的有效性和性能。在合成数据实验中，作者考虑了三种不同的函数形式，包括线性函数、三次函数和正弦函数的和，并随机生成了不同的函数参数来构建不同的任务。在真实世界数据实验中，作者使用了六个真实世界数据集，包括电力变压器温度、电力消耗负载、交易、交通、天气和类流感疾病等。实验结果表明，所提出的元学习方法在多元时间序列预测任务中取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</p>
+<h4 id="Autoformer"><a href="#Autoformer" class="headerlink" title="Autoformer"></a>Autoformer</h4><ul>
+<li><p>Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting</p>
+</li>
+<li><p><strong>作者</strong>: [Haixu Wu, Jiehui Xu, Jianmin Wang, Mingsheng Long ]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: []</p>
+</li>
+<li><p><strong>年份</strong>: [2022]</p>
+</li>
+<li><p><strong>摘要</strong>: 延长预测时间是极端天气预警和长期能源消耗规划等实际应用的关键需求。本文研究时间序列的长期预测问题。先前的基于 Transformer 的模型采用各种自我注意机制来发现长期依赖关系。然而，长期未来的复杂时间模式使模型无法找到可靠的依赖关系。此外，Transformers 必须采用稀疏版本的 point-wise self-attentions 以获得长序列效率，从而导致信息利用瓶颈。除了 Transformers，我们将 Autoformer 设计为一种具有自相关机制的新型分解架构。我们打破了序列分解的预处理惯例，并将其更新为深度模型的基本内部块。这种设计为 Autoformer 赋予了复杂时间序列的渐进分解能力。此外，受随机过程理论的启发，我们设计了基于序列周期性的自相关机制，在子序列级别进行依赖关系发现和表示聚合。自相关在效率和准确性方面都优于自注意机制。在长期预测中，Autoformer 产生了最先进的准确性，在六个基准上相对提高了 38%，涵盖了五个实际应用：能源、交通、经济、天气和疾病。</p>
+</li>
+<li><p><strong>code</strong>：<a target="_blank" rel="noopener" href="https://github.com/thuml/Autoformer">https://github.com/thuml/Autoformer</a></p>
+</li>
+<li><p><strong>comment</strong>：自相关机制取代自注意力机制。在显存占用和运行时间两个指标上，自相关机制均表现出了优秀的空间、时间效率，两个层面均超过自注意力机制及其稀疏变体，表现出高效的复杂度。Autoformer通过渐进式分解和序列级连接，应对复杂时间模式以及信息利用瓶颈，大幅提高了长时预测效果。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本文研究时间序列的长期预测问题。先前的基于 Transformer 的模型采用各种自我注意机制来发现长期依赖关系。然而，长期未来的复杂时间模式使模型无法找到可靠的依赖关系。此外，Transformers 必须采用稀疏版本的 point-wise self-attentions 以获得长序列效率，从而导致信息利用瓶颈。除了 Transformers，我们将 Autoformer 设计为一种具有自相关机制的新型分解架构。我们打破了序列分解的预处理惯例，并将其更新为深度模型的基本内部块。这种设计为 Autoformer 赋予了复杂时间序列的渐进分解能力。此外，受随机过程理论的启发，我们设计了基于序列周期性的自相关机制，在子序列级别进行依赖关系发现和表示聚合。自相关在效率和准确性方面都优于自注意机制。</span><br></pre></td></tr></table></figure>
+
+<p>延长预测时间是极端天气预警和长期能源消耗规划等实际应用的关键需求。本文研究时间序列的长期预测问题。先前的基于 Transformer 的模型采用各种自我注意机制来发现长期依赖关系。然而，长期未来的复杂时间模式使模型无法找到可靠的依赖关系。此外，Transformers 必须采用稀疏版本的 point-wise self-attentions 以获得长序列效率，从而导致信息利用瓶颈。除了 Transformers，我们将 Autoformer 设计为一种具有自相关机制的新型分解架构。我们打破了序列分解的预处理惯例，并将其更新为深度模型的基本内部块。这种设计为 Autoformer 赋予了复杂时间序列的渐进分解能力。此外，受随机过程理论的启发，我们设计了基于序列周期性的自相关机制，在子序列级别进行依赖关系发现和表示聚合。自相关在效率和准确性方面都优于自我注意。在长期预测中，Autoformer 产生了最先进的准确性，在六个基准上相对提高了 38%，涵盖了五个实际应用：能源、交通、经济、天气和疾病。</p>
+<p>之前基于Transformer的时间序列预测模型，通过自注意力机制（self-attention）来捕捉时刻间的依赖，在时序预测上取得了一些进展。但是在长期序列预测中，仍存在不足：</p>
+<ul>
+<li>长序列中的复杂时间模式使得<strong>注意力机制难以发现可靠的时序依赖</strong>。</li>
+<li>基于Transformer的模型不得不使用<strong>稀疏形式的注意力机制</strong>来应对二次复杂度的问题，但造成了<strong>信息利用的瓶颈</strong>。</li>
+</ul>
+<img src="/2023/07/22/lstfsurvey/v2-56dd4ca871cb71611561c2bf2bd1ab24_b.jpg" class title="这是一张图片">
+
+
+
+<h5 id="AUTOformer创新"><a href="#AUTOformer创新" class="headerlink" title="AUTOformer创新"></a>AUTOformer创新</h5><p>分解架构：突破将时序分解作为预处理的传统方法，设计序列分解单元以嵌入深度模型，实现渐进式地（progressively）预测，逐步得到可预测性更强的组分。</p>
+<p><strong>自相关（Auto-Correlation）机制</strong>：基于随机过程理论，丢弃点向（point-wise）连接的自注意力机制，实现序列级（series-wise）连接的自相关机制，且具有的复杂度，打破信息利用瓶颈。</p>
+<p>应对长期预测问题，Autoformer在能源、交通、经济、气象、疾病五大领域取得了38%的大幅效果提升。</p>
+
+
+
+
+<p>时间序列分解是时序分析的经典方法，可以将时间序列分解为几类潜在的时间模式，如周期项，趋势项等。</p>
+<p>在预测任务中，由于未来的不可知性，通常先对输入进行分解，再每个组分分别预测。</p>
+<p>但这样使得预测结果受限于分解效果，并且忽视了长期未来中各个组分之间的相互作用。</p>
+<p>针对上述问题，作者提出深度分解架构，在预测过程中，逐步从隐变量中分离趋势项与周期项，实现渐进式（progressive）分解。并且模型交替进行预测结果优化和序列分解，可以实现两者的相互促进。</p>
+<h5 id="分解架构"><a href="#分解架构" class="headerlink" title="分解架构"></a>分解架构</h5><p>A. 序列分解单元</p>
+<p>B. 编解码器</p>
+<h5 id="自相关机制"><a href="#自相关机制" class="headerlink" title="自相关机制"></a>自相关机制</h5><p>观察到，不同周期的相似相位之间通常表现出相似的子过程，利用这种序列固有的周期性来设计自相关机制，实现高效的序列级连接。</p>
+<p>自相关机制包含基于周期的依赖发现（Period-based dependencies）和时延信息聚合（Time delay aggregation）。</p>
+<p>A. 基于周期的依赖发现</p>
+<p>B. 时延信息聚合</p>
+<p>C. 对比分析</p>
+<h5 id="实验-3"><a href="#实验-3" class="headerlink" title="实验"></a>实验</h5><p>Autoformer在多个领域的数据集、各种输入-输出长度的设置下，取得了一致的最优（SOTA）结果。</p>
+<p>在input-96-predict-336设置下，相比于之前的SOTA结果，Autoformer实现了ETT能源数据集74%的MSE提升，Electricity能源数据集MSE提升24%，Exchange经济数据集提升64%，Traffic交通数据集提升14%，Weather气象数据集提升26%，在input-24-predict-60设置下，ILI疾病数据集提升30%。</p>
+<p>在上述6个数据集，Autoformer在MSE指标上平均提升38%。</p>
+<h4 id="Informer"><a href="#Informer" class="headerlink" title="Informer"></a>Informer</h4><ul>
+<li><p>Beyond Efficient Transformer for Long Sequence Time-Series Forecasting</p>
+</li>
+<li><p><strong>作者</strong>: [Haoyi Zhou, Shanghang Zhang, Jieqi Peng, Shuai Zhang,  Jianxin Li, Hui Xiong, Wancai Zhang]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: [AAAI]</p>
+</li>
+<li><p><strong>年份</strong>: [2021]</p>
+</li>
+<li><p><strong>code</strong>：<a target="_blank" rel="noopener" href="https://github.com/zhouhaoyi/Informer2020?utm_source=catalyzex.com">https://github.com/zhouhaoyi/Informer2020?utm_source=catalyzex.com</a></p>
+</li>
+<li><p><strong>摘要</strong>: </p>
+</li>
+<li><p>许多实际应用需要对长时间序列进行预测，例如用电规划。 长序列时间预测（LSTF）要求模型具有较高的预测能力，即有效地捕捉输出和输入之间精确的长程依赖关系的能力。 最近的研究表明，Transformer有提高预测能力的潜力。 然而，Transformer存在几个严重的问题，使其无法直接适用于LSTF，包括二次方的时间复杂度、高内存使用量和编码器-解码器架构的固有限制。 为了解决这些问题，我们为LSTF设计了一个高效的基于Transformer的模型，命名为Informer，具有三个明显的特点。 (i) ProbSparse自注意力机制，在时间复杂度和内存使用方面达到了 O(LlogL)、，并且在序列的依存关系排列上有相当的性能。 (ii)自注意力蒸馏通过将级联层的输入减半来突出主要注意力，并有效地处理极长的输入序列。 (iii) 提出了生成式解码器，只需一步即可获得长序列输出，同时避免了推理阶段的累积误差传播。。 在四个大规模数据集上进行的广泛实验表明，Informer明显优于现有方法，并为LSTF问题提供了新的解决方案</p>
+</li>
+<li><p><strong>贡献:</strong> </p>
+<p>这篇论文的贡献包括：</p>
+<ol>
+<li><p>提出了Informer模型，用于增强LSTF问题的预测能力，验证了Transformer-like模型捕捉长序列时间序列输出和输入之间的个体长程依赖的潜在价值。</p>
+</li>
+<li><p>提出了ProbSparse自注意机制，以有效替代传统的自注意机制。它在依赖对齐上实现了O(L log L)的时间复杂度和O(L log L)的内存使用。</p>
+</li>
+<li><p>提出了自注意力蒸馏操作，以优先考虑J层堆叠中的主导注意力分数，并将总空间复杂度急剧降至O((2-epsilon)L log L)，有助于接收长序列输入。</p>
+</li>
+<li><p>提出了生成式解码器，只需一步即可获得长序列输出，同时避免了推理阶段的累积误差传播。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>comment</strong>：主要是改善了transformer在LSTF上表现得不足，并且具有优异的时间和空间复杂度。</p>
+</li>
+</ul>
+<h5 id="methodology"><a href="#methodology" class="headerlink" title="methodology"></a>methodology</h5><p><strong>1.高效self-attention机制</strong></p>
+<p><strong>2.编码器：允许在内存使用限制下处理更长的输入序列</strong></p>
+
+
+
+
+<p><strong>3.解码器：通过一个前向过程生成长序列输出</strong></p>
+<img src="/2023/07/22/lstfsurvey/v2-03ba0f2b93e5756396cb38ac474883b0_b.jpg" class title="这是一张图片">
+
+
+
+<h4 id="Pyraformer"><a href="#Pyraformer" class="headerlink" title="Pyraformer"></a>Pyraformer</h4><ul>
+<li><p>Low-Complexity Pyramidal Attention for Long-Range Time Series Modeling and Forecasting</p>
+</li>
+<li><p><strong>作者</strong>: [Shizhan Liu, Hang Yu,Cong Liao, Jianguo Li, Weiyao Lin, Alex X. Liu, and Schahram Dustdar]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: [ICLR]</p>
+</li>
+<li><p><strong>年份</strong>: [2022]</p>
+</li>
+<li><p><strong>code</strong>：<a target="_blank" rel="noopener" href="https://github.com/ant-research/Pyraformer">https://github.com/ant-research/Pyraformer</a></p>
+</li>
+<li><p><strong>摘要</strong>:  根据过去的时间序列数据准确预测未来至关重要，因为它为提前做出决策和风险管理打开了大门。在实践中，挑战在于构建一个灵活但简洁的模型，该模型可以捕获广泛的时间依赖性。在本文中，我们通过探索时间序列的多分辨率表示来提出 Pyraformer。具体来说，我们介绍了金字塔注意模块（PAM），其中尺度间树结构总结了不同分辨率的特征，尺度内相邻连接对不同范围的时间依赖性进行建模。在温和条件下，Pyraformer 中信号遍历路径的最大长度相对于序列长度 L 是一个常数（即 O(1)），而其时间和空间复杂度与 L 成线性关系。大量实验结果表明，Pyraformer通常在单步和远程多步预测任务中以最少的时间和内存消耗实现最高的预测精度，尤其是当序列很长时。</p>
+</li>
+<li><p><strong>贡献:</strong> 本文的主要贡献是提出了一种名为Pyraformer的低复杂度金字塔式注意力模型，用于时间序列建模和预测。该模型可以捕捉广泛的时间依赖关系，同时保持简洁的模型结构。使用Pyraformer，可以在最小的时间和内存消耗下实现单步和长程多步预测任务的高预测精度。此外，本文还提出了一种新的多分辨率表示方法，即金字塔式注意力模块（PAM），用于在不同分辨率上汇总特征，并建模不同范围的时间依赖关系。实验结果表明，Pyraformer在多个时间序列预测任务上都取得了优异的性能。</p>
+</li>
+<li><p><strong>comment</strong>：Pyraformer的时间和空间复杂度较低，同时可以同时捕捉不同范围的时间依赖关系，提高了时间序列建模和预测的准确性。</p>
+</li>
+</ul>
+
+
+
+
+
+
+<h5 id="methodology-1"><a href="#methodology-1" class="headerlink" title="methodology"></a>methodology</h5><p>**Pyramidal Attention Module (PAM)**是Pyraformer模型的核心组成部分之一，用于捕捉时间序列中不同范围的时间依赖关系。PAM利用金字塔图来描述时间序列的多分辨率结构，将时间序列分解为不同的尺度，并在这些尺度之间建立连接。这种多分辨率结构已被证明在计算机视觉和统计信号处理等领域中是一种有效的长程交互建模工具。PAM可以分解为两个部分：尺度内连接和尺度间连接。在PAM中，每个尺度内的位置只与该尺度内的其他位置相互作用，而不与其他尺度的位置相互作用。这种设计可以减少计算量，并提高模型的效率。PAM还引入了一种新的注意力机制，称为金字塔注意力，用于在不同尺度之间传递信息。通过这种方式，PAM可以捕捉时间序列中不同尺度的时间依赖关系，并在保持高效的同时提高模型的准确性。</p>
+<p>**Coarser-Scale Construction Module (CSCM)**是Pyraformer模型的另一个核心组成部分，用于初始化金字塔图中较粗尺度的节点，以便后续的PAM在这些节点之间交换信息。CSCM通过在时间维度上对嵌入序列进行卷积操作，逐层引入粗尺度节点。具体来说，CSCM从底部到顶部逐层引入粗尺度节点，每个尺度的节点都是通过对其子节点进行卷积操作得到的。在卷积操作中，CSCM使用了一些优化策略，如瓶颈结构和深度可分离卷积，以减少计算量和内存消耗。通过CSCM，Pyraformer可以在不同尺度之间建立连接，并捕捉时间序列中不同尺度的时间依赖关系，从而提高模型的准确性。</p>
+<p><strong>Prediction Module</strong>是Pyraformer模型用于时间序列预测的核心组成部分之一。对于单步预测，模型会在历史序列的末尾添加一个结束标记，并将其输入到嵌入层中进行编码。编码后，模型会从金字塔图的所有尺度中收集最后一个节点的特征，并将它们连接起来，然后输入到一个全连接层中进行预测。对于多步预测，Pyraformer提出了两种预测模块。第一种模块与单步预测模块相同，但会将所有尺度的最后一个节点映射到未来M个时间步中。第二种模块则采用了一个解码器，其中包含两个全注意力层，用于在多个时间步之间传递信息。通过这些预测模块，Pyraformer可以对时间序列进行准确的预测，并在保持高效的同时提高模型的准确性。</p>
+<h5 id="实验-4"><a href="#实验-4" class="headerlink" title="实验"></a>实验</h5><p>Pyraformer模型在多个数据集上进行了实验，包括Electricity、Wind、App Flow、ETTh1和ETTh2。其中Electricity、Wind和App Flow数据集用于单步预测，而ETTh1和ETTh2数据集用于多步预测。在实验中，Pyraformer模型与其他5种注意力机制进行了比较，包括原始的全注意力机制、对数稀疏注意力机制、LSH注意力机制、滑动窗口注意力机制和扩张滑动窗口注意力机制。实验结果表明，Pyraformer模型在所有数据集上都取得了最佳的预测性能，并且在预测长度较长的情况下表现更加优异。此外，Pyraformer模型还进行了消融实验，以研究其各个组成部分对预测性能的影响。实验结果表明，PAM和CSCM是Pyraformer模型的两个关键组成部分，对模型的性能有着重要的影响。</p>
+<h4 id="N-HiTS"><a href="#N-HiTS" class="headerlink" title="N-HiTS"></a>N-HiTS</h4><ul>
+<li><p>Neural Hierarchical Interpolation for Time Series Forecasting</p>
+</li>
+<li><p><strong>作者</strong>: [Cristian Challu,Kin G. Olivares,Boris N. Oreshkin, Federico Garza, Max Mergenthaler-Canseco,Artur Dubrawski]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: [AAAI]</p>
+</li>
+<li><p><strong>年份</strong>: [2023]</p>
+</li>
+<li><p><strong>code</strong>：<a target="_blank" rel="noopener" href="https://github.com/Nixtla/neuralforecast">https://github.com/Nixtla/neuralforecast</a></p>
+</li>
+<li><p><strong>摘要</strong>: 本文主要是改进了NBEATS模型对于Long sequence的不足。<br>而后者是一个纯粹（pure）的深度网络结构</p>
+</li>
+<li><p><strong>comment</strong>：NBEATS模型主要是是对于LSTF有着重的提升</p>
+</li>
+</ul>
+<h6 id="Multi-Rate-Data-Sampling"><a href="#Multi-Rate-Data-Sampling" class="headerlink" title="Multi-Rate Data Sampling"></a>Multi-Rate Data Sampling</h6><p>用下采样（时域上的最大池化）将时间序列采样为多种粒度的序列。采样用的池化层大小越大，则得到的序列更加低频&#x2F;尺度较大；反之，则是更加高频&#x2F;尺度较小。但是用了采样之后，得到的这些序列相较于原始序列，都变得更加低频&#x2F;尺度较大了。利用不同kernel size的池化层，就可以得到不同尺度的序列。其实这种方式作为一种预处理的方式，在时间序列分析中是比较常见的。</p>
+<p>这样做的好处也很直观了，下采样之后，序列长度变短了，所以复杂度变低了，效率变高了。此外，也减少了模型参数量，避免了过拟合的风险，又保持了原始的感受野。</p>
+<h6 id="Hierarchical-Interpolation"><a href="#Hierarchical-Interpolation" class="headerlink" title="Hierarchical Interpolation"></a>Hierarchical Interpolation</h6><p>和下采样是对应的，在预测结果上又做了个上采样。这可以结合N-HiTs的模型架构图来理解，比如在第一个stack，下采样的kernel size大，所以输入序列更短、尺度更大，预测出来的未来序列也更短，要想得到和期望Horizon一样的长度，就做一个上采样，也就是插值（比如线性插值，二次插值），需要插值很多个点。在最后一个stack，下采样的kernel size小，所以序列更长、尺度更小，预测出来的未来序列也更长，就可以少插值一些。<strong>所以每个stack实际上都是负责不同尺度的预测，最后把不同尺度的预测序列插值到相同粒度（也就是期望预测Horizon的粒度）然后相加即可</strong>。可以结合模型图左侧来看，第一个stack因为序列短，尺度大，预测后插值结果就很平滑，更低频一些；而下面的stack则尺度越来越小，插值结果更高频一些。然后具体每个stack的kernel size怎么选取呢，用指数减小的方式即可。</p>
+<h3 id="传统统计方法vs深度学习方法"><a href="#传统统计方法vs深度学习方法" class="headerlink" title="传统统计方法vs深度学习方法"></a>传统统计方法vs深度学习方法</h3><h4 id="Are-Transformers-Effective-for-Time-Series-Forecasting"><a href="#Are-Transformers-Effective-for-Time-Series-Forecasting" class="headerlink" title="Are Transformers Effective for Time Series Forecasting"></a>Are Transformers Effective for Time Series Forecasting</h4><ul>
+<li><p><strong>作者</strong>: [Ailing Zeng, Muxi Chen, Lei Zhang, Qiang Xu]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: [AAAI]</p>
+</li>
+<li><p><strong>年份</strong>: [2023]</p>
+</li>
+<li><p><strong>摘要</strong>: 近年来，基于Transformers的长期时间序列预测（LTSF）解决方案呈现出爆炸式增长。尽管过去几年的性能不断提高，但我们在本文中对这一研究方向的有效性提出了质疑。具体而言，Transformers可以说是提取长序列中元素之间语义相关性最成功的解决方案。然而，在时间序列建模中，我们需要提取连续点的有序集合中的时间关系。虽然在Transformers中使用位置编码和使用令牌嵌入子序列有助于保留一些排序信息，但置换不变的自注意机制的本质不可避免地导致了时间信息的丢失。为了验证我们的观点，我们引入了一组名为LTSF-Linear的简单的单层线性模型进行比较。在九个真实数据集上的实验结果表明，LTSF-Linear在大部分情况下都出人意料地优于现有的复杂Transformer-based LTSF模型，而且往往优势很大。</p>
+</li>
+<li><p><strong>贡献:</strong> 1.在我们所知道的范围内，这是第一篇挑战Transformers在长期时间序列预测任务中有效性的论文。</p>
+<ol start="2">
+<li>为了验证我们的观点，我们引入了一组名为LTSF-Linear的尴尬简单的单层线性模型进行比较。这些模型可以作为LTSF问题的新基准。 </li>
+<li>我们对现有的基于Transformer的LTSF解决方案的各个方面进行了全面的实证研究，包括模拟长输入的能力、对时间序列顺序的敏感性、位置编码和子序列嵌入的影响以及效率比较。我们的发现将有助于未来在这一领域的研究</li>
+</ol>
+</li>
+<li><p>comment：主要在论证LTSF-Linear在大部分情况下都优于现有的复杂Transformer-based LTSF模型</p>
+</li>
+</ul>
+<p>前面写了Transformer最主要的部分是多头self-attention机制，然后说transformer在NLP领域表现可能很好，但是在time series预测的表现会导致信息损失（不好），然后本文建立了Linear model与transformer model结果进行对比，在9个涉及到各领域的数据集上Transformer的表现都不如Linear model</p>
+<h3 id="Transformer-vs-RNN"><a href="#Transformer-vs-RNN" class="headerlink" title="Transformer vs RNN"></a>Transformer vs RNN</h3><h4 id="Enhancing-the-Locality-and-Breaking-the-Memory-Bottleneck-of-Transformer-on-Time-Series-Forecasting"><a href="#Enhancing-the-Locality-and-Breaking-the-Memory-Bottleneck-of-Transformer-on-Time-Series-Forecasting" class="headerlink" title="Enhancing the Locality and Breaking the Memory Bottleneck of Transformer on Time Series Forecasting"></a>Enhancing the Locality and Breaking the Memory Bottleneck of Transformer on Time Series Forecasting</h4><ul>
+<li><p><strong>作者</strong>: [Xiaoyong Jin、Yao Xuan、Xiyou Zhou、Wenhu Chen、Yu-Xiang Wang和Xifeng Yan]</p>
+</li>
+<li><p><strong>会议&#x2F;期刊</strong>: [NIPS]</p>
+</li>
+<li><p><strong>年份</strong>: [2020]</p>
+</li>
+<li><p><strong>摘要</strong>: 这篇文章提出了一种改进Transformer在时间序列预测中的应用的方法。作者指出了传统Transformer架构在处理时间序列时存在的局部性和内存瓶颈问题，并提出了卷积自注意力和LogSparse Transformer来解决这些问题。作者在合成数据和真实数据集上进行了实验，证明了这些方法的有效性。这些方法可以提高时间序列预测的准确性，特别是在具有细粒度和强长期依赖性的时间序列中.</p>
+<p>在文章中，作者提到了传统的时间序列预测模型，如状态空间模型和自回归模型，这些模型需要对每个时间序列进行独立拟合，并需要从业者手动选择趋势、季节性和其他组成部分。相比之下，深度神经网络，特别是循环神经网络（RNN），已被提出作为一种替代方案，用于以自回归方式对时间序列进行建模。然而，由于梯度消失和梯度爆炸问题，RNN的训练非常困难。尽管出现了各种变体，包括LSTM和GRU，但这些问题仍然没有得到解决。因此，作者提出的改进Transformer方法可以看作是一种改进的替代方案，相比传统的RNN模型，可以更好地处理时间序列中的局部性和长期依赖性。</p>
+<p>comment：相较于传统的RNN，基于transformer的模型可以更好地处理时间序列中的局部性和长期依赖性。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Zachary Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://tongjiu.top/2023/07/22/lstfsurvey/" title="lstfsurvey">https://tongjiu.top/2023/07/22/lstfsurvey/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/LSTF/" rel="tag"># LSTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/22/CoBEVT/" rel="prev" title="CoBEVT">
+      <i class="fa fa-chevron-left"></i> CoBEVT
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AFBackground"><span class="nav-number">1.</span> <span class="nav-text">背景Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BAMotivation"><span class="nav-number">2.</span> <span class="nav-text">动机Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E5%89%8D%E7%9A%84%E7%A0%94%E7%A9%B6Related-work"><span class="nav-number">3.</span> <span class="nav-text">先前的研究Related work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9-Model"><span class="nav-number">4.</span> <span class="nav-text">模型选择 Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%C2%B7%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">传统·统计方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-ARIMA-%E5%B7%AE%E5%88%86%E8%87%AA%E5%9B%9E%E5%BD%92%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.1.</span> <span class="nav-text">1.ARIMA 差分自回归移动平均模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-ETS%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91%E6%B3%95"><span class="nav-number">4.1.2.</span> <span class="nav-text">2.ETS指数平滑法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.</span> <span class="nav-text">深度学习方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FEDformer"><span class="nav-number">4.2.1.</span> <span class="nav-text">FEDformer</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.2.1.0.1.</span> <span class="nav-text">模型</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">4.2.1.0.2.</span> <span class="nav-text">模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TIDE"><span class="nav-number">4.2.2.</span> <span class="nav-text">TIDE</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.2.0.1.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">4.2.2.0.2.</span> <span class="nav-text">实验</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FiLM"><span class="nav-number">4.2.3.</span> <span class="nav-text">FiLM:</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%B4%A1%E7%8C%AE"><span class="nav-number">4.2.3.0.1.</span> <span class="nav-text">贡献</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84-1"><span class="nav-number">4.2.3.0.2.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#RevIN%EF%BC%9A%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96%E5%9D%97"><span class="nav-number">4.2.3.0.3.</span> <span class="nav-text">RevIN：数据标准化块</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#LPU%EF%BC%9A%E5%8B%92%E8%AE%A9%E5%BE%B7%E6%8A%95%E5%BD%B1%E8%A3%85%E7%BD%AE"><span class="nav-number">4.2.3.0.4.</span> <span class="nav-text">LPU：勒让德投影装置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#FEL-%E9%A2%91%E7%8E%87%E5%A2%9E%E5%BC%BA%E5%B1%82%EF%BC%88%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%EF%BC%89"><span class="nav-number">4.2.3.0.5.</span> <span class="nav-text">FEL: 频率增强层（傅里叶变换）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%9A%E5%B0%BA%E5%BA%A6%E4%B8%93%E5%AE%B6%E6%9C%BA%E5%88%B6%E7%9A%84%E6%B7%B7%E5%90%88"><span class="nav-number">4.2.3.0.6.</span> <span class="nav-text">多尺度专家机制的混合</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-1"><span class="nav-number">4.2.3.0.7.</span> <span class="nav-text">实验</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DeepTime"><span class="nav-number">4.2.4.</span> <span class="nav-text">DeepTime</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%B4%A1%E7%8C%AE-1"><span class="nav-number">4.2.4.0.1.</span> <span class="nav-text">贡献</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-2"><span class="nav-number">4.2.4.0.2.</span> <span class="nav-text">实验</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Autoformer"><span class="nav-number">4.2.5.</span> <span class="nav-text">Autoformer</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#AUTOformer%E5%88%9B%E6%96%B0"><span class="nav-number">4.2.5.1.</span> <span class="nav-text">AUTOformer创新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E8%A7%A3%E6%9E%B6%E6%9E%84"><span class="nav-number">4.2.5.2.</span> <span class="nav-text">分解架构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E7%9B%B8%E5%85%B3%E6%9C%BA%E5%88%B6"><span class="nav-number">4.2.5.3.</span> <span class="nav-text">自相关机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-3"><span class="nav-number">4.2.5.4.</span> <span class="nav-text">实验</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Informer"><span class="nav-number">4.2.6.</span> <span class="nav-text">Informer</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#methodology"><span class="nav-number">4.2.6.1.</span> <span class="nav-text">methodology</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pyraformer"><span class="nav-number">4.2.7.</span> <span class="nav-text">Pyraformer</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#methodology-1"><span class="nav-number">4.2.7.1.</span> <span class="nav-text">methodology</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-4"><span class="nav-number">4.2.7.2.</span> <span class="nav-text">实验</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#N-HiTS"><span class="nav-number">4.2.8.</span> <span class="nav-text">N-HiTS</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Multi-Rate-Data-Sampling"><span class="nav-number">4.2.8.0.1.</span> <span class="nav-text">Multi-Rate Data Sampling</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Hierarchical-Interpolation"><span class="nav-number">4.2.8.0.2.</span> <span class="nav-text">Hierarchical Interpolation</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95vs%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="nav-number">4.3.</span> <span class="nav-text">传统统计方法vs深度学习方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Are-Transformers-Effective-for-Time-Series-Forecasting"><span class="nav-number">4.3.1.</span> <span class="nav-text">Are Transformers Effective for Time Series Forecasting</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transformer-vs-RNN"><span class="nav-number">4.4.</span> <span class="nav-text">Transformer vs RNN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Enhancing-the-Locality-and-Breaking-the-Memory-Bottleneck-of-Transformer-on-Time-Series-Forecasting"><span class="nav-number">4.4.1.</span> <span class="nav-text">Enhancing the Locality and Breaking the Memory Bottleneck of Transformer on Time Series Forecasting</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zachary Yang"
+      src="/images/kejigou.png">
+  <p class="site-author-name" itemprop="name">Zachary Yang</p>
+  <div class="site-description" itemprop="description">生生不息</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongjiu123" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongjiu123" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dryang0624@163.com" title="E-Mail → mailto:dryang0624@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
