@@ -1,0 +1,151 @@
+# NexT Theme Configuration
+# Docs: https://theme-next.js.org/
+
+# Scheme
+scheme: Gemini
+
+# Dark Mode
+darkmode: false
+
+# Site Information
+favicon:
+  small: /images/favicon-16x16-next.png
+  medium: /images/favicon-32x32-next.png
+  apple_touch_icon: /images/apple-touch-icon-next.png
+
+# Menu
+menu:
+  home: / || fa fa-home
+  about: /about/ || fa fa-user
+  tags: /tags/ || fa fa-tags
+  categories: /categories/ || fa fa-th
+  archives: /archives/ || fa fa-archive
+
+menu_settings:
+  icons: true
+  badges: true
+
+# Sidebar
+sidebar:
+  position: left
+  display: post
+
+avatar:
+  url: /images/kejigou.png
+  rounded: true
+  rotated: false
+
+# Social Links
+social:
+  GitHub: https://github.com/tongjiu123 || fab fa-github
+  E-Mail: mailto:dryang0624@163.com || fa fa-envelope
+  Zhihu: https://www.zhihu.com/people/yzyroy || fa fa-book
+
+social_icons:
+  enable: true
+  icons_only: false
+  transition: false
+
+# GitHub Banner
+github_banner:
+  enable: true
+  permalink: https://github.com/tongjiu123
+  title: Follow me on GitHub
+
+# Creative Commons
+creative_commons:
+  license: by-nc-sa
+  sidebar: true
+  post: false
+  language: en
+
+# Back to top
+back2top:
+  enable: true
+  sidebar: false
+  scrollpercent: true
+
+# Reading progress bar
+reading_progress:
+  enable: true
+  position: top
+  color: "#37c6c0"
+  height: 3px
+
+# Bookmark
+bookmark:
+  enable: true
+  color: "#222"
+  save: auto
+
+# Code Block
+codeblock:
+  copy_button:
+    enable: true
+    show_result: true
+    style: mac
+
+# Font
+font:
+  enable: false
+
+# Post Settings
+post_meta:
+  item_text: true
+  created_at: true
+  updated_at:
+    enable: true
+    another_day: true
+  categories: true
+
+symbols_count_time:
+  separated_meta: true
+  item_text_post: true
+  item_text_total: true
+
+# Tag Icon
+tag_icon: true
+
+# Related Posts
+related_posts:
+  enable: true
+
+# Post Edit
+post_edit:
+  enable: false
+
+# Local Search
+local_search:
+  enable: true
+  trigger: auto
+  top_n_per_article: 1
+  unescape: false
+  preload: false
+
+# Busuanzi Counter
+busuanzi_count:
+  enable: true
+  total_visitors: true
+  total_visitors_icon: fa fa-user
+  total_views: true
+  total_views_icon: fa fa-eye
+
+# Motion
+motion:
+  enable: true
+  async: false
+  transition:
+    post_block: fadeIn
+    post_header: slideDownIn
+    post_body: slideDownIn
+    coll_header: slideLeftIn
+    sidebar: slideUpIn
+
+# Footer
+footer:
+  since: 2020
+  icon:
+    name: fa fa-heart
+    animated: true
+    color: "#ff0000"
+  copyright: Zongyou Yang
