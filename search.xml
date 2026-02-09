@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>deeptime</title>
-    <url>/2023/07/22/deeptime/</url>
-    <content><![CDATA[<h1 id="DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting"><a href="#DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting" class="headerlink" title="DeepTime: Learning Deep Time-index Models for Time Series Forecasting"></a>DeepTime: Learning Deep Time-index Models for Time Series Forecasting</h1><span id="more"></span>
-
-<p>DeepTime模型是一个用于LSTF的由[Gerald Woo ，Chenghao Liu ，Doyen Sahoo ， Akshat Kumar ，Steven Hoi ]等人于2022年发表的模型。</p>
-<p>arxiv链接</p>
-<p><a href="http://link.zhihu.com/?target=https://arxiv.org/abs/2207.06046">https://arxiv.org/abs/2207.06046</a></p>
-<p>Github链接</p>
-<p><a href="http://link.zhihu.com/?target=https://github.com/salesforce/DeepTime">https://github.com/salesforce/DeepTime</a></p>
-<p><strong>摘要</strong>: 论文提出了一种用于多元时间序列预测的深度学习框架DeepTime，该框架采用元优化方法对基模型的超参数进行优化，基模型是一种简单的前馈神经网络，论文提供了理论分析和实证结果来证明所提框架的有效性。</p>
-<p>其使用closed-form ridge regressor进行元数据学习，并且可以自动提取特征，并且避免了梯度消失及梯度爆炸。</p>
-<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a><strong>贡献</strong></h3><ol>
-<li>提出了一种新的元学习方法，用于训练和测试时间序列预测模型，该方法采用了一个闭合形式的岭回归器来实现元优化过程，可以在训练和测试时都非常快速和高效。</li>
-<li>采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式，从而提高模型的泛化能力和预测性能。</li>
-<li>在多元时间序列预测任务中进行了实验验证，结果表明该方法取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</li>
-</ol>
-<p>在Related Work部分，本文回顾了现有的时间序列预测方法，包括传统的时间序列预测方法和基于深度学习的方法。传统的时间序列预测方法包括ARIMA、ETS和VAR等，这些方法在处理短时间序列和单变量时间序列时表现良好，但在处理长时间序列和多变量时间序列时存在一些局限性。基于深度学习的方法在处理这些问题时表现更好，包括RNN、LSTM和GRU等，这些方法可以处理长时间序列和多变量时间序列，并且可以自动提取特征。然而，这些方法通常需要大量的计算资源和时间来训练，并且可能会出现过拟合问题。因此，本文提出了一种新的深度学习框架DeepTime，它可以高效地处理长时间序列和多变量时间序列，并在实际数据集上取得了竞争性的结果。</p>
-<p>它是一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段。内部学习过程是标准的监督学习过程，用于拟合最近时间步骤的参数。外部学习过程使深度时间索引模型能够从数据中学习强大的归纳偏差，以便进行外推。DeepTime采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。与传统的时间序列预测方法不同，DeepTime可以处理长时间序列和多变量时间序列，并且可以自动提取特征。本文的实验结果表明，DeepTime在实际数据集上取得了竞争性的结果，并且比现有的基于深度学习的时间序列预测方法更加高效。</p>
-<p><img src="/v2-67fd0eb883a4312b4cd36b103989248e_720w.webp" alt="DeepTime模型架构"></p>
-<p>时间序列预测的目标是预测未来时间步骤的值，给定过去时间步骤的值。本文采用的是基于回归的方法，即将时间序列预测问题转化为一个回归问题，通过学习一个函数f来预测未来时间步骤的值。本文的目标是提出一种新的深度学习框架DeepTime，用于时间序列预测，并解决现有方法的一些问题，如过拟合、计算复杂度高等问题。为此，本文提出了一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段，以提高模型的泛化能力和预测性能。同时，本文还提出了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。</p>
-<p><img src="/v2-ef9069c667992477f3c9b837987d5ebc_720w.webp" alt="元优化框架"></p>
-<ul>
-<li><strong>Fast and Efficient Meta-optimization</strong></li>
-<li>本文提出了一种快速高效的元优化方法，用于训练和测试时间序列预测模型。具体来说，本文采用了一个闭合形式的岭回归器来实现元优化过程，这个方法可以在训练和测试时都非常快速和高效。与传统的基于梯度的元优化方法不同，本文的方法不需要进行内部梯度下降，因此可以避免梯度消失和梯度爆炸等问题。同时，本文的方法还采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。通过这些方法，本文提出的元优化框架可以更好地处理时间序列预测问题，提高模型的泛化能力和预测性能。</li>
-</ul>
-<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a><strong>实验</strong></h3><p>该论文在实验部分分别对合成数据和真实世界数据进行了测试，以验证所提出的元学习方法的有效性和性能。在合成数据实验中，作者考虑了三种不同的函数形式，包括线性函数、三次函数和正弦函数的和，并随机生成了不同的函数参数来构建不同的任务。在真实世界数据实验中，作者使用了六个真实世界数据集，包括电力变压器温度、电力消耗负载、交易、交通、天气和类流感疾病等。实验结果表明，所提出的元学习方法在多元时间序列预测任务中取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</p>
-<p><img src="/v2-71debe61ccd42c50f7c641b7c7d76236_720w.webp" alt="实验结果"></p>
-<p>其分别与最近比较火的几种模型，比如N-HITS，FEDformer，Autoformer，Infomer等在多种数据集上进行了表现的比较，可以看到其表现不俗。</p>
-]]></content>
-      <categories>
-        <category>Paper</category>
-      </categories>
-      <tags>
-        <tag>LSTF</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CoBEVT</title>
     <url>/2023/07/22/CoBEVT/</url>
     <content><![CDATA[<h1 id="CoBEVT：稀疏Transformer做协作BEV语义分割"><a href="#CoBEVT：稀疏Transformer做协作BEV语义分割" class="headerlink" title="CoBEVT：稀疏Transformer做协作BEV语义分割"></a>CoBEVT：稀疏Transformer做协作BEV语义分割</h1><span id="more"></span>
@@ -202,94 +165,41 @@
       </tags>
   </entry>
   <entry>
-    <title>mininet1</title>
-    <url>/2022/09/13/mininet1/</url>
-    <content><![CDATA[<p>安装mininet坑</p>
-<span id="more"></span>
+    <title>deeptime</title>
+    <url>/2023/07/22/deeptime/</url>
+    <content><![CDATA[<h1 id="DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting"><a href="#DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting" class="headerlink" title="DeepTime: Learning Deep Time-index Models for Time Series Forecasting"></a>DeepTime: Learning Deep Time-index Models for Time Series Forecasting</h1><span id="more"></span>
 
-<h3 id="1-连接不上git-clone-git-github-com-mininet-mininet"><a href="#1-连接不上git-clone-git-github-com-mininet-mininet" class="headerlink" title="1.连接不上git clone git:&#x2F;&#x2F;github.com&#x2F;mininet&#x2F;mininet"></a>1.连接不上git clone git:&#x2F;&#x2F;github.com&#x2F;mininet&#x2F;mininet</h3><p>网络问题，挂上蓝灯代理依然不行</p>
-<p>解决方案：直接从github上下载</p>
-<p>github.com&#x2F;mininet&#x2F;mininet</p>
-<p>修改mininet-master文件名为mininet</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd mininet</span><br><span class="line">util/install.sh -a</span><br><span class="line">sudo mn --test pingall</span><br></pre></td></tr></table></figure>
-
-<p>此后可能出现问题openflow连接失败，见下一条</p>
-<h3 id="2-openflow"><a href="#2-openflow" class="headerlink" title="2.openflow"></a>2.openflow</h3><p>多尝试几次在mininet文件下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">util/install.sh -0  #安装openflow1.0</span><br><span class="line">或者</span><br><span class="line">util/install.sh -3  #安装openflow1.3</span><br></pre></td></tr></table></figure>
-
-<p>此后会出现问题pox连接不上</p>
-<h3 id="3-pox"><a href="#3-pox" class="headerlink" title="3.pox"></a>3.pox</h3><p>需要使用sudo权限</p>
-<p>尝试只安装pox</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo util/install.sh -p</span><br></pre></td></tr></table></figure>
-
-<p>后缀为p代表只安装pox</p>
-<p>执行install.sh脚本</p>
-<p>后缀分别有</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-a 默认全部安装</span><br><span class="line">-b 安装benchmark：oflops</span><br><span class="line">-c安装核心之后清空已有配置</span><br><span class="line">-d 删除某些敏感文件</span><br><span class="line">-e 安装Mininet开发依赖</span><br><span class="line">-f 安装OpenFolw协议支持</span><br><span class="line">-h 打印帮助信息</span><br><span class="line">-i 安装indigo Virtual Switch</span><br><span class="line">-k 安装新的内核</span><br><span class="line">-m 从源目录安装open vSwitch内核模块</span><br><span class="line">-n 安装Mininet依赖和核心文件</span><br><span class="line">-p 安装pox控制器</span><br><span class="line">-r 删除已存在的open vSwitch包</span><br><span class="line">-s 依赖源码</span><br><span class="line">-t 完成其他的虚拟机创建任务</span><br><span class="line">-v 安装Open switch</span><br><span class="line">-V 指定Open vSwitch的版本</span><br><span class="line">-w 安装Wireashark解析器</span><br><span class="line">-x 安装NOX Classic控制器</span><br><span class="line">-y 安装Ryu控制器</span><br><span class="line">-0 安装openflow1.0</span><br><span class="line">-3 安装openflow1.3</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-install-ryu"><a href="#4-install-ryu" class="headerlink" title="4.install ryu"></a>4.install ryu</h3><p>安装其他版本python</p>
-<p>本人安装python3.10.2</p>
-<p>并指定优先级（除anaconda3中的3.7外）</p>
-<p>步骤：</p>
-<p>1、在Python官网下载想要安装Python版本的压缩包：<a href="https://www.python.org/">https://www.python.org/</a></p>
-<p>2、解压压缩包：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -xzvf Python-3.10.2.tgz</span><br></pre></td></tr></table></figure>
-
-<p>3、指定安装路径</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd Python-3.10.2</span><br><span class="line">./configure --prefix=/usr/bin/python3.10 </span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-
-<p>设置默认Python版本<br>update-alternatives系列命令对一个候选列表进行操作。</p>
-<p>在这个候选列表中，我们可以：（1）添加候选Python版本；（2） 删除列表中已有的Python版本。</p>
-<p>通过这个列表，我们可以：（1）手动为系统指定默认Python版本；（2）通过配置权重自动指定默认Python版本。</p>
-<p>以root权限操作：</p>
-<p>查看候选列表中已有的Python版本：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --list python</span><br></pre></td></tr></table></figure>
-
-<p>添加候选Python版本：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 2</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3.10/bin/python3.10 3 # 自己后来安装的Python</span><br></pre></td></tr></table></figure>
-
-<p>语法：–install &lt;链接&gt; &lt;名称&gt; &lt;路径&gt; &lt;优先级&gt;，&lt;链接&gt; 需保持一致。优先级数字越大越高。</p>
-<p>删除列表中已有的Python版本：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --remove python /usr/bin/python2.7</span><br></pre></td></tr></table></figure>
-
-<p>查看目前列表中每个Python版本的配置情况：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --config python</span><br></pre></td></tr></table></figure>
-
-<p>选择0，自动以优先级数字最大的为默认python版本，选择其他则手动指定版本。</p>
-<p>此后，使用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip3 install ryu</span><br></pre></td></tr></table></figure>
-
-<p>即可安装ryu</p>
-<p>推测原因：ubuntu16自带的python出现了包的抵触</p>
-<h3 id="5-testbed无法运行run-sh"><a href="#5-testbed无法运行run-sh" class="headerlink" title="5. testbed无法运行run.sh"></a>5. testbed无法运行run.sh</h3><ol>
-<li>bad for loop variable</li>
+<p>DeepTime模型是一个用于LSTF的由[Gerald Woo ，Chenghao Liu ，Doyen Sahoo ， Akshat Kumar ，Steven Hoi ]等人于2022年发表的模型。</p>
+<p>arxiv链接</p>
+<p><a href="http://link.zhihu.com/?target=https://arxiv.org/abs/2207.06046">https://arxiv.org/abs/2207.06046</a></p>
+<p>Github链接</p>
+<p><a href="http://link.zhihu.com/?target=https://github.com/salesforce/DeepTime">https://github.com/salesforce/DeepTime</a></p>
+<p><strong>摘要</strong>: 论文提出了一种用于多元时间序列预测的深度学习框架DeepTime，该框架采用元优化方法对基模型的超参数进行优化，基模型是一种简单的前馈神经网络，论文提供了理论分析和实证结果来证明所提框架的有效性。</p>
+<p>其使用closed-form ridge regressor进行元数据学习，并且可以自动提取特征，并且避免了梯度消失及梯度爆炸。</p>
+<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a><strong>贡献</strong></h3><ol>
+<li>提出了一种新的元学习方法，用于训练和测试时间序列预测模型，该方法采用了一个闭合形式的岭回归器来实现元优化过程，可以在训练和测试时都非常快速和高效。</li>
+<li>采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式，从而提高模型的泛化能力和预测性能。</li>
+<li>在多元时间序列预测任务中进行了实验验证，结果表明该方法取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd testbed</span><br><span class="line">sudo ./run.sh</span><br></pre></td></tr></table></figure>
-
-<p>失败，显示bad for loop variable</p>
-<p>解决方法：加上#!&#x2F;bin&#x2F;bash</p>
-<ol start="2">
-<li>10461挂起 sudo：python找不到命令</li>
-</ol>
-<p>缺少pbr</p>
-<h3 id="补充：mininet使用"><a href="#补充：mininet使用" class="headerlink" title="补充：mininet使用"></a>补充：mininet使用</h3><h6 id="3-启动Mininet"><a href="#3-启动Mininet" class="headerlink" title="3.启动Mininet"></a>3.启动Mininet</h6><p>安装完成后，通过sudo mn命令启动mininet，更多相关主要命令参考如下：</p>
-<h6 id="1-主要网络构建启动命令"><a href="#1-主要网络构建启动命令" class="headerlink" title="1. 主要网络构建启动命令"></a>1. 主要网络构建启动命令</h6><p>–topo 制定拓扑类型或文件<br>–custom 自建拓扑<br>–switch 设置交换机类型<br>–controller 设置控制器类型<br>–mac 自动设置主机mac</p>
-<h6 id="2-内部交互主要命令"><a href="#2-内部交互主要命令" class="headerlink" title="2. 内部交互主要命令"></a>2. 内部交互主要命令</h6><p>dump 输出节点信息<br>net 查看网络拓扑信息<br>nodes 查看全部节点信息<br>dpctl 操作datapath<br>iperf 制定节点之间的tcp<br>h1 ping h2 测试主机的连通性</p>
-<h6 id="4-Mininet简单示例"><a href="#4-Mininet简单示例" class="headerlink" title="4.Mininet简单示例"></a>4.Mininet简单示例</h6><ol>
-<li><p>单一拓扑<br>sudo mn –topo&#x3D;single，3<br>其中3为主机数目的设定参数，可更换其他。</p>
-</li>
-<li><p>线形拓扑<br>sudo mn –topo&#x3D;linear，4<br>对于线性拓扑，数字代表交换机数目和主机数目。</p>
-</li>
-<li><p>树形拓扑<br>sudo mn –topo&#x3D;tree，depth&#x3D;2，fanout&#x3D;2<br>depth代表深度，fanout代表扇出，即深度代表交换机的深度，扇出代表每个交换机下挂载主机数目。</p>
-</li>
-<li><p>自定义拓扑<br>sudo mn –custom file.py –topo mytopo<br>file.py代表自己编写的拓扑脚本文件</p>
-</li>
-</ol>
-<p>参考：<a href="https://www.jianshu.com/p/71e29d487ea9">https://www.jianshu.com/p/71e29d487ea9</a></p>
+<p>在Related Work部分，本文回顾了现有的时间序列预测方法，包括传统的时间序列预测方法和基于深度学习的方法。传统的时间序列预测方法包括ARIMA、ETS和VAR等，这些方法在处理短时间序列和单变量时间序列时表现良好，但在处理长时间序列和多变量时间序列时存在一些局限性。基于深度学习的方法在处理这些问题时表现更好，包括RNN、LSTM和GRU等，这些方法可以处理长时间序列和多变量时间序列，并且可以自动提取特征。然而，这些方法通常需要大量的计算资源和时间来训练，并且可能会出现过拟合问题。因此，本文提出了一种新的深度学习框架DeepTime，它可以高效地处理长时间序列和多变量时间序列，并在实际数据集上取得了竞争性的结果。</p>
+<p>它是一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段。内部学习过程是标准的监督学习过程，用于拟合最近时间步骤的参数。外部学习过程使深度时间索引模型能够从数据中学习强大的归纳偏差，以便进行外推。DeepTime采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。与传统的时间序列预测方法不同，DeepTime可以处理长时间序列和多变量时间序列，并且可以自动提取特征。本文的实验结果表明，DeepTime在实际数据集上取得了竞争性的结果，并且比现有的基于深度学习的时间序列预测方法更加高效。</p>
+<p><img src="/v2-67fd0eb883a4312b4cd36b103989248e_720w.webp" alt="DeepTime模型架构"></p>
+<p>时间序列预测的目标是预测未来时间步骤的值，给定过去时间步骤的值。本文采用的是基于回归的方法，即将时间序列预测问题转化为一个回归问题，通过学习一个函数f来预测未来时间步骤的值。本文的目标是提出一种新的深度学习框架DeepTime，用于时间序列预测，并解决现有方法的一些问题，如过拟合、计算复杂度高等问题。为此，本文提出了一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段，以提高模型的泛化能力和预测性能。同时，本文还提出了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。</p>
+<p><img src="/v2-ef9069c667992477f3c9b837987d5ebc_720w.webp" alt="元优化框架"></p>
+<ul>
+<li><strong>Fast and Efficient Meta-optimization</strong></li>
+<li>本文提出了一种快速高效的元优化方法，用于训练和测试时间序列预测模型。具体来说，本文采用了一个闭合形式的岭回归器来实现元优化过程，这个方法可以在训练和测试时都非常快速和高效。与传统的基于梯度的元优化方法不同，本文的方法不需要进行内部梯度下降，因此可以避免梯度消失和梯度爆炸等问题。同时，本文的方法还采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。通过这些方法，本文提出的元优化框架可以更好地处理时间序列预测问题，提高模型的泛化能力和预测性能。</li>
+</ul>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a><strong>实验</strong></h3><p>该论文在实验部分分别对合成数据和真实世界数据进行了测试，以验证所提出的元学习方法的有效性和性能。在合成数据实验中，作者考虑了三种不同的函数形式，包括线性函数、三次函数和正弦函数的和，并随机生成了不同的函数参数来构建不同的任务。在真实世界数据实验中，作者使用了六个真实世界数据集，包括电力变压器温度、电力消耗负载、交易、交通、天气和类流感疾病等。实验结果表明，所提出的元学习方法在多元时间序列预测任务中取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</p>
+<p><img src="/v2-71debe61ccd42c50f7c641b7c7d76236_720w.webp" alt="实验结果"></p>
+<p>其分别与最近比较火的几种模型，比如N-HITS，FEDformer，Autoformer，Infomer等在多种数据集上进行了表现的比较，可以看到其表现不俗。</p>
 ]]></content>
       <categories>
-        <category>problem</category>
+        <category>Paper</category>
       </categories>
+      <tags>
+        <tag>LSTF</tag>
+      </tags>
   </entry>
   <entry>
     <title>scaleOIJ</title>
@@ -531,6 +441,96 @@
 
 <p>linux给文件改名</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> test.txt new.txt</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>problem</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>mininet1</title>
+    <url>/2022/09/13/mininet1/</url>
+    <content><![CDATA[<p>安装mininet坑</p>
+<span id="more"></span>
+
+<h3 id="1-连接不上git-clone-git-github-com-mininet-mininet"><a href="#1-连接不上git-clone-git-github-com-mininet-mininet" class="headerlink" title="1.连接不上git clone git:&#x2F;&#x2F;github.com&#x2F;mininet&#x2F;mininet"></a>1.连接不上git clone git:&#x2F;&#x2F;github.com&#x2F;mininet&#x2F;mininet</h3><p>网络问题，挂上蓝灯代理依然不行</p>
+<p>解决方案：直接从github上下载</p>
+<p>github.com&#x2F;mininet&#x2F;mininet</p>
+<p>修改mininet-master文件名为mininet</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd mininet</span><br><span class="line">util/install.sh -a</span><br><span class="line">sudo mn --test pingall</span><br></pre></td></tr></table></figure>
+
+<p>此后可能出现问题openflow连接失败，见下一条</p>
+<h3 id="2-openflow"><a href="#2-openflow" class="headerlink" title="2.openflow"></a>2.openflow</h3><p>多尝试几次在mininet文件下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">util/install.sh -0  #安装openflow1.0</span><br><span class="line">或者</span><br><span class="line">util/install.sh -3  #安装openflow1.3</span><br></pre></td></tr></table></figure>
+
+<p>此后会出现问题pox连接不上</p>
+<h3 id="3-pox"><a href="#3-pox" class="headerlink" title="3.pox"></a>3.pox</h3><p>需要使用sudo权限</p>
+<p>尝试只安装pox</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo util/install.sh -p</span><br></pre></td></tr></table></figure>
+
+<p>后缀为p代表只安装pox</p>
+<p>执行install.sh脚本</p>
+<p>后缀分别有</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-a 默认全部安装</span><br><span class="line">-b 安装benchmark：oflops</span><br><span class="line">-c安装核心之后清空已有配置</span><br><span class="line">-d 删除某些敏感文件</span><br><span class="line">-e 安装Mininet开发依赖</span><br><span class="line">-f 安装OpenFolw协议支持</span><br><span class="line">-h 打印帮助信息</span><br><span class="line">-i 安装indigo Virtual Switch</span><br><span class="line">-k 安装新的内核</span><br><span class="line">-m 从源目录安装open vSwitch内核模块</span><br><span class="line">-n 安装Mininet依赖和核心文件</span><br><span class="line">-p 安装pox控制器</span><br><span class="line">-r 删除已存在的open vSwitch包</span><br><span class="line">-s 依赖源码</span><br><span class="line">-t 完成其他的虚拟机创建任务</span><br><span class="line">-v 安装Open switch</span><br><span class="line">-V 指定Open vSwitch的版本</span><br><span class="line">-w 安装Wireashark解析器</span><br><span class="line">-x 安装NOX Classic控制器</span><br><span class="line">-y 安装Ryu控制器</span><br><span class="line">-0 安装openflow1.0</span><br><span class="line">-3 安装openflow1.3</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-install-ryu"><a href="#4-install-ryu" class="headerlink" title="4.install ryu"></a>4.install ryu</h3><p>安装其他版本python</p>
+<p>本人安装python3.10.2</p>
+<p>并指定优先级（除anaconda3中的3.7外）</p>
+<p>步骤：</p>
+<p>1、在Python官网下载想要安装Python版本的压缩包：<a href="https://www.python.org/">https://www.python.org/</a></p>
+<p>2、解压压缩包：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -xzvf Python-3.10.2.tgz</span><br></pre></td></tr></table></figure>
+
+<p>3、指定安装路径</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd Python-3.10.2</span><br><span class="line">./configure --prefix=/usr/bin/python3.10 </span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>设置默认Python版本<br>update-alternatives系列命令对一个候选列表进行操作。</p>
+<p>在这个候选列表中，我们可以：（1）添加候选Python版本；（2） 删除列表中已有的Python版本。</p>
+<p>通过这个列表，我们可以：（1）手动为系统指定默认Python版本；（2）通过配置权重自动指定默认Python版本。</p>
+<p>以root权限操作：</p>
+<p>查看候选列表中已有的Python版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --list python</span><br></pre></td></tr></table></figure>
+
+<p>添加候选Python版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 2</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3.10/bin/python3.10 3 # 自己后来安装的Python</span><br></pre></td></tr></table></figure>
+
+<p>语法：–install &lt;链接&gt; &lt;名称&gt; &lt;路径&gt; &lt;优先级&gt;，&lt;链接&gt; 需保持一致。优先级数字越大越高。</p>
+<p>删除列表中已有的Python版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --remove python /usr/bin/python2.7</span><br></pre></td></tr></table></figure>
+
+<p>查看目前列表中每个Python版本的配置情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --config python</span><br></pre></td></tr></table></figure>
+
+<p>选择0，自动以优先级数字最大的为默认python版本，选择其他则手动指定版本。</p>
+<p>此后，使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip3 install ryu</span><br></pre></td></tr></table></figure>
+
+<p>即可安装ryu</p>
+<p>推测原因：ubuntu16自带的python出现了包的抵触</p>
+<h3 id="5-testbed无法运行run-sh"><a href="#5-testbed无法运行run-sh" class="headerlink" title="5. testbed无法运行run.sh"></a>5. testbed无法运行run.sh</h3><ol>
+<li>bad for loop variable</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd testbed</span><br><span class="line">sudo ./run.sh</span><br></pre></td></tr></table></figure>
+
+<p>失败，显示bad for loop variable</p>
+<p>解决方法：加上#!&#x2F;bin&#x2F;bash</p>
+<ol start="2">
+<li>10461挂起 sudo：python找不到命令</li>
+</ol>
+<p>缺少pbr</p>
+<h3 id="补充：mininet使用"><a href="#补充：mininet使用" class="headerlink" title="补充：mininet使用"></a>补充：mininet使用</h3><h6 id="3-启动Mininet"><a href="#3-启动Mininet" class="headerlink" title="3.启动Mininet"></a>3.启动Mininet</h6><p>安装完成后，通过sudo mn命令启动mininet，更多相关主要命令参考如下：</p>
+<h6 id="1-主要网络构建启动命令"><a href="#1-主要网络构建启动命令" class="headerlink" title="1. 主要网络构建启动命令"></a>1. 主要网络构建启动命令</h6><p>–topo 制定拓扑类型或文件<br>–custom 自建拓扑<br>–switch 设置交换机类型<br>–controller 设置控制器类型<br>–mac 自动设置主机mac</p>
+<h6 id="2-内部交互主要命令"><a href="#2-内部交互主要命令" class="headerlink" title="2. 内部交互主要命令"></a>2. 内部交互主要命令</h6><p>dump 输出节点信息<br>net 查看网络拓扑信息<br>nodes 查看全部节点信息<br>dpctl 操作datapath<br>iperf 制定节点之间的tcp<br>h1 ping h2 测试主机的连通性</p>
+<h6 id="4-Mininet简单示例"><a href="#4-Mininet简单示例" class="headerlink" title="4.Mininet简单示例"></a>4.Mininet简单示例</h6><ol>
+<li><p>单一拓扑<br>sudo mn –topo&#x3D;single，3<br>其中3为主机数目的设定参数，可更换其他。</p>
+</li>
+<li><p>线形拓扑<br>sudo mn –topo&#x3D;linear，4<br>对于线性拓扑，数字代表交换机数目和主机数目。</p>
+</li>
+<li><p>树形拓扑<br>sudo mn –topo&#x3D;tree，depth&#x3D;2，fanout&#x3D;2<br>depth代表深度，fanout代表扇出，即深度代表交换机的深度，扇出代表每个交换机下挂载主机数目。</p>
+</li>
+<li><p>自定义拓扑<br>sudo mn –custom file.py –topo mytopo<br>file.py代表自己编写的拓扑脚本文件</p>
+</li>
+</ol>
+<p>参考：<a href="https://www.jianshu.com/p/71e29d487ea9">https://www.jianshu.com/p/71e29d487ea9</a></p>
 ]]></content>
       <categories>
         <category>problem</category>
