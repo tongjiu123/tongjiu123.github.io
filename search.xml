@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>deeptime</title>
+    <url>/2023/07/22/deeptime/</url>
+    <content><![CDATA[<h1 id="DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting"><a href="#DeepTime-Learning-Deep-Time-index-Models-for-Time-Series-Forecasting" class="headerlink" title="DeepTime: Learning Deep Time-index Models for Time Series Forecasting"></a>DeepTime: Learning Deep Time-index Models for Time Series Forecasting</h1><span id="more"></span>
+
+<p>DeepTime模型是一个用于LSTF的由[Gerald Woo ，Chenghao Liu ，Doyen Sahoo ， Akshat Kumar ，Steven Hoi ]等人于2022年发表的模型。</p>
+<p>arxiv链接</p>
+<p><a href="http://link.zhihu.com/?target=https://arxiv.org/abs/2207.06046">https://arxiv.org/abs/2207.06046</a></p>
+<p>Github链接</p>
+<p><a href="http://link.zhihu.com/?target=https://github.com/salesforce/DeepTime">https://github.com/salesforce/DeepTime</a></p>
+<p><strong>摘要</strong>: 论文提出了一种用于多元时间序列预测的深度学习框架DeepTime，该框架采用元优化方法对基模型的超参数进行优化，基模型是一种简单的前馈神经网络，论文提供了理论分析和实证结果来证明所提框架的有效性。</p>
+<p>其使用closed-form ridge regressor进行元数据学习，并且可以自动提取特征，并且避免了梯度消失及梯度爆炸。</p>
+<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a><strong>贡献</strong></h3><ol>
+<li>提出了一种新的元学习方法，用于训练和测试时间序列预测模型，该方法采用了一个闭合形式的岭回归器来实现元优化过程，可以在训练和测试时都非常快速和高效。</li>
+<li>采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式，从而提高模型的泛化能力和预测性能。</li>
+<li>在多元时间序列预测任务中进行了实验验证，结果表明该方法取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</li>
+</ol>
+<p>在Related Work部分，本文回顾了现有的时间序列预测方法，包括传统的时间序列预测方法和基于深度学习的方法。传统的时间序列预测方法包括ARIMA、ETS和VAR等，这些方法在处理短时间序列和单变量时间序列时表现良好，但在处理长时间序列和多变量时间序列时存在一些局限性。基于深度学习的方法在处理这些问题时表现更好，包括RNN、LSTM和GRU等，这些方法可以处理长时间序列和多变量时间序列，并且可以自动提取特征。然而，这些方法通常需要大量的计算资源和时间来训练，并且可能会出现过拟合问题。因此，本文提出了一种新的深度学习框架DeepTime，它可以高效地处理长时间序列和多变量时间序列，并在实际数据集上取得了竞争性的结果。</p>
+<p>它是一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段。内部学习过程是标准的监督学习过程，用于拟合最近时间步骤的参数。外部学习过程使深度时间索引模型能够从数据中学习强大的归纳偏差，以便进行外推。DeepTime采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。与传统的时间序列预测方法不同，DeepTime可以处理长时间序列和多变量时间序列，并且可以自动提取特征。本文的实验结果表明，DeepTime在实际数据集上取得了竞争性的结果，并且比现有的基于深度学习的时间序列预测方法更加高效。</p>
+<p><img src="/v2-67fd0eb883a4312b4cd36b103989248e_720w.webp" alt="DeepTime模型架构"></p>
+<p>时间序列预测的目标是预测未来时间步骤的值，给定过去时间步骤的值。本文采用的是基于回归的方法，即将时间序列预测问题转化为一个回归问题，通过学习一个函数f来预测未来时间步骤的值。本文的目标是提出一种新的深度学习框架DeepTime，用于时间序列预测，并解决现有方法的一些问题，如过拟合、计算复杂度高等问题。为此，本文提出了一个元优化框架，将深度时间索引模型的学习过程分为内部学习和外部学习两个阶段，以提高模型的泛化能力和预测性能。同时，本文还提出了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。</p>
+<p><img src="/v2-ef9069c667992477f3c9b837987d5ebc_720w.webp" alt="元优化框架"></p>
+<ul>
+<li><strong>Fast and Efficient Meta-optimization</strong></li>
+<li>本文提出了一种快速高效的元优化方法，用于训练和测试时间序列预测模型。具体来说，本文采用了一个闭合形式的岭回归器来实现元优化过程，这个方法可以在训练和测试时都非常快速和高效。与传统的基于梯度的元优化方法不同，本文的方法不需要进行内部梯度下降，因此可以避免梯度消失和梯度爆炸等问题。同时，本文的方法还采用了一种特定的函数形式，利用隐式神经表示和一个新颖的拼接傅里叶特征模块来高效地学习时间序列中的高频模式。通过这些方法，本文提出的元优化框架可以更好地处理时间序列预测问题，提高模型的泛化能力和预测性能。</li>
+</ul>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a><strong>实验</strong></h3><p>该论文在实验部分分别对合成数据和真实世界数据进行了测试，以验证所提出的元学习方法的有效性和性能。在合成数据实验中，作者考虑了三种不同的函数形式，包括线性函数、三次函数和正弦函数的和，并随机生成了不同的函数参数来构建不同的任务。在真实世界数据实验中，作者使用了六个真实世界数据集，包括电力变压器温度、电力消耗负载、交易、交通、天气和类流感疾病等。实验结果表明，所提出的元学习方法在多元时间序列预测任务中取得了优秀的性能，且比传统的基于梯度的元学习方法更加高效和稳定。</p>
+<p><img src="/v2-71debe61ccd42c50f7c641b7c7d76236_720w.webp" alt="实验结果"></p>
+<p>其分别与最近比较火的几种模型，比如N-HITS，FEDformer，Autoformer，Infomer等在多种数据集上进行了表现的比较，可以看到其表现不俗。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+      <tags>
+        <tag>LSTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CoBEVT</title>
+    <url>/2023/07/22/CoBEVT/</url>
+    <content><![CDATA[<h1 id="CoBEVT：稀疏Transformer做协作BEV语义分割"><a href="#CoBEVT：稀疏Transformer做协作BEV语义分割" class="headerlink" title="CoBEVT：稀疏Transformer做协作BEV语义分割"></a>CoBEVT：稀疏Transformer做协作BEV语义分割</h1><span id="more"></span>
+
+<p>UCLA大学在2022年发表在CoRL</p>
+<p>Paper：<a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2207.02202">https://arxiv.org/abs/2207.02202</a></p>
+<ul>
+<li>场景：复杂交通场景中</li>
+<li>问题：基于单智能体相机的系统对于复杂交通场景中的遮挡和检测远处的目标性能较差</li>
+<li>动机：使用通用多智能体多相机感知框架（车与车( Vehicle-to-Vehicle，V2V )通信技术可以使无人驾驶车辆能够共享感知信息），提高感知性能和范围</li>
+<li>paper发表于CoRL 2022</li>
+<li>多智体多摄像机感知框架</li>
+<li>轴向注意力（fused axial attention，FAX）模块</li>
+<li>数据集：V2V 感知数据集OPV2V；nuScenes</li>
+</ul>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>鸟瞰图( BEV )语义分割在自动驾驶的空间感知中起着至关重要的作用。尽管最近的文献在BEV地图理解方面取得了重大进展，但它们都是基于单智能体相机的系统。这些解决方案有时在处理复杂交通场景中的遮挡或检测远处物体时存在困难。车与车( Vehicle-to-Vehicle，V2V )通信技术使无人驾驶车辆能够共享感知信息，与单智能体系统相比，显著提高了感知性能和范围。</p>
+<p>在本文中，我们提出了CoBEVT，这是第一个能够协同生成BEV地图预测的通用多智能体多相机感知框架。为了在Transformer底层架构中高效地融合来自多视图和多智能体数据的相机特征，我们设计了一个融合的轴向注意力模块( FAX )，该模块能够稀疏地捕获视图和智能体之间的局部和全局空间交互。</p>
+<h3 id="CoBEVT"><a href="#CoBEVT" class="headerlink" title="CoBEVT"></a>CoBEVT</h3><p>第一个使用多智能体多相机传感器通过稀疏视觉转换器协作生成BEV分割地图的框架</p>
+<p>每个AV通过SinBEVT Transformer从其相机机架计算出自己的BEV，并在压缩后传输给其他AV。接收端将接收到的BEV特征变换到其坐标系下，并使用提出的FuseBEVT进行BEV级聚合。</p>
+<p><img src="/v2-f34e07352a28b095403c224b5331a71e_720w.webp" alt="CoBEVT结构图"></p>
+<p>CoBEVT结构图</p>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ul>
+<li>一个V2V通信系统，其中所有AV都可以与其他AV交换感知信息</li>
+<li>所有智能体的pose都是准确的，并且传输的消息是同步的</li>
+</ul>
+<h3 id="FAX-—-Fused-Axial-Attention"><a href="#FAX-—-Fused-Axial-Attention" class="headerlink" title="FAX — Fused Axial Attention"></a>FAX — Fused Axial Attention</h3><p>Sin BEVT和Fuse BEVT的核心组件</p>
+<p>可以在局部和全局上有效地聚合跨代理或相机视图的特征。</p>
+<p>具有很大的通用性，在不同的模态上表现出对多个感知任务的有效性，包括基于多视角相机的协同&#x2F;单智能体BEV分割和协同3D LiDAR目标检测。</p>
+<p><img src="/v2-c450b0e4bbbf9763b37df7f81681c6f3_720w.webp" alt="FAX模块"></p>
+<h3 id="SinBEVT-for-Single-agent-BEV-Feature-Computation"><a href="#SinBEVT-for-Single-agent-BEV-Feature-Computation" class="headerlink" title="SinBEVT for Single-agent BEV Feature Computation"></a>SinBEVT for Single-agent BEV Feature Computation</h3><p>通过SinBEVT Transformer从其相机机架计算出自己的BEV</p>
+<h3 id="FuseBEVT-for-Multi-agent-BEV-Feature-Fusion"><a href="#FuseBEVT-for-Multi-agent-BEV-Feature-Fusion" class="headerlink" title="FuseBEVT for Multi-agent BEV Feature Fusion"></a>FuseBEVT for Multi-agent BEV Feature Fusion</h3><p>一个简单的1x1卷积自动编码器来压缩和解压BEV特征，以降低传输数据大小</p>
+<p>FuseBEVT是一个3-D视觉transformer，可以专注地融合来自多智体的BEV特征信息</p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>摄影机追踪结果</p>
+<p>LiDAR-track results.</p>
+<p>nuScenes vehicle map-view segmentation</p>
+<p>Effect of compression rate</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+      <tags>
+        <tag>Auto_vehicle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VICOD</title>
+    <url>/2023/07/22/VICOD/</url>
+    <content><![CDATA[<h1 id="VICOD-激光雷达和摄像头的多级融合方法"><a href="#VICOD-激光雷达和摄像头的多级融合方法" class="headerlink" title="VICOD:激光雷达和摄像头的多级融合方法"></a>VICOD:激光雷达和摄像头的多级融合方法</h1><span id="more"></span>
+
+<p>论文标题：Multistage Fusion Approach of Lidar and Camera for Vehicle-Infrastructure Cooperative Object Detection</p>
+<p>2022 5th World Conference on Mechanical Engineering and Intelligent Manufacturing (WCMEIM)</p>
+<p>Paper：<a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/document/10021459">https://ieeexplore.ieee.org/document/10021459</a></p>
+<h3 id="旧的方案："><a href="#旧的方案：" class="headerlink" title="旧的方案："></a>旧的方案：</h3><p>1.使用基于基础设施的LiDAR传感器检测和跟踪十字路口的行人和车辆，分析准确的实时信息，包括行人和车辆的存在，位置，速度和方向。</p>
+<p>2.这些工作并没有合成多模态传感器数据，也没有在现实场景中得到验证。</p>
+<h3 id="该文章方案："><a href="#该文章方案：" class="headerlink" title="该文章方案："></a>该文章方案：</h3><p>VICOD：激光雷达与摄像头的多级融合方法，用于车基协同目标检测</p>
+<p>选择车侧点云和图像数据以及路侧点云数据作为输入，车侧通过特征融合生成检测框，然后与路侧数据生成的检测框完成对象级融合，投影到车侧坐标系，得到融合的检测框。与使用原始数据和提取特征的早期融合和特征级融合相比，该文方案的车-基础设施协同目标检测方案的平均精度显著高于数据集提供的基准，而该文采用的方案在保证检测精度的基础上，可以降低路侧向车侧数据传输的成本和时延。</p>
+<h3 id="数据集："><a href="#数据集：" class="headerlink" title="数据集："></a>数据集：</h3><ul>
+<li>DAIR-V2X 数据集</li>
+<li>用于车基协同自动驾驶研究的大规模、多模态、多视图数据集</li>
+<li>数据均来自北京高水平自动驾驶示范区的真实场景</li>
+</ul>
+<h3 id="VICOD结构"><a href="#VICOD结构" class="headerlink" title="VICOD结构"></a>VICOD结构</h3><p><img src="/v2-598e1685bf05e8e9cd8308e451845558_720w.webp" alt="VICOD结构图"></p>
+<ul>
+<li>车侧检测网络</li>
+<li>基础设施侧检测网络</li>
+<li>检测箱融合网络</li>
+</ul>
+<p>车辆侧利用图像和点云数据通过特征融合生成检测箱，路侧仅使用点云数据生成检测箱，投影到车侧坐标系完成与车侧生成的检测箱的物体级融合，得到融合检测箱。</p>
+<h3 id="车侧检测网络"><a href="#车侧检测网络" class="headerlink" title="车侧检测网络"></a>车侧检测网络</h3><ul>
+<li>从点云和图像中提取特征Extracting Feature from Point Clouds and Images:</li>
+<li>区域提案网络Region Proposal Network</li>
+</ul>
+<p>首先在提取的全分辨率特征上应用1 × 1卷积核，然后对其进行裁剪和尺寸调整，在两个视图中获得尺寸为3 × 3的特征裁剪，随后通过元素平均操作进行融合</p>
+<p>将融合后的特征作物送入全连接层，全连接层输出物体&#x2F;背景得分和三维包围盒的回归值。</p>
+<p>对得到的3D候选区域进行非极大值抑制( NMS )并丢弃冗余候选区域，以消除冗余候选区域。</p>
+<ul>
+<li>第二阶段检测网络Second Stage Detection Network</li>
+</ul>
+<p>类似于RPN</p>
+<h3 id="车端检测网络结构"><a href="#车端检测网络结构" class="headerlink" title="车端检测网络结构"></a>车端检测网络结构</h3><p><img src="/v2-df53bed02e01e1d1073cadebbedec842_720w.webp" alt="车端检测网络结构"></p>
+<h3 id="基础设施侧检测网络"><a href="#基础设施侧检测网络" class="headerlink" title="基础设施侧检测网络"></a>基础设施侧检测网络</h3><ul>
+<li>功能编码器网络：将点云转换为伪图像以进行 2D 卷积操作。散点算子生成伪图像</li>
+<li>区域提案网络：由二维卷积神经网络组成</li>
+<li>检测头：实现 3D 物体检测</li>
+</ul>
+<p><img src="/v2-58b88a455f5acd65cd0d85072a517bdb_720w.webp" alt="基础设施侧检测网络"></p>
+<h3 id="检测箱融合网络"><a href="#检测箱融合网络" class="headerlink" title="检测箱融合网络"></a>检测箱融合网络</h3><ul>
+<li>坐标变换和过滤</li>
+<li>匹配和组合</li>
+</ul>
+<p>相同的对象，在匹配它们后，比较它们的分数并保持结果具有更高的置信度。</p>
+<p>对于不同的对象，将它们组合在一起。随后，通过在检测结果中整合相应的更准确的信息并处理坐标变换中的误差，完成融合结果的空间补偿。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><img src="/v2-ccf76553bd49791b65cfa2eabfd40d08_720w.webp" alt="实验结果"></p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>激光雷达与摄像头的多级融合方法，用于车基协同目标检测。利用车辆侧的点云和图像数据以及路侧的点云数据，通过特征提取和区域建议网络得到相应的检测箱，输入到检测箱融合网络中，经过坐标转换、滤波和积分运算后得到最终的融合检测箱。与数据集基准相比，结果表明，该方案能够显著提高车-基础设施协同目标检测的平均精度。考虑到传感器和通信的成本，我们只使用点云数据来完成路边的物体检测，然后与车辆侧的检测结果实现后期融合。与使用原始数据或提取特征的早期融合或特征融合相比，该方案在保证检测精度的基础上，可以降低从路侧到车辆侧的数据传输成本和时延。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+      <tags>
+        <tag>Auto_vehicle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BEVFusion</title>
+    <url>/2023/07/22/BEVFusion/</url>
+    <content><![CDATA[<h1 id="BEVFusion-A-Simple-and-Robust-LiDAR-Camera-Fusion-Framework"><a href="#BEVFusion-A-Simple-and-Robust-LiDAR-Camera-Fusion-Framework" class="headerlink" title="BEVFusion: A Simple and Robust LiDAR-Camera Fusion Framework"></a>BEVFusion: A Simple and Robust LiDAR-Camera Fusion Framework</h1><span id="more"></span>
+
+<p>**整体内容概述：**融合激光雷达和相机的信息已经变成了3D目标检测的一个标准，当前的方法依赖于激光雷达传感器的点云作为查询，以利用图像空间的特征。然而，人们发现，这种基本假设使得当前的融合框架无法在发生 LiDAR 故障时做出任何预测，无论是轻微还是严重。这从根本上限制了实际场景下的部署能力。相比之下，作者提出了一个令人惊讶的简单而新颖的融合框架，称为 BEVFusion，其相机流不依赖于 LiDAR 数据的输入，从而解决了以前方法的缺点。作者的框架在正常训练设置下超越了最先进的方法。在模拟各种 LiDAR 故障的鲁棒性训练设置下，作者的框架显着超过了最先进的方法15.7%到28.9%的mAP。这是第一个处理LiDAR故障的方法，并且可以在没有任何后处理程序的情况下部署到实际场景中。代码已经开源。</p>
+<p>代码：<a href="https://link.zhihu.com/?target=https://github.com/ADLab-AutoDrive/BEVFusion">https://github.com/ADLab-AutoDrive/BEVFusion</a></p>
+<p>论文：<a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2205.13790">https://arxiv.org/abs/2205.13790</a></p>
+<p><strong>一. 背景介绍</strong></p>
+<p>基于视觉的感知任务，例如3D目标检测，一直是自动驾驶任务的一个关键点。在传统车载视觉感知系统的所有传感器中，激光雷达和摄像头通常是提供准确点云和周围世界图像特征的两个最关键的传感器。在感知系统的早期阶段，人们为每个传感器设计单独的深度模型，并通过后处理方法融合信息。一般来说，汽车无法飞行，所以人们发现生成鸟瞰图 (BEV) 已成为自动驾驶场景的标准。然而，由于缺乏深度信息，通常很难在纯图像输入上回归3D 边界框，同样，当LiDAR没有接收到足够的点时，也很难对点云上的对象进行分类。即：图像缺少激光雷达，则没有深度信息，而激光雷达缺少图像，难以进行目标识别。</p>
+<p>最近，人们设计了激光雷达和相机融合的深度网络，以更好地利用两种模式的信息。具体来说，大部分工作可以总结如下：i）给定一个或几个LiDAR点云中的点、LiDAR到世界坐标系的变换矩阵以及相机到世界坐标系的变换矩阵；ii) 人们将 LiDAR 点或proposal转换为相机世界并将其用作查询（queries），以选择对应的图像特征。这条工作线构成了最先进的 3D BEV 感知方法。然而，人们忽略的一个基本假设是，由于需要从LiDAR点生成图像查询，当前的 LiDAR-相机融合方法本质上依赖于LiDAR传感器的原始点云，如图1所示。</p>
+<p><img src="/v2-cce4bb7c1206e8a5707756c6dadc9276_720w.webp" alt="框架对比"></p>
+<p>图1 框架对比。以前的融合方法可以大致分为 (a) 点级point-level融合机制，将图像特征投影到原始点云上，即找到点云和图像特征对应的部分，融合信息，以及 (b) 特征级融合机制，分别在每个视图图像上投影LiDAR特征或proposal以提取RGB信息。(c) 相比之下，作者提出一个新框架，相机和lidar的输入分开</p>
+<p>作者认为，LiDAR和相机融合的理想框架应该是，无论彼此是否存在，单个模态的每个模型都不应该失败，但同时拥有两种模态将进一步提高感知准确性。为此，作者提出了一个令人惊讶的简单而有效的框架，它解决了当前方法的LiDAR相机融合的依赖性，称为BEVFusion。</p>
+<p><strong>二、相关的工作</strong></p>
+<p>在这里，作者根据输入模式对3D检测方法进行广泛分类。</p>
+<p>仅仅基于相机模态的3D检测方法、仅仅基于激光雷达的3D检测方法、以及激光雷达和相机融合的3D目标检测方法。当前融合机制的一个被忽视的假设是它们严重依赖LiDAR点云，事实上，如果缺少LiDAR 输入，这些方法将不可避免地失败。</p>
+<p><strong>三．BEVFusion：一个通用的激光雷达和相机融合的框架</strong></p>
+<p>如图2所示，作者详细介绍了他们提出的用于3D目标检测的框架BEVFusion。</p>
+<p><img src="/v2-bb4f4c955179af52582870499e12401d_720w.webp" alt="BEVFusion框架"></p>
+<p>图2 BEVFusion框架。两个流分别提取特征并将它们转换到相同的BEV空间：i）将相机视图特征投影到3D车身坐标以生成相机BEV特征；ii) 3D backbone从点云中提取LiDAR BEV特征。然后融合两种模态的BEV特征。最后，基于融合的BEV特征构建特定任务的头部，并预测3D目标。</p>
+<p>3.1 相机流架构：从多视图图像到BEV空间</p>
+<p>作者从Lift-Splat-Shoot (LSS)开始，适度调整LSS以提高性能。相机图像编码、相机视角投视模块等。</p>
+<p><img src="/v2-d806be2b954e739f32796ca789f48258_720w.png" alt="公式"></p>
+<p><img src="/v2-4dc01a78c5cd0935b03104cb4be0952a_720w.webp" alt="视图投影"></p>
+<p>3.4 检测头</p>
+<p>由于作者框架的最后一个功能是在BEV空间中，可以利用早期论文中流行的检测头模块。</p>
+<p><strong>四．实验</strong></p>
+<p>在本节中，作者展示了实验设置和BEVFusion的性能。</p>
+<p><img src="/v2-506b8997447c42adc617252181acafb5_720w.webp" alt="泛化能力"></p>
+<p>表1 BEVFusion的泛化能力。</p>
+<p>4.2 泛化能力</p>
+<p>BEVFusion框架可以显着提高这些仅LiDAR方法的性能。融合方案将PointPillars提高了18.4% mAP和10.6% NDS，CenterPoint和TransFusion-L提高了3.0%~7.1% mAP。</p>
+<p>4.3 和其他方法的比较</p>
+<p><img src="/v2-3d9033089d60c2ac281732ab1ce51d81_720w.webp" alt="测试集结果"></p>
+<p>表2 上面是验证集结果，下面是测试集结果</p>
+<p>4.4 鲁棒性实验</p>
+<p><img src="/v2-dc859c8c5f9d7834d8671aa8197cf0b3_720w.webp" alt="鲁棒性可视化"></p>
+<p>图4 BEV视角下可视化点云</p>
+<p><img src="/v2-0356c639ecdc0810cbf9893388cd0932_720w.webp" alt="有限LiDAR视场结果"></p>
+<p>表3 有限LiDAR视场鲁棒性设置的结果。</p>
+<p><img src="/v2-8b8bd0c0f1fc31162cc348553de65f97_720w.webp" alt="目标失败案例结果"></p>
+<p>表4 目标失败案例的鲁棒性设置结果。</p>
+<p>4.4.2 对相机故障的鲁棒性</p>
+<p><img src="/v2-792f2698d32ed7e303783757918af7b3_720w.webp" alt="相机故障结果"></p>
+<p>表5 相机故障案例的鲁棒性设置结果。</p>
+<p>4.5 消融分析</p>
+<p><img src="/v2-4edfabd0e0919a3ecbf8eddd43bb2ea8_720w.webp" alt="相机流消融"></p>
+<p>表6 相机流消融分析</p>
+<p><img src="/v2-d17648d126a0db9451fb39430e527da6_720w.webp" alt="融合模块消融"></p>
+<p>表7 融合模块消融分析</p>
+<p><strong>五 总结</strong></p>
+<p>在本文中，作者介绍了BEVFusion，这是一个非常简单但独特的 LiDAR 相机融合框架，它解开了之前方法对LiDAR相机融合的依赖性。作者的框架包括两个独立的流，它们将原始相机和LiDAR传感器输入编码到同一BEV空间中的特征中，然后是一个简单的模块来融合这些特征，以便它们可以传递到现代任务预测头架构中。广泛的实验证明了作者的框架对各种相机和激光雷达故障的强大鲁棒性和泛化能力。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+      <tags>
+        <tag>Auto_vehicle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mininet1</title>
+    <url>/2022/09/13/mininet1/</url>
+    <content><![CDATA[<p>安装mininet坑</p>
+<span id="more"></span>
+
+<h3 id="1-连接不上git-clone-git-github-com-mininet-mininet"><a href="#1-连接不上git-clone-git-github-com-mininet-mininet" class="headerlink" title="1.连接不上git clone git:&#x2F;&#x2F;github.com&#x2F;mininet&#x2F;mininet"></a>1.连接不上git clone git:&#x2F;&#x2F;github.com&#x2F;mininet&#x2F;mininet</h3><p>网络问题，挂上蓝灯代理依然不行</p>
+<p>解决方案：直接从github上下载</p>
+<p>github.com&#x2F;mininet&#x2F;mininet</p>
+<p>修改mininet-master文件名为mininet</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd mininet</span><br><span class="line">util/install.sh -a</span><br><span class="line">sudo mn --test pingall</span><br></pre></td></tr></table></figure>
+
+<p>此后可能出现问题openflow连接失败，见下一条</p>
+<h3 id="2-openflow"><a href="#2-openflow" class="headerlink" title="2.openflow"></a>2.openflow</h3><p>多尝试几次在mininet文件下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">util/install.sh -0  #安装openflow1.0</span><br><span class="line">或者</span><br><span class="line">util/install.sh -3  #安装openflow1.3</span><br></pre></td></tr></table></figure>
+
+<p>此后会出现问题pox连接不上</p>
+<h3 id="3-pox"><a href="#3-pox" class="headerlink" title="3.pox"></a>3.pox</h3><p>需要使用sudo权限</p>
+<p>尝试只安装pox</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo util/install.sh -p</span><br></pre></td></tr></table></figure>
+
+<p>后缀为p代表只安装pox</p>
+<p>执行install.sh脚本</p>
+<p>后缀分别有</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-a 默认全部安装</span><br><span class="line">-b 安装benchmark：oflops</span><br><span class="line">-c安装核心之后清空已有配置</span><br><span class="line">-d 删除某些敏感文件</span><br><span class="line">-e 安装Mininet开发依赖</span><br><span class="line">-f 安装OpenFolw协议支持</span><br><span class="line">-h 打印帮助信息</span><br><span class="line">-i 安装indigo Virtual Switch</span><br><span class="line">-k 安装新的内核</span><br><span class="line">-m 从源目录安装open vSwitch内核模块</span><br><span class="line">-n 安装Mininet依赖和核心文件</span><br><span class="line">-p 安装pox控制器</span><br><span class="line">-r 删除已存在的open vSwitch包</span><br><span class="line">-s 依赖源码</span><br><span class="line">-t 完成其他的虚拟机创建任务</span><br><span class="line">-v 安装Open switch</span><br><span class="line">-V 指定Open vSwitch的版本</span><br><span class="line">-w 安装Wireashark解析器</span><br><span class="line">-x 安装NOX Classic控制器</span><br><span class="line">-y 安装Ryu控制器</span><br><span class="line">-0 安装openflow1.0</span><br><span class="line">-3 安装openflow1.3</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-install-ryu"><a href="#4-install-ryu" class="headerlink" title="4.install ryu"></a>4.install ryu</h3><p>安装其他版本python</p>
+<p>本人安装python3.10.2</p>
+<p>并指定优先级（除anaconda3中的3.7外）</p>
+<p>步骤：</p>
+<p>1、在Python官网下载想要安装Python版本的压缩包：<a href="https://www.python.org/">https://www.python.org/</a></p>
+<p>2、解压压缩包：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -xzvf Python-3.10.2.tgz</span><br></pre></td></tr></table></figure>
+
+<p>3、指定安装路径</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd Python-3.10.2</span><br><span class="line">./configure --prefix=/usr/bin/python3.10 </span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>设置默认Python版本<br>update-alternatives系列命令对一个候选列表进行操作。</p>
+<p>在这个候选列表中，我们可以：（1）添加候选Python版本；（2） 删除列表中已有的Python版本。</p>
+<p>通过这个列表，我们可以：（1）手动为系统指定默认Python版本；（2）通过配置权重自动指定默认Python版本。</p>
+<p>以root权限操作：</p>
+<p>查看候选列表中已有的Python版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --list python</span><br></pre></td></tr></table></figure>
+
+<p>添加候选Python版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 2</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3.10/bin/python3.10 3 # 自己后来安装的Python</span><br></pre></td></tr></table></figure>
+
+<p>语法：–install &lt;链接&gt; &lt;名称&gt; &lt;路径&gt; &lt;优先级&gt;，&lt;链接&gt; 需保持一致。优先级数字越大越高。</p>
+<p>删除列表中已有的Python版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --remove python /usr/bin/python2.7</span><br></pre></td></tr></table></figure>
+
+<p>查看目前列表中每个Python版本的配置情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --config python</span><br></pre></td></tr></table></figure>
+
+<p>选择0，自动以优先级数字最大的为默认python版本，选择其他则手动指定版本。</p>
+<p>此后，使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip3 install ryu</span><br></pre></td></tr></table></figure>
+
+<p>即可安装ryu</p>
+<p>推测原因：ubuntu16自带的python出现了包的抵触</p>
+<h3 id="5-testbed无法运行run-sh"><a href="#5-testbed无法运行run-sh" class="headerlink" title="5. testbed无法运行run.sh"></a>5. testbed无法运行run.sh</h3><ol>
+<li>bad for loop variable</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd testbed</span><br><span class="line">sudo ./run.sh</span><br></pre></td></tr></table></figure>
+
+<p>失败，显示bad for loop variable</p>
+<p>解决方法：加上#!&#x2F;bin&#x2F;bash</p>
+<ol start="2">
+<li>10461挂起 sudo：python找不到命令</li>
+</ol>
+<p>缺少pbr</p>
+<h3 id="补充：mininet使用"><a href="#补充：mininet使用" class="headerlink" title="补充：mininet使用"></a>补充：mininet使用</h3><h6 id="3-启动Mininet"><a href="#3-启动Mininet" class="headerlink" title="3.启动Mininet"></a>3.启动Mininet</h6><p>安装完成后，通过sudo mn命令启动mininet，更多相关主要命令参考如下：</p>
+<h6 id="1-主要网络构建启动命令"><a href="#1-主要网络构建启动命令" class="headerlink" title="1. 主要网络构建启动命令"></a>1. 主要网络构建启动命令</h6><p>–topo 制定拓扑类型或文件<br>–custom 自建拓扑<br>–switch 设置交换机类型<br>–controller 设置控制器类型<br>–mac 自动设置主机mac</p>
+<h6 id="2-内部交互主要命令"><a href="#2-内部交互主要命令" class="headerlink" title="2. 内部交互主要命令"></a>2. 内部交互主要命令</h6><p>dump 输出节点信息<br>net 查看网络拓扑信息<br>nodes 查看全部节点信息<br>dpctl 操作datapath<br>iperf 制定节点之间的tcp<br>h1 ping h2 测试主机的连通性</p>
+<h6 id="4-Mininet简单示例"><a href="#4-Mininet简单示例" class="headerlink" title="4.Mininet简单示例"></a>4.Mininet简单示例</h6><ol>
+<li><p>单一拓扑<br>sudo mn –topo&#x3D;single，3<br>其中3为主机数目的设定参数，可更换其他。</p>
+</li>
+<li><p>线形拓扑<br>sudo mn –topo&#x3D;linear，4<br>对于线性拓扑，数字代表交换机数目和主机数目。</p>
+</li>
+<li><p>树形拓扑<br>sudo mn –topo&#x3D;tree，depth&#x3D;2，fanout&#x3D;2<br>depth代表深度，fanout代表扇出，即深度代表交换机的深度，扇出代表每个交换机下挂载主机数目。</p>
+</li>
+<li><p>自定义拓扑<br>sudo mn –custom file.py –topo mytopo<br>file.py代表自己编写的拓扑脚本文件</p>
+</li>
+</ol>
+<p>参考：<a href="https://www.jianshu.com/p/71e29d487ea9">https://www.jianshu.com/p/71e29d487ea9</a></p>
+]]></content>
+      <categories>
+        <category>problem</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>scaleOIJ</title>
+    <url>/2023/07/24/scaleOIJ/</url>
+    <content><![CDATA[<h1 id="Scalable-OIJ-on-Modern-Multicore-Processors-in-OpenMLDB"><a href="#Scalable-OIJ-on-Modern-Multicore-Processors-in-OpenMLDB" class="headerlink" title="Scalable OIJ on Modern Multicore Processors in OpenMLDB"></a>Scalable OIJ on Modern Multicore Processors in OpenMLDB</h1><span id="more"></span>
+
+<h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>● 该研究基于OpenMLDB平台，旨在提高现代多核服务器上进行OIJ的延迟和吞吐量。</p>
+<p>● Online Interval Join（OIJ）是一种常见的基于时间数据库的区间连接方法，用于在数据流中连接具有重叠时间区间的元组。然而，现有的OIJ解决方案（key-OIJ）在处理大规模数据时存在性能瓶颈，因此需要进行优化。</p>
+<p>● 本研究通过实验分析现有解决方案的设计空间和关键问题，并提出了一种新的解决方案——Scale-OIJ，以提高OIJ的性能。</p>
+<p>● Dataset：Both real-world and synthetic</p>
+<p>● Indicator: Throughput(mean value); Lateness(CDF); Unbalancedness(standard deviation of workloads); LCC miss(last-level cache miss)</p>
+<h3 id="简单对比"><a href="#简单对比" class="headerlink" title="简单对比"></a>简单对比</h3><p>● 在文本中，作者提出了一种名为Scale-OIJ的新方法，用于实现可扩展的在线区间连接。与现有的OIJ解决方案Key-OIJ相比，Scale-OIJ具有以下区别：</p>
+<p>● Scale-OIJ：<br>● - 使用SWMR(Single-Writer-Multiple-Reader) Time-Travel数据结构，可以在不锁定数据的情况下进行并发读写操作。<br>● - 使用动态平衡调度，可以在多个线程之间动态分配工作负载，以实现更好的负载均衡。<br>● - 使用增量窗口聚合，可以避免重复计算重叠窗口，从而提高计算效率。</p>
+<p>● Key-OIJ：<br>● - 使用基于键的分区并行化策略，可以将输入元组并发地与相同键的缓冲区连接。<br>● - 为了处理潜在的乱序流到达，元组只能在一段时间后才能被删除。</p>
+<h3 id="传统方法的缺点—key-OIJ"><a href="#传统方法的缺点—key-OIJ" class="headerlink" title="传统方法的缺点—key-OIJ"></a>传统方法的缺点—key-OIJ</h3><p>● 1. 处理无序数据的成本高昂<br>● 2. 负载不平衡<br>● 3. 冗余计算</p>
+<h3 id="新方法—-scale-OIJ"><a href="#新方法—-scale-OIJ" class="headerlink" title="新方法— scale-OIJ"></a>新方法— scale-OIJ</h3><p>● 整体上，该设计遵循基于键的分区模型（Key-OIJ），但允许根据工作负载分布和相同分区的共享处理来动态重新分区数据。</p>
+<p>● Time-Travel Data Structure</p>
+<p>为了实现高效的窗口数据检索，文章设计了一种基于double-layered skip-list的数据结构。</p>
+<p>时间复杂度：O(logNkey) + O(logNts)</p>
+<p>SWMR Concurrency Property：具有相同键的元组可以由多个连接器（joiners）共同处理</p>
+<p>● Dynamic Schedule</p>
+<p>shared Processing：通过共享处理框架和虚拟团队的设计，连接器可以共享具有相同键的元组。</p>
+<p>Dynamic Schedule：共享处理框架允许在不迁移数据的情况下动态重新分区数据。</p>
+<p>● Incremental Online Interval Join</p>
+<p>重叠窗口问题：在进行区间连接时，特别是当窗口较大时，存在邻近窗口可能重叠的高概率。</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h5 id="Algorithm1-Search-A-Tuple"><a href="#Algorithm1-Search-A-Tuple" class="headerlink" title="Algorithm1:Search A Tuple"></a>Algorithm1:Search A Tuple</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: &lt;key, ts&gt;</span><br><span class="line">Output: the node containing the matched tuple</span><br><span class="line">1 node ← HEAD</span><br><span class="line">2 level ← HEIGHT</span><br><span class="line">3 while true do</span><br><span class="line">4 next = load_acquire (node[level].next)</span><br><span class="line">5 if next == NULL || next.key &gt; key then</span><br><span class="line">6 if level &lt;= 0 then</span><br><span class="line">7 return node</span><br><span class="line">8 level = level − 1</span><br><span class="line">9 else if next.key == key then</span><br><span class="line">10 return node</span><br><span class="line">11 else</span><br><span class="line">12 node = next</span><br><span class="line">13 return node</span><br></pre></td></tr></table></figure>
+
+<p>skiplist.h中使用 FindEqual 方法来寻找 skiplist 中的一个 tuple：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Node&lt;K, V&gt;* <span class="title">FindEqual</span><span class="params">(<span class="type">const</span> K&amp; key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K, V&gt;* node = head_;</span><br><span class="line">    <span class="type">uint8_t</span> level = <span class="built_in">GetMaxHeight</span>() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        Node&lt;K, V&gt;* next = node-&gt;<span class="built_in">GetNext</span>(level);</span><br><span class="line">        <span class="keyword">if</span> (next == <span class="literal">NULL</span> || <span class="built_in">compare_</span>(next-&gt;<span class="built_in">GetKey</span>(), key) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (level &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> node;</span><br><span class="line">            &#125;</span><br><span class="line">            level--;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            node = next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Algorithm2-Put-A-New-Tuple"><a href="#Algorithm2-Put-A-New-Tuple" class="headerlink" title="Algorithm2: Put A New Tuple"></a>Algorithm2: Put A New Tuple</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: &lt;key, ts, x&gt;</span><br><span class="line">Output: N.A.</span><br><span class="line">// search the position to insert</span><br><span class="line">1 node ← HEAD</span><br><span class="line">2 level ← HEIGHT</span><br><span class="line">3 while true do</span><br><span class="line">4 next = node[level].next</span><br><span class="line">5 if next == NULL || next.key &gt;= key then</span><br><span class="line">6 pre[level] = node</span><br><span class="line">7 if level &lt;= 0 then</span><br><span class="line">8 break</span><br><span class="line">9 level = level − 1</span><br><span class="line">10 else</span><br><span class="line">11 node = next</span><br><span class="line">// insert into the skiplist</span><br><span class="line">12 new_node = NewNode(x, random_height)</span><br><span class="line">13 for i ← 0 to height do</span><br><span class="line">14 store_relaxed(new_node[i].next, pre[i].next)</span><br><span class="line">15 for i ← 0 to height do</span><br><span class="line">16 store_release(pre[i].next, new_node)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Algorithm3-Dynamic-Schedule"><a href="#Algorithm3-Dynamic-Schedule" class="headerlink" title="Algorithm3: Dynamic Schedule"></a>Algorithm3: Dynamic Schedule</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: Load distribution of all the keys, current key partition schedule S</span><br><span class="line">Output: optimized key partition schedule</span><br><span class="line">1 Snew = S</span><br><span class="line">2 while true do</span><br><span class="line">3 calculate the workload Wi for every joiner Ji according to Equation 3</span><br><span class="line">4 select the maximum and minimum joiners:</span><br><span class="line">  Jmax = arg maxi Wi</span><br><span class="line">  Jmin = arg mini Wi</span><br><span class="line">5 add all key partitions ∀pj ∈ Jmax → priority queue PQJmax</span><br><span class="line">6 for pi ← PQJmax.top() do</span><br><span class="line">7 replicate pi to Jmin in the new schedule Snew</span><br><span class="line">8 if last_unbalancedness − unbalancedness &gt; δ then</span><br><span class="line">9 break</span><br><span class="line">10 PQJmax.pop()</span><br><span class="line">11 if Snew does not change then</span><br><span class="line">12 break</span><br><span class="line">13 ∀k |xk| = λ × |xk|</span><br><span class="line">14 return the new schedule Snew</span><br></pre></td></tr></table></figure>
+
+<p><img src="/968b9ceba0c63a5cf96ee3ea0e8ae65.png" alt="Scale-OIJ架构"></p>
+<h3 id="Dynamic-schedule"><a href="#Dynamic-schedule" class="headerlink" title="Dynamic schedule"></a>Dynamic schedule</h3><p>Dynamic Schedule算法通过收集运行时的数据分布统计信息，可以推导出所有Joiner的工作负载分布情况，从而可以定期重新调度分区分配。</p>
+<h4 id="Shared-Processing"><a href="#Shared-Processing" class="headerlink" title="Shared Processing"></a>Shared Processing</h4><p>Shared Processing框架使用了一种虚拟团队的概念，将具有相同键的元组分配给多个Joiner共同处理。</p>
+<h4 id="Virtual-Team"><a href="#Virtual-Team" class="headerlink" title="Virtual Team"></a>Virtual Team</h4><p>Virtual Team是由具有相同键的元组随机分配给多个Joiner组成的。Joiner向虚拟团队中的所有成员公开读取(R)权限，而将写入(W)权限保留给自己。</p>
+<h4 id="Dynamic-schedule-1"><a href="#Dynamic-schedule-1" class="headerlink" title="Dynamic schedule"></a>Dynamic schedule</h4><p>动态调度框架中重新调度的目标是减少Joiner之间工作负载调度的不平衡性。</p>
+<p><img src="/30f8251ce7c6b4b55a27993e63183e2.png" alt="动态调度公式"></p>
+<p>算法3的启发式解决方案的基本步骤是：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1）计算每个Joiner的工作负载，并选择具有最大工作负载Jmax和最小工作负载Jmin的Joiner（第3-4行）。</span><br><span class="line">2）尝试将Jmax中具有最大工作负载的分区复制到Jmin中（第5-7行）。</span><br><span class="line">3）如果不平衡度降低了一个阈值，就退出（第8-9行），并重复步骤1）-2）。</span><br><span class="line">4）如果在迭代后新计划中没有变化，则停止探索（第11-12行）。</span><br><span class="line">5）最后衰减统计数据（第13行）。</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+      <tags>
+        <tag>Streaming</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LSTF survey</title>
+    <url>/2023/07/22/lstfsurvey/</url>
+    <content><![CDATA[<p>Time Series Forecasting blend in Online Interval Join</p>
+<span id="more"></span>
+
+<h2 id="背景Background"><a href="#背景Background" class="headerlink" title="背景Background"></a>背景Background</h2><p>流式处理系统中，一般使用key-partitioned based join 算法（key-OIJ）所处理的信息主要为：金融、风控、推荐等领域的毫秒级实时流式特征计算</p>
+<p>Scalable Online Interval Join on Modern Multicore Processors in OpenMLDB中提出的scale-OIJ解决了1.work load不平衡数据倾斜； 2.重叠窗口带来的重复计算； 3.数据无序带来的数据扫描</p>
+<h2 id="动机Motivation"><a href="#动机Motivation" class="headerlink" title="动机Motivation"></a>动机Motivation</h2><p>通过时序预测的方法</p>
+<p>这个RP的主要目标是通过引入时序预测技术来降低OIJ的delay。我们的研究关注于使用时序预测方法来预测时间间隔数据的发展趋势，并利用这些预测结果来提前进行连接操作，从而减少实际数据到达所需的等待时间。</p>
+<p>openMLDB需要较低的时延以满足需求</p>
+<p>scale-OIJ是将两个数据流进行聚合操作。因此我们可以对数据流可以使用time series forecasting进行提前预测，提前进行连接操作来降低时延</p>
+<h2 id="先前的研究Related-work"><a href="#先前的研究Related-work" class="headerlink" title="先前的研究Related work"></a>先前的研究Related work</h2><p>在时序预测方面，基于统计模型的方法被广泛应用于预测时间序列数据。例如，ARIMA模型结合自回归、差分和移动平均等技术来建模时间序列的趋势和季节性。指数平滑法（ETS）则利用加权平均和趋势调整来对时间序列数据进行预测。</p>
+<p>基于深度学习的时序预测方法在近年来得到了广泛关注。深度学习模型如循环神经网络（RNN）、长短期记忆网络（LSTM）和Transformer等，具有捕捉时间序列复杂模式和长期依赖关系的能力。</p>
+<p>近三年，使用MLP模型来进行时序预测的文章层出不穷，但是其是否绝对比传统方法效果好仍存在质疑。</p>
+<h2 id="模型选择-Model"><a href="#模型选择-Model" class="headerlink" title="模型选择 Model"></a>模型选择 Model</h2><p>在本研究中，我们将选择适合于时间序列数据预测的模型。我们将考虑传统的统计模型如ARIMA、指数平滑法（ETS）以及基于深度学习的模型如RNN、LSTM和Transformer等。</p>
+<p>分别选出传统统计模型中的”轻”方案和使用机器学习的”重”方案。</p>
+<h3 id="传统·统计方法"><a href="#传统·统计方法" class="headerlink" title="传统·统计方法"></a>传统·统计方法</h3><h4 id="1-ARIMA-差分自回归移动平均模型"><a href="#1-ARIMA-差分自回归移动平均模型" class="headerlink" title="1.ARIMA 差分自回归移动平均模型"></a>1.ARIMA 差分自回归移动平均模型</h4><p>ARIMA 是用于单变量时间序列数据预测的最广泛使用方法之一</p>
+<p>优点：模型十分简单，只需要内生变量而不需要借助其他外生变量</p>
+<p>缺点：要求时序数据是稳定的；本质上只能捕捉线性关系，不能捕捉非线性关系</p>
+<h4 id="2-ETS指数平滑法"><a href="#2-ETS指数平滑法" class="headerlink" title="2.ETS指数平滑法"></a>2.ETS指数平滑法</h4><p>基本原理：指数平滑法是移动平均法中的一种，其特点在于给过去的观测值不一样的权重，即较近期观测值的权数比较远期观测值的权数要大。</p>
+<p>指数平滑法的基本公式：St&#x3D;a*yt+(1-a)*St-1</p>
+<h3 id="深度学习方法"><a href="#深度学习方法" class="headerlink" title="深度学习方法"></a>深度学习方法</h3><h4 id="FEDformer"><a href="#FEDformer" class="headerlink" title="FEDformer"></a>FEDformer</h4><ul>
+<li><strong>paper</strong>：Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting</li>
+<li><strong>作者</strong>: [阿里巴巴达摩院]</li>
+<li><strong>会议&#x2F;期刊</strong>: [ICML]</li>
+<li><strong>年份</strong>: [2022]</li>
+<li><strong>code</strong>：<a href="https://github.com/MAZiqing/FEDformer">https://github.com/MAZiqing/FEDformer</a></li>
+<li><strong>摘要</strong>: FEDformer模型在多个真实世界数据集上都表现出了很好的性能，具有较低的计算复杂度和内存复杂度，适用于大规模时间序列预测任务。</li>
+<li><strong>贡献</strong>：<ol>
+<li>提出了一种基于频域增强的分解Transformer架构，采用专家混合技术进行季节性趋势分解</li>
+<li>提出了傅里叶增强块和小波增强块</li>
+<li>通过随机选择一定数量的傅里叶分量，该模型实现了线性计算复杂度和内存成本</li>
+<li>在6个基准数据集上进行了广泛的实验，分别提高了14.8%和22.6%</li>
+</ol>
+</li>
+</ul>
+<p>FEDformer( Frequency Enhanced Decomposed Transformer)是一种针对长期序列预测的新型Transformer模型。融合transformer和经典信号处理方法。</p>
+<h6 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h6><p><img src="/4a86682f91355cefbb7d3631a0a45a7.png" alt="FEDformer模型"></p>
+<p>Encoder部分：输入经过两个MOE Decomp层，每层将信号分解为S和T，S被传递给接下来的层学习，并最终传给解码器。T被舍弃</p>
+<p>Decoder部分：Encoder的输入经过三个MOE Decomp层分解为S和T，S传递给接下来的层进行学习，通过频域Attention层对编码器和解码器的S项进行频域关联性学习，T分量则进行累加最终加回给S项以还原原始序列</p>
+<h6 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h6><p>频域学习模块 FEB：采用一个全连接层R作为可学习的参数。</p>
+<p>频域注意力模块 FEA：将来自编码器和解码器的信号进行cross attention操作。</p>
+<p>周期-趋势分解模块 MOE Decomp：将序列分解为S和T，并且分解不止一次，反复分解。</p>
+<p>前向传播模块 Feed Forward。</p>
+<h4 id="TIDE"><a href="#TIDE" class="headerlink" title="TIDE"></a>TIDE</h4><ul>
+<li>Long-term Forecasting with TiDE: Time-series Dense Encoder</li>
+<li><strong>作者</strong>: [GOOGLE]</li>
+<li><strong>年份</strong>: [2023]</li>
+<li><strong>摘要</strong>: 提出TiDE模型（新型多层感知器（MLP）编码器-解码器模型），整个模型没有任何注意力机制、RNN或CNN，完全由全连接组成。</li>
+<li><strong>code</strong>：<a href="https://github.com/google-research/google-research/tree/master/tide">https://github.com/google-research/google-research/tree/master/tide</a></li>
+<li><strong>comment</strong>：TIDE相对于其他模型，其没有使用自注意力机制，而且准确率很高，且速度快</li>
+</ul>
+<p><img src="/v2-082a1616973b0539cda4e63e08893840_b.jpg" alt="TiDE模型"></p>
+<h6 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h6><p>TiDE整个模型结构全部由MLP组成，重点解决之前线性模型无法建模预测窗口与历史窗口非线性关系、无法有效建模外部变量等问题。</p>
+<p>模型的核心基础组件是Residual Block。模型整体可以分为<strong>Feature Projection、Dense Encoder、Dense Decoder、Temporal Decoder</strong>四个部分。</p>
+<h4 id="FiLM"><a href="#FiLM" class="headerlink" title="FiLM:"></a>FiLM:</h4><ul>
+<li>Frequency improved Legendre Memory Model for Long-term Time Series Forecasting</li>
+<li><strong>作者</strong>: [Yifan Guo, Zhiwen Yu, Jianxin Li, Shenghua Liu]</li>
+<li><strong>会议&#x2F;期刊</strong>: [NeurIPS]</li>
+<li><strong>年份</strong>: [2022]</li>
+<li><strong>code</strong>：<a href="https://github.com/tianzhou2011/FiLM/">https://github.com/tianzhou2011/FiLM/</a></li>
+<li><strong>comment</strong>：使用勒让德多项式投影，在高维空间中寻找其特征，增加准确率，对于LSTF效果不错</li>
+</ul>
+<h6 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h6><ol>
+<li>提出了一种FiLM模型，它采用专家混合的方法进行多尺度时间序列特征提取。</li>
+<li>重新设计了Legendre Projection Unit (LPU)。</li>
+<li>提出了一种Frequency Enhanced Layers (FEL)方法。</li>
+<li>在多个领域的六个基准数据集上进行了大量实验，提高了19.2%和26.1%的性能。</li>
+</ol>
+<h4 id="DeepTime"><a href="#DeepTime" class="headerlink" title="DeepTime"></a>DeepTime</h4><ul>
+<li>Deep Time-Index Meta-Learning for Non-Stationary Time-Series Forecasting</li>
+<li><strong>作者</strong>: [Gerald Woo ，Chenghao Liu ，Doyen Sahoo ， Akshat Kumar ，Steven Hoi ]</li>
+<li><strong>年份</strong>: [2022]</li>
+<li><strong>code</strong>：<a href="https://github.com/salesforce/DeepTime">https://github.com/salesforce/DeepTime</a></li>
+<li><strong>comment</strong>：使用元数据学习方法，不需要进行内部梯度下降，因此可以避免梯度消失和梯度爆炸等问题</li>
+</ul>
+<h4 id="Autoformer"><a href="#Autoformer" class="headerlink" title="Autoformer"></a>Autoformer</h4><ul>
+<li>Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting</li>
+<li><strong>作者</strong>: [Haixu Wu, Jiehui Xu, Jianmin Wang, Mingsheng Long ]</li>
+<li><strong>年份</strong>: [2022]</li>
+<li><strong>code</strong>：<a href="https://github.com/thuml/Autoformer">https://github.com/thuml/Autoformer</a></li>
+<li><strong>comment</strong>：自相关机制取代自注意力机制。Autoformer通过渐进式分解和序列级连接，应对复杂时间模式以及信息利用瓶颈，大幅提高了长时预测效果。</li>
+</ul>
+<p><img src="/v2-56dd4ca871cb71611561c2bf2bd1ab24_b.jpg" alt="Autoformer"></p>
+<h5 id="AUTOformer创新"><a href="#AUTOformer创新" class="headerlink" title="AUTOformer创新"></a>AUTOformer创新</h5><p>分解架构：突破将时序分解作为预处理的传统方法，设计序列分解单元以嵌入深度模型，实现渐进式地预测。</p>
+<p><strong>自相关（Auto-Correlation）机制</strong>：基于随机过程理论，丢弃点向连接的自注意力机制，实现序列级连接的自相关机制。</p>
+<p>在能源、交通、经济、气象、疾病五大领域取得了38%的大幅效果提升。</p>
+<h4 id="Informer"><a href="#Informer" class="headerlink" title="Informer"></a>Informer</h4><ul>
+<li>Beyond Efficient Transformer for Long Sequence Time-Series Forecasting</li>
+<li><strong>作者</strong>: [Haoyi Zhou, Shanghang Zhang, Jieqi Peng, Shuai Zhang, Jianxin Li, Hui Xiong, Wancai Zhang]</li>
+<li><strong>会议&#x2F;期刊</strong>: [AAAI]</li>
+<li><strong>年份</strong>: [2021]</li>
+<li><strong>code</strong>：<a href="https://github.com/zhouhaoyi/Informer2020?utm_source=catalyzex.com">https://github.com/zhouhaoyi/Informer2020</a></li>
+<li><strong>贡献</strong>:<ol>
+<li>提出了ProbSparse自注意机制，实现了O(L log L)的时间复杂度</li>
+<li>提出了自注意力蒸馏操作</li>
+<li>提出了生成式解码器，只需一步即可获得长序列输出</li>
+</ol>
+</li>
+<li><strong>comment</strong>：主要是改善了transformer在LSTF上表现得不足，并且具有优异的时间和空间复杂度。</li>
+</ul>
+<h5 id="methodology"><a href="#methodology" class="headerlink" title="methodology"></a>methodology</h5><p><strong>1.高效self-attention机制</strong></p>
+<p><strong>2.编码器：允许在内存使用限制下处理更长的输入序列</strong></p>
+<p><strong>3.解码器：通过一个前向过程生成长序列输出</strong></p>
+<p><img src="/v2-03ba0f2b93e5756396cb38ac474883b0_b.jpg" alt="Informer模型"></p>
+<h4 id="Pyraformer"><a href="#Pyraformer" class="headerlink" title="Pyraformer"></a>Pyraformer</h4><ul>
+<li>Low-Complexity Pyramidal Attention for Long-Range Time Series Modeling and Forecasting</li>
+<li><strong>作者</strong>: [Shizhan Liu, Hang Yu, Cong Liao, Jianguo Li, Weiyao Lin, Alex X. Liu, and Schahram Dustdar]</li>
+<li><strong>会议&#x2F;期刊</strong>: [ICLR]</li>
+<li><strong>年份</strong>: [2022]</li>
+<li><strong>code</strong>：<a href="https://github.com/ant-research/Pyraformer">https://github.com/ant-research/Pyraformer</a></li>
+<li><strong>comment</strong>：Pyraformer的时间和空间复杂度较低，同时可以同时捕捉不同范围的时间依赖关系。</li>
+</ul>
+<h4 id="N-HiTS"><a href="#N-HiTS" class="headerlink" title="N-HiTS"></a>N-HiTS</h4><ul>
+<li>Neural Hierarchical Interpolation for Time Series Forecasting</li>
+<li><strong>作者</strong>: [Cristian Challu, Kin G. Olivares, Boris N. Oreshkin, Federico Garza, Max Mergenthaler-Canseco, Artur Dubrawski]</li>
+<li><strong>会议&#x2F;期刊</strong>: [AAAI]</li>
+<li><strong>年份</strong>: [2023]</li>
+<li><strong>code</strong>：<a href="https://github.com/Nixtla/neuralforecast">https://github.com/Nixtla/neuralforecast</a></li>
+<li><strong>comment</strong>：NBEATS模型主要是对于LSTF有着重的提升</li>
+</ul>
+<h6 id="Multi-Rate-Data-Sampling"><a href="#Multi-Rate-Data-Sampling" class="headerlink" title="Multi-Rate Data Sampling"></a>Multi-Rate Data Sampling</h6><p>用下采样（时域上的最大池化）将时间序列采样为多种粒度的序列。</p>
+<h6 id="Hierarchical-Interpolation"><a href="#Hierarchical-Interpolation" class="headerlink" title="Hierarchical Interpolation"></a>Hierarchical Interpolation</h6><p>和下采样是对应的，在预测结果上又做了个上采样。<strong>所以每个stack实际上都是负责不同尺度的预测，最后把不同尺度的预测序列插值到相同粒度然后相加即可</strong>。</p>
+<h3 id="传统统计方法vs深度学习方法"><a href="#传统统计方法vs深度学习方法" class="headerlink" title="传统统计方法vs深度学习方法"></a>传统统计方法vs深度学习方法</h3><h4 id="Are-Transformers-Effective-for-Time-Series-Forecasting"><a href="#Are-Transformers-Effective-for-Time-Series-Forecasting" class="headerlink" title="Are Transformers Effective for Time Series Forecasting"></a>Are Transformers Effective for Time Series Forecasting</h4><ul>
+<li><strong>作者</strong>: [Ailing Zeng, Muxi Chen, Lei Zhang, Qiang Xu]</li>
+<li><strong>会议&#x2F;期刊</strong>: [AAAI]</li>
+<li><strong>年份</strong>: [2023]</li>
+<li><strong>摘要</strong>: 引入了一组名为LTSF-Linear的简单的单层线性模型进行比较。在九个真实数据集上的实验结果表明，LTSF-Linear在大部分情况下都出人意料地优于现有的复杂Transformer-based LTSF模型。</li>
+</ul>
+<h3 id="Transformer-vs-RNN"><a href="#Transformer-vs-RNN" class="headerlink" title="Transformer vs RNN"></a>Transformer vs RNN</h3><h4 id="Enhancing-the-Locality-and-Breaking-the-Memory-Bottleneck-of-Transformer-on-Time-Series-Forecasting"><a href="#Enhancing-the-Locality-and-Breaking-the-Memory-Bottleneck-of-Transformer-on-Time-Series-Forecasting" class="headerlink" title="Enhancing the Locality and Breaking the Memory Bottleneck of Transformer on Time Series Forecasting"></a>Enhancing the Locality and Breaking the Memory Bottleneck of Transformer on Time Series Forecasting</h4><ul>
+<li><strong>作者</strong>: [Xiaoyong Jin、Yao Xuan、Xiyou Zhou、Wenhu Chen、Yu-Xiang Wang和Xifeng Yan]</li>
+<li><strong>会议&#x2F;期刊</strong>: [NIPS]</li>
+<li><strong>年份</strong>: [2020]</li>
+<li><strong>摘要</strong>: 提出了卷积自注意力和LogSparse Transformer来解决传统Transformer在时间序列中的局部性和内存瓶颈问题。</li>
+<li><strong>comment</strong>：相较于传统的RNN，基于transformer的模型可以更好地处理时间序列中的局部性和长期依赖性。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+      <tags>
+        <tag>LSTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sftp_sql_1</title>
+    <url>/2022/03/20/sftp-sql-1/</url>
+    <content><![CDATA[<p>2022&#x2F;3&#x2F;20 发现sftp连接不上，显示connection closed</p>
+<span id="more"></span>
+
+<h6 id="查看-sshd-config-配置文件，-发现没有-usr-libexec-sftp-server可执行程序"><a href="#查看-sshd-config-配置文件，-发现没有-usr-libexec-sftp-server可执行程序" class="headerlink" title="查看 sshd_config 配置文件， 发现没有&#x2F;usr&#x2F;libexec&#x2F;sftp-server可执行程序"></a>查看 sshd_config 配置文件， 发现没有&#x2F;usr&#x2F;libexec&#x2F;sftp-server可执行程序</h6><p><code>override default of no subsystems</code></p>
+<p><code>Subsystem      sftp    /usr/libexec/opensshj/sftp-server</code></p>
+<p>可以修改如下：</p>
+<p><code>override default of no subsystems</code></p>
+<p><code>Subsystem      sftp    internal-sftp</code></p>
+<p>并且发现里头sftp路径为：usr&#x2F;libexec&#x2F;opensshj&#x2F;sftp-server</p>
+<p>修改j为好，但仍然connection closed</p>
+<h6 id="sftp-server-与-internal-sftp-的区别可看"><a href="#sftp-server-与-internal-sftp-的区别可看" class="headerlink" title="sftp-server 与 internal-sftp 的区别可看"></a>sftp-server 与 internal-sftp 的区别可看</h6><p><a href="https://serverfault.com/questions/660160/openssh-difference-between-internal-sftp-and-sftp-server">https://serverfault.com/questions/660160/openssh-difference-between-internal-sftp-and-sftp-server</a></p>
+<h6 id="ssh可以使用但sftp不能使用"><a href="#ssh可以使用但sftp不能使用" class="headerlink" title="ssh可以使用但sftp不能使用"></a>ssh可以使用但sftp不能使用</h6><p><a href="http://bbs.chinaunix.net/thread-4252902-1-1.html">http://bbs.chinaunix.net/thread-4252902-1-1.html</a></p>
+<p>ssh可以使用sftp不可以使用</p>
+<p>Vim &#x2F;etc&#x2F;passwd<br>把 bbscgl:500:500::&#x2F;kssftp:&#x2F;bin&#x2F;false<br>改为 bbscgl:500:500::&#x2F;kssftp:&#x2F;bin&#x2F;bash</p>
+<p>但是Vi &#x2F;etc&#x2F;passwd 失败</p>
+<h6 id="尝试重启服务sshd-service"><a href="#尝试重启服务sshd-service" class="headerlink" title="尝试重启服务sshd.service"></a>尝试重启服务sshd.service</h6><p>systemctl restart sshd.service</p>
+<p>防火墙</p>
+<p>sudo systemctl status wall fired</p>
+<p>查看防火墙状态：<code>sudo systemctl status firewalld</code><br>关闭防火墙:<code>sudo systemctl stop firewalld</code></p>
+<h5 id="导入stif-csv"><a href="#导入stif-csv" class="headerlink" title="导入stif.csv"></a>导入stif.csv</h5><h6 id="解决办法1-转换成txt再导入"><a href="#解决办法1-转换成txt再导入" class="headerlink" title="解决办法1:转换成txt再导入"></a>解决办法1:转换成txt再导入</h6><p>无法转换成txt</p>
+<h6 id="解决办法2-切换encoding"><a href="#解决办法2-切换encoding" class="headerlink" title="解决办法2:切换encoding"></a>解决办法2:切换encoding</h6><p>format ‘csv’, delimiter ‘, encoding ‘ISO-8859-1’)”</p>
+<p>可以导入，但是导入了以后还是乱码</p>
+<h6 id="解决办法3-使用工具切换成txt"><a href="#解决办法3-使用工具切换成txt" class="headerlink" title="解决办法3:使用工具切换成txt"></a>解决办法3:使用工具切换成txt</h6><p>使用wps另存为txt，解决了大数据量的问题</p>
+<h5 id="导入relation-csv"><a href="#导入relation-csv" class="headerlink" title="导入relation.csv"></a>导入relation.csv</h5><p>centos更改文件所有者</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chown</span> jay:fefjay a.txt <span class="comment">#修改文件所属用户为jay，所属用户组为fefjay</span></span><br></pre></td></tr></table></figure>
+
+<p>linux解压zip</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> zip</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">unzip abc.zip</span><br><span class="line"><span class="comment">#出现inflating即为成功</span></span><br></pre></td></tr></table></figure>
+
+<p>vi正则</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%s/<span class="string">&quot;//g</span></span><br></pre></td></tr></table></figure>
+
+<p>vim正则</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">:%s/foo/bar/g    会在全局范围(%)查找foo并替换为bar，所有出现都会被替换（g）</span><br><span class="line"></span><br><span class="line">:<span class="keyword">w</span> 保存不退出</span><br><span class="line">:<span class="keyword">w</span> 新文件名 把文件另存为新文件</span><br><span class="line">:q 不保存退出</span><br><span class="line">:<span class="keyword">wq</span> 保存退出</span><br><span class="line">:! 强制</span><br><span class="line">:q! 强制不保存退出</span><br><span class="line">:wq! 强制保存退出</span><br></pre></td></tr></table></figure>
+
+<p>sed</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">&quot;s/&amp;#@/,/g&quot;</span> stif_2022-03-12.csv</span><br></pre></td></tr></table></figure>
+
+<p>gpfdist导入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps -ef | grep gpfdist</span><br><span class="line">gpfdist -d /home/admin/data/ -p 8081 -l /home/admin/data.log &amp;</span><br></pre></td></tr></table></figure>
+
+<p>linux给文件改名</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> test.txt new.txt</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>problem</category>
+      </categories>
+  </entry>
+</search>
