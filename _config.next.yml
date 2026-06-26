@@ -37,9 +37,6 @@ avatar:
 
 # Social Links
 social:
-  GitHub: https://github.com/tongjiu123 || fab fa-github
-  E-Mail: mailto:dryang0624@163.com || fa fa-envelope
-  Zhihu: https://www.zhihu.com/people/yzyroy || fa fa-book
 
 social_icons:
   enable: true
@@ -48,7 +45,7 @@ social_icons:
 
 # GitHub Banner
 github_banner:
-  enable: true
+  enable: false
   permalink: https://github.com/tongjiu123
   title: Follow me on GitHub
 
