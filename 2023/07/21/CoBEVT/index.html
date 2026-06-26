@@ -19,32 +19,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yangzongyou.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"mac","show_result":true},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="VICOD:激光雷达和摄像头的多级融合方法">
+    <meta name="description" content="CoBEVT：稀疏Transformer做协作BEV语义分割">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VICOD">
-<meta property="og:url" content="https://yangzongyou.com/2023/07/22/VICOD/index.html">
+<meta property="og:title" content="CoBEVT">
+<meta property="og:url" content="https://yangzongyou.com/2023/07/21/CoBEVT/index.html">
 <meta property="og:site_name" content="Blog of Yang">
-<meta property="og:description" content="VICOD:激光雷达和摄像头的多级融合方法">
+<meta property="og:description" content="CoBEVT：稀疏Transformer做协作BEV语义分割">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://yangzongyou.com/v2-598e1685bf05e8e9cd8308e451845558_720w.webp">
-<meta property="og:image" content="https://yangzongyou.com/v2-df53bed02e01e1d1073cadebbedec842_720w.webp">
-<meta property="og:image" content="https://yangzongyou.com/v2-58b88a455f5acd65cd0d85072a517bdb_720w.webp">
-<meta property="og:image" content="https://yangzongyou.com/v2-ccf76553bd49791b65cfa2eabfd40d08_720w.webp">
+<meta property="og:image" content="https://yangzongyou.com/v2-f34e07352a28b095403c224b5331a71e_720w.webp">
+<meta property="og:image" content="https://yangzongyou.com/v2-c450b0e4bbbf9763b37df7f81681c6f3_720w.webp">
 <meta property="article:published_time" content="2023-07-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-02-09T02:42:56.009Z">
+<meta property="article:modified_time" content="2026-06-26T07:24:52.761Z">
 <meta property="article:author" content="Zachary Yang">
 <meta property="article:tag" content="Auto_vehicle">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yangzongyou.com/v2-598e1685bf05e8e9cd8308e451845558_720w.webp">
+<meta name="twitter:image" content="https://yangzongyou.com/v2-f34e07352a28b095403c224b5331a71e_720w.webp">
 
 
-<link rel="canonical" href="https://yangzongyou.com/2023/07/22/VICOD/">
+<link rel="canonical" href="https://yangzongyou.com/2023/07/21/CoBEVT/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yangzongyou.com/2023/07/22/VICOD/","path":"2023/07/22/VICOD/","title":"VICOD"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yangzongyou.com/2023/07/21/CoBEVT/","path":"2023/07/21/CoBEVT/","title":"CoBEVT"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>VICOD | Blog of Yang</title>
+<title>CoBEVT | Blog of Yang</title>
   
 
 
@@ -164,7 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#VICOD-%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%E5%92%8C%E6%91%84%E5%83%8F%E5%A4%B4%E7%9A%84%E5%A4%9A%E7%BA%A7%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">VICOD:激光雷达和摄像头的多级融合方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A7%E7%9A%84%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">旧的方案：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A5%E6%96%87%E7%AB%A0%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">该文章方案：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">数据集：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VICOD%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.</span> <span class="nav-text">VICOD结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%A6%E4%BE%A7%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C"><span class="nav-number">1.5.</span> <span class="nav-text">车侧检测网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%A6%E7%AB%AF%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">1.6.</span> <span class="nav-text">车端检测网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E4%BE%A7%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C"><span class="nav-number">1.7.</span> <span class="nav-text">基础设施侧检测网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E7%AE%B1%E8%9E%8D%E5%90%88%E7%BD%91%E7%BB%9C"><span class="nav-number">1.8.</span> <span class="nav-text">检测箱融合网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.9.</span> <span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.9.1.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CoBEVT%EF%BC%9A%E7%A8%80%E7%96%8FTransformer%E5%81%9A%E5%8D%8F%E4%BD%9CBEV%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2"><span class="nav-number">1.</span> <span class="nav-text">CoBEVT：稀疏Transformer做协作BEV语义分割</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CoBEVT"><span class="nav-number">1.2.</span> <span class="nav-text">CoBEVT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%8F%90"><span class="nav-number">1.3.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FAX-%E2%80%94-Fused-Axial-Attention"><span class="nav-number">1.4.</span> <span class="nav-text">FAX — Fused Axial Attention</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SinBEVT-for-Single-agent-BEV-Feature-Computation"><span class="nav-number">1.5.</span> <span class="nav-text">SinBEVT for Single-agent BEV Feature Computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FuseBEVT-for-Multi-agent-BEV-Feature-Fusion"><span class="nav-number">1.6.</span> <span class="nav-text">FuseBEVT for Multi-agent BEV Feature Fusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.7.</span> <span class="nav-text">实验</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -173,7 +171,7 @@
     <img class="site-author-image" itemprop="image" alt="Zachary Yang"
       src="/images/kejigou.png">
   <p class="site-author-name" itemprop="name">Zachary Yang</p>
-  <div class="site-description" itemprop="description">Welcome to my tech-focused blog! My name is Zongyou Yang, and I am currently pursuing a joint degree in Telecommunications Engineering with Management at Beijing University of Posts and Telecommunications (BUPT) in collaboration with Queen Mary, University of London (QMUL).</div>
+  <div class="site-description" itemprop="description">Welcome to my tech-focused blog! My name is Zongyou Yang. I hold a Master's degree in Computer Graphics, Vision and Imaging from University College London (UCL) and a Bachelor's degree in Telecommunications Engineering with Management from Queen Mary University of London (QMUL). My interests span AI, deep learning, computer vision, and autonomous driving.</div>
 </div>
 <div class="site-state-wrap animated">
   <nav class="site-state">
@@ -231,7 +229,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://yangzongyou.com/2023/07/22/VICOD/">
+    <link itemprop="mainEntityOfPage" href="https://yangzongyou.com/2023/07/21/CoBEVT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/kejigou.png">
@@ -240,16 +238,16 @@
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Blog of Yang">
-      <meta itemprop="description" content="Welcome to my tech-focused blog! My name is Zongyou Yang, and I am currently pursuing a joint degree in Telecommunications Engineering with Management at Beijing University of Posts and Telecommunications (BUPT) in collaboration with Queen Mary, University of London (QMUL).">
+      <meta itemprop="description" content="Welcome to my tech-focused blog! My name is Zongyou Yang. I hold a Master's degree in Computer Graphics, Vision and Imaging from University College London (UCL) and a Bachelor's degree in Telecommunications Engineering with Management from Queen Mary University of London (QMUL). My interests span AI, deep learning, computer vision, and autonomous driving.">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="VICOD | Blog of Yang">
+      <meta itemprop="name" content="CoBEVT | Blog of Yang">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          VICOD
+          CoBEVT
         </h1>
 
         <div class="post-meta-container">
@@ -267,7 +265,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-02-09 10:42:56" itemprop="dateModified" datetime="2026-02-09T10:42:56+08:00">2026-02-09</time>
+      <time title="Modified: 2026-06-26 15:24:52" itemprop="dateModified" datetime="2026-06-26T15:24:52+08:00">2026-06-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -295,53 +293,40 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="VICOD-激光雷达和摄像头的多级融合方法"><a href="#VICOD-激光雷达和摄像头的多级融合方法" class="headerlink" title="VICOD:激光雷达和摄像头的多级融合方法"></a>VICOD:激光雷达和摄像头的多级融合方法</h1><span id="more"></span>
+    <div class="post-body" itemprop="articleBody"><h1 id="CoBEVT：稀疏Transformer做协作BEV语义分割"><a href="#CoBEVT：稀疏Transformer做协作BEV语义分割" class="headerlink" title="CoBEVT：稀疏Transformer做协作BEV语义分割"></a>CoBEVT：稀疏Transformer做协作BEV语义分割</h1><span id="more"></span>
 
-<p>论文标题：Multistage Fusion Approach of Lidar and Camera for Vehicle-Infrastructure Cooperative Object Detection</p>
-<p>2022 5th World Conference on Mechanical Engineering and Intelligent Manufacturing (WCMEIM)</p>
-<p>Paper：<a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/document/10021459">https://ieeexplore.ieee.org/document/10021459</a></p>
-<h3 id="旧的方案："><a href="#旧的方案：" class="headerlink" title="旧的方案："></a>旧的方案：</h3><p>1.使用基于基础设施的LiDAR传感器检测和跟踪十字路口的行人和车辆，分析准确的实时信息，包括行人和车辆的存在，位置，速度和方向。</p>
-<p>2.这些工作并没有合成多模态传感器数据，也没有在现实场景中得到验证。</p>
-<h3 id="该文章方案："><a href="#该文章方案：" class="headerlink" title="该文章方案："></a>该文章方案：</h3><p>VICOD：激光雷达与摄像头的多级融合方法，用于车基协同目标检测</p>
-<p>选择车侧点云和图像数据以及路侧点云数据作为输入，车侧通过特征融合生成检测框，然后与路侧数据生成的检测框完成对象级融合，投影到车侧坐标系，得到融合的检测框。与使用原始数据和提取特征的早期融合和特征级融合相比，该文方案的车-基础设施协同目标检测方案的平均精度显著高于数据集提供的基准，而该文采用的方案在保证检测精度的基础上，可以降低路侧向车侧数据传输的成本和时延。</p>
-<h3 id="数据集："><a href="#数据集：" class="headerlink" title="数据集："></a>数据集：</h3><ul>
-<li>DAIR-V2X 数据集</li>
-<li>用于车基协同自动驾驶研究的大规模、多模态、多视图数据集</li>
-<li>数据均来自北京高水平自动驾驶示范区的真实场景</li>
-</ul>
-<h3 id="VICOD结构"><a href="#VICOD结构" class="headerlink" title="VICOD结构"></a>VICOD结构</h3><p><img src="/v2-598e1685bf05e8e9cd8308e451845558_720w.webp" alt="VICOD结构图"></p>
+<p>UCLA大学在2022年发表在CoRL</p>
+<p>Paper：<a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2207.02202">https://arxiv.org/abs/2207.02202</a></p>
 <ul>
-<li>车侧检测网络</li>
-<li>基础设施侧检测网络</li>
-<li>检测箱融合网络</li>
+<li>场景：复杂交通场景中</li>
+<li>问题：基于单智能体相机的系统对于复杂交通场景中的遮挡和检测远处的目标性能较差</li>
+<li>动机：使用通用多智能体多相机感知框架（车与车( Vehicle-to-Vehicle，V2V )通信技术可以使无人驾驶车辆能够共享感知信息），提高感知性能和范围</li>
+<li>paper发表于CoRL 2022</li>
+<li>多智体多摄像机感知框架</li>
+<li>轴向注意力（fused axial attention，FAX）模块</li>
+<li>数据集：V2V 感知数据集OPV2V；nuScenes</li>
 </ul>
-<p>车辆侧利用图像和点云数据通过特征融合生成检测箱，路侧仅使用点云数据生成检测箱，投影到车侧坐标系完成与车侧生成的检测箱的物体级融合，得到融合检测箱。</p>
-<h3 id="车侧检测网络"><a href="#车侧检测网络" class="headerlink" title="车侧检测网络"></a>车侧检测网络</h3><ul>
-<li>从点云和图像中提取特征Extracting Feature from Point Clouds and Images:</li>
-<li>区域提案网络Region Proposal Network</li>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>鸟瞰图( BEV )语义分割在自动驾驶的空间感知中起着至关重要的作用。尽管最近的文献在BEV地图理解方面取得了重大进展，但它们都是基于单智能体相机的系统。这些解决方案有时在处理复杂交通场景中的遮挡或检测远处物体时存在困难。车与车( Vehicle-to-Vehicle，V2V )通信技术使无人驾驶车辆能够共享感知信息，与单智能体系统相比，显著提高了感知性能和范围。</p>
+<p>在本文中，我们提出了CoBEVT，这是第一个能够协同生成BEV地图预测的通用多智能体多相机感知框架。为了在Transformer底层架构中高效地融合来自多视图和多智能体数据的相机特征，我们设计了一个融合的轴向注意力模块( FAX )，该模块能够稀疏地捕获视图和智能体之间的局部和全局空间交互。</p>
+<h3 id="CoBEVT"><a href="#CoBEVT" class="headerlink" title="CoBEVT"></a>CoBEVT</h3><p>第一个使用多智能体多相机传感器通过稀疏视觉转换器协作生成BEV分割地图的框架</p>
+<p>每个AV通过SinBEVT Transformer从其相机机架计算出自己的BEV，并在压缩后传输给其他AV。接收端将接收到的BEV特征变换到其坐标系下，并使用提出的FuseBEVT进行BEV级聚合。</p>
+<p><img src="/v2-f34e07352a28b095403c224b5331a71e_720w.webp" alt="CoBEVT结构图"></p>
+<p>CoBEVT结构图</p>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ul>
+<li>一个V2V通信系统，其中所有AV都可以与其他AV交换感知信息</li>
+<li>所有智能体的pose都是准确的，并且传输的消息是同步的</li>
 </ul>
-<p>首先在提取的全分辨率特征上应用1 × 1卷积核，然后对其进行裁剪和尺寸调整，在两个视图中获得尺寸为3 × 3的特征裁剪，随后通过元素平均操作进行融合</p>
-<p>将融合后的特征作物送入全连接层，全连接层输出物体&#x2F;背景得分和三维包围盒的回归值。</p>
-<p>对得到的3D候选区域进行非极大值抑制( NMS )并丢弃冗余候选区域，以消除冗余候选区域。</p>
-<ul>
-<li>第二阶段检测网络Second Stage Detection Network</li>
-</ul>
-<p>类似于RPN</p>
-<h3 id="车端检测网络结构"><a href="#车端检测网络结构" class="headerlink" title="车端检测网络结构"></a>车端检测网络结构</h3><p><img src="/v2-df53bed02e01e1d1073cadebbedec842_720w.webp" alt="车端检测网络结构"></p>
-<h3 id="基础设施侧检测网络"><a href="#基础设施侧检测网络" class="headerlink" title="基础设施侧检测网络"></a>基础设施侧检测网络</h3><ul>
-<li>功能编码器网络：将点云转换为伪图像以进行 2D 卷积操作。散点算子生成伪图像</li>
-<li>区域提案网络：由二维卷积神经网络组成</li>
-<li>检测头：实现 3D 物体检测</li>
-</ul>
-<p><img src="/v2-58b88a455f5acd65cd0d85072a517bdb_720w.webp" alt="基础设施侧检测网络"></p>
-<h3 id="检测箱融合网络"><a href="#检测箱融合网络" class="headerlink" title="检测箱融合网络"></a>检测箱融合网络</h3><ul>
-<li>坐标变换和过滤</li>
-<li>匹配和组合</li>
-</ul>
-<p>相同的对象，在匹配它们后，比较它们的分数并保持结果具有更高的置信度。</p>
-<p>对于不同的对象，将它们组合在一起。随后，通过在检测结果中整合相应的更准确的信息并处理坐标变换中的误差，完成融合结果的空间补偿。</p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><img src="/v2-ccf76553bd49791b65cfa2eabfd40d08_720w.webp" alt="实验结果"></p>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>激光雷达与摄像头的多级融合方法，用于车基协同目标检测。利用车辆侧的点云和图像数据以及路侧的点云数据，通过特征提取和区域建议网络得到相应的检测箱，输入到检测箱融合网络中，经过坐标转换、滤波和积分运算后得到最终的融合检测箱。与数据集基准相比，结果表明，该方案能够显著提高车-基础设施协同目标检测的平均精度。考虑到传感器和通信的成本，我们只使用点云数据来完成路边的物体检测，然后与车辆侧的检测结果实现后期融合。与使用原始数据或提取特征的早期融合或特征融合相比，该方案在保证检测精度的基础上，可以降低从路侧到车辆侧的数据传输成本和时延。</p>
+<h3 id="FAX-—-Fused-Axial-Attention"><a href="#FAX-—-Fused-Axial-Attention" class="headerlink" title="FAX — Fused Axial Attention"></a>FAX — Fused Axial Attention</h3><p>Sin BEVT和Fuse BEVT的核心组件</p>
+<p>可以在局部和全局上有效地聚合跨代理或相机视图的特征。</p>
+<p>具有很大的通用性，在不同的模态上表现出对多个感知任务的有效性，包括基于多视角相机的协同&#x2F;单智能体BEV分割和协同3D LiDAR目标检测。</p>
+<p><img src="/v2-c450b0e4bbbf9763b37df7f81681c6f3_720w.webp" alt="FAX模块"></p>
+<h3 id="SinBEVT-for-Single-agent-BEV-Feature-Computation"><a href="#SinBEVT-for-Single-agent-BEV-Feature-Computation" class="headerlink" title="SinBEVT for Single-agent BEV Feature Computation"></a>SinBEVT for Single-agent BEV Feature Computation</h3><p>通过SinBEVT Transformer从其相机机架计算出自己的BEV</p>
+<h3 id="FuseBEVT-for-Multi-agent-BEV-Feature-Fusion"><a href="#FuseBEVT-for-Multi-agent-BEV-Feature-Fusion" class="headerlink" title="FuseBEVT for Multi-agent BEV Feature Fusion"></a>FuseBEVT for Multi-agent BEV Feature Fusion</h3><p>一个简单的1x1卷积自动编码器来压缩和解压BEV特征，以降低传输数据大小</p>
+<p>FuseBEVT是一个3-D视觉transformer，可以专注地融合来自多智体的BEV特征信息</p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>摄影机追踪结果</p>
+<p>LiDAR-track results.</p>
+<p>nuScenes vehicle map-view segmentation</p>
+<p>Effect of compression rate</p>
 
     </div>
 
@@ -358,13 +343,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/07/22/BEVFusion/" rel="prev" title="BEVFusion">
-                  <i class="fa fa-angle-left"></i> BEVFusion
+                <a href="/2023/07/21/VICOD/" rel="prev" title="VICOD">
+                  <i class="fa fa-angle-left"></i> VICOD
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/07/22/CoBEVT/" rel="next" title="CoBEVT">
-                  CoBEVT <i class="fa fa-angle-right"></i>
+                <a href="/2023/07/21/BEVFusion/" rel="next" title="BEVFusion">
+                  BEVFusion <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
